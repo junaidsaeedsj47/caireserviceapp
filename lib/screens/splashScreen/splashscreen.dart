@@ -1,8 +1,24 @@
 import 'package:caireapp/constants/caireColors.dart';
+import 'package:caireapp/screens/dashboardScreen/homeScreen.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 4), () {
+      AppUtils.navigationRoute(context: context, route: const HomeScreen());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +32,6 @@ class SplashScreen extends StatelessWidget {
             colors: [
               AppColors.instance.splashColorThree!,
               AppColors.instance.splashColorOne!,
-
               AppColors.instance.splashColorTwo!,
             ],
           )),
