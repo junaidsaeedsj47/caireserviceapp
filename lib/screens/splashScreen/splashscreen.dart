@@ -1,5 +1,6 @@
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/screens/dashboardScreen/homeScreen.dart';
+import 'package:caireapp/screens/login/login_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 4), () {
-      AppUtils.navigationRoute(context: context, route: const HomeScreen());
+      AppUtils.navigationRoute(context: context, route: const LoginScreen());
     });
   }
 
@@ -30,9 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              AppColors.instance.splashColorThree!,
-              AppColors.instance.splashColorOne!,
-              AppColors.instance.splashColorTwo!,
+              AppColors.instance.splashColorThree,
+              AppColors.instance.splashColorOne,
+              AppColors.instance.splashColorTwo,
             ],
           )),
           child: Center(
