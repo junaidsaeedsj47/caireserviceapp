@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/screens/dashboardScreen/homeScreen.dart';
 import 'package:caireapp/screens/login/login_screen.dart';
@@ -40,13 +41,20 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Caire',
-                  style: TextStyle(
-                    fontSize: 48.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+
+                AnimatedTextKit(
+                  animatedTexts: [
+                    WavyAnimatedText('Caire',
+                      textStyle: TextStyle(
+                        fontSize: 48.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),],
+                  isRepeatingAnimation: false,
+                  onTap: () {
+                    print("Tap Event");
+                  },
                 ),
                 SizedBox(
                   height: 40,

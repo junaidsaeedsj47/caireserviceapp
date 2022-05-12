@@ -1,4 +1,5 @@
 
+import 'package:caireapp/screens/dashboardScreen/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: DynamicSize.height(0.02, context),
                 ),
                 Text(
-                    'Caire Inc. is the largest suburban Chicago, Caire service serving all suburbs, airports and downtown',
+                    'Lorem ipsum dolor sit mit is a dumy text.ipsum dolor sit mit is a dumy',
                     style: TextStyle(
                       // color: AppColors.getInstance().appGreyColor,
                       color: Colors.grey,
@@ -125,11 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
-
-//                        Navigator.push(
-//                          context,
-//                          MaterialPageRoute(builder: (context) => HomeScreen()),
-//                        );
+                       Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (context) => HomeScreen()),
+                       );
                       }),
                 ),
                 SizedBox(
@@ -164,8 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w700,
                       fontSize: 14,
                     ),
                     textAlign: TextAlign.center,
@@ -185,8 +185,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Forgot Username?',
                     style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w700,
                       fontSize: 14,
                     ),
                     textAlign: TextAlign.center,
