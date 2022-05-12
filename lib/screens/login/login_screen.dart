@@ -1,31 +1,28 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/caireColors.dart';
 import '../../device/device.dart';
 import '../../widgets/caire_fields.dart';
-
+import '../signup/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
-
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:Colors.white,
-        body:   SingleChildScrollView(
-          child:
-          Container(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Container(
             margin: const EdgeInsetsDirectional.only(
                 start: 20, end: 20, bottom: 10),
             child: Column(
@@ -62,12 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 CarieTextFieldWithoutLabel(
-
                   controller: emailController,
                   hintText: 'Username/Email',
-                    hintStyle: const TextStyle(color: Color(0xffB4B4B4)),
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 18, horizontal: 20),
+                  hintStyle: const TextStyle(color: Color(0xffB4B4B4)),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
                 ),
 //              TextFormField(
 //                decoration: InputDecoration(
@@ -88,8 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   hintText: 'Password',
                   hintStyle: const TextStyle(color: Color(0xffB4B4B4)),
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 18, horizontal: 20),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
                 ),
 //                TextFormField(
 //                  obscureText: true,
@@ -116,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 35),
                   child: CupertinoButton(
                       borderRadius: BorderRadius.circular(12),
-                      color:AppColors.instance.themeColor,
+                      color: AppColors.instance.themeColor,
                       child: const Text(
                         'Login',
                         style: TextStyle(
@@ -125,7 +121,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
-
 //                        Navigator.push(
 //                          context,
 //                          MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -150,7 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.w500),
                     ),
                     onPressed: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()),
+                      );
                     },
                   ),
                 ),
@@ -158,9 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: DynamicSize.height(0.018, context),
                 ),
                 InkWell(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(
