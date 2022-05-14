@@ -1,5 +1,6 @@
 import 'package:caireapp/constants/caireColors.dart';
-import 'package:caireapp/screens/categories/viewmall_categories_screen.dart';
+import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
+import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
@@ -59,15 +60,6 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                       Container(
                         padding: const EdgeInsetsDirectional.only(
                             start: 10, end: 10, top: 20, bottom: 20),
-                        // decoration: BoxDecoration(
-                        //     gradient: LinearGradient(
-                        //   begin: Alignment.bottomLeft,
-                        //   end: Alignment.topRight,
-                        //   colors: [
-                        //     AppColors.instance.themeColor,
-                        //     AppColors.instance.splashColorThree,
-                        //   ],
-                        // )),
                         child: Column(
                           children: [
                             getSubTitleServices(),
@@ -321,112 +313,117 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
           scrollDirection: Axis.vertical,
           itemCount: model.servicesData.length,
           itemBuilder: (context, int index) {
-            return Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColors.instance.backGroundColor),
-                // margin: EdgeInsetsDirectional.only(end: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+            return GestureDetector(
+              onTap: (){
+                AppUtils.navigationRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+              },
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(bottom: 20),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.instance.backGroundColor),
+                  // margin: EdgeInsetsDirectional.only(end: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            // height: 150,
+                            child: Image.network(
+                              model.servicesData[index].serviceImage.toString(),
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                          // height: 150,
-                          child: Image.network(
-                            model.servicesData[index].serviceImage.toString(),
-                            fit: BoxFit.fill,
-                          ),
+                          Positioned.fill(
+                              child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                        end: 15, bottom: 15),
+                                    child: getPriceTag(model, index),
+                                  ))),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.,
+                          children: [
+                            getRatingStars(model, index,
+                                model.servicesData[index].serviceProviderRating!),
+                            // RatingBar.builder(
+                            //   ignoreGestures: false,
+                            //   itemSize: 15,
+                            //   initialRating:
+                            //       model.servicesData[index].serviceProviderRating!,
+                            //   minRating: 1,
+                            //   direction: Axis.horizontal,
+                            //   allowHalfRating: false,
+                            //   itemCount: 5,
+                            //   unratedColor: Colors.transparent,
+                            //   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            //   itemBuilder: (context, _) =>
+                            //       Image.asset("assets/images/goldenStar.png"),
+                            //   onRatingUpdate: (rating) {
+                            //     print(rating);
+                            //   },
+                            // ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              model.servicesData[index].serviceProviderRating
+                                  .toString(),
+                              style: TextStyleUtil.textStyleRaqiBook(context),
+                            ),
+                          ],
                         ),
-                        Positioned.fill(
-                            child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                      end: 15, bottom: 15),
-                                  child: getPriceTag(model, index),
-                                ))),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        // mainAxisAlignment: MainAxisAlignment.,
-                        children: [
-                          getRatingStars(model, index,
-                              model.servicesData[index].serviceProviderRating!),
-                          // RatingBar.builder(
-                          //   ignoreGestures: false,
-                          //   itemSize: 15,
-                          //   initialRating:
-                          //       model.servicesData[index].serviceProviderRating!,
-                          //   minRating: 1,
-                          //   direction: Axis.horizontal,
-                          //   allowHalfRating: false,
-                          //   itemCount: 5,
-                          //   unratedColor: Colors.transparent,
-                          //   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          //   itemBuilder: (context, _) =>
-                          //       Image.asset("assets/images/goldenStar.png"),
-                          //   onRatingUpdate: (rating) {
-                          //     print(rating);
-                          //   },
-                          // ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            model.servicesData[index].serviceProviderRating
-                                .toString(),
-                            style: TextStyleUtil.textStyleRaqiBook(context),
-                          ),
-                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Text(
-                        model.servicesData[index].serviceName!,
-                        style: TextStyleUtil.textStyleRaqiBook(context,
-                            fontWeight: AppFontWeight.bold, fontSize: 18),
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 20),
-                      child: Row(
-                        children: [
-                          Icon(Icons.account_circle),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            model.servicesData[index].serviceProviderName!,
-                            style: TextStyleUtil.textStyleRaqiBook(context,
-                                color: AppColors.instance.lightGreyText),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: Text(
+                          model.servicesData[index].serviceName!,
+                          style: TextStyleUtil.textStyleRaqiBook(context,
+                              fontWeight: AppFontWeight.bold, fontSize: 18),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 20),
+                        child: Row(
+                          children: [
+                            Icon(Icons.account_circle),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              model.servicesData[index].serviceProviderName!,
+                              style: TextStyleUtil.textStyleRaqiBook(context,
+                                  color: AppColors.instance.lightGreyText),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

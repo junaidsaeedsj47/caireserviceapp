@@ -40,6 +40,8 @@ dependencies:
   animated_text_kit: ^4.2.1
   stacked:
   flutter_rating_bar: ^4.0.0
+  auto_size_text: any
+  universal_platform: any
 
 dev_dependencies:
   flutter_test:

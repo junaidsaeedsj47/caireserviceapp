@@ -1,4 +1,6 @@
 import 'package:caireapp/constants/caireColors.dart';
+import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/categories/viewall_categories_viewmodel.dart';
@@ -42,8 +44,8 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
                   centerTitle: true,
                   title: Text(
                     "Categories",
-                    style:
-                        TextStyleUtil.textStyleRaqiBook(context, fontSize: 24,color: AppColors.instance.textWhiteColor),
+                    style: TextStyleUtil.textStyleRaqiBook(context,
+                        fontSize: 24, color: AppColors.instance.textWhiteColor),
                   ),
                   systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarColor: AppColors.instance.themeColor, // Status bar
@@ -136,16 +138,22 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
 
   Widget getCategoriesList(
       BuildContext context, ViewAllCategoriesViewModel model) {
-    return GestureDetector(
-      onTap: () {},
-      child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: model.lisOfCategories.length,
-        itemBuilder: (context, index) => Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey)),
+    return GridView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: model.lisOfCategories.length,
+      itemBuilder: (context, index) => Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey)),
+        child: GestureDetector(
+          onTap: () {
+            AppUtils.navigationRoute(
+                context: context,
+                route: ViewAllServicesScreen(
+                  title: model.lisOfCategories[index],
+                ));
+          },
           child: Column(
             children: [
               Expanded(
@@ -177,12 +185,12 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
             ],
           ),
         ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 20,
-          crossAxisSpacing: 15,
-          // childAspectRatio:,
-        ),
+      ),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 15,
+        // childAspectRatio:,
       ),
     );
   }

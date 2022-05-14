@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/device/device.dart';
-import 'package:caireapp/screens/categories/viewmall_categories_screen.dart';
-import 'package:caireapp/screens/services/viewall_services_screen.dart';
+import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
+import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
+import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
@@ -13,14 +15,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _DashboardScreenState createState() => _DashboardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     DashboardViewModel dashboardScreenViewModel = DashboardViewModel();
@@ -36,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   centerTitle: true,
                   title: Text(
                     "Caire",
-                    style:
-                        TextStyleUtil.textStyleRaqiBook(context, fontSize: 24,color: AppColors.instance.textWhiteColor),
+                    style: TextStyleUtil.textStyleRaqiBook(context,
+                        fontSize: 24, color: AppColors.instance.textWhiteColor),
                   ),
                   automaticallyImplyLeading: false,
                   systemOverlayStyle: SystemUiOverlayStyle(
@@ -257,9 +259,12 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey)),
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             AppUtils.navigationRoute(
-                context: context, route: ViewAllServicesScreen(title: model.lisOfCategories[index],));
+                context: context,
+                route: ViewAllServicesScreen(
+                  title: model.lisOfCategories[index],
+                ));
           },
           child: Column(
             children: [
@@ -280,7 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 5,
               ),
               Text(model.lisOfCategories[index],
-                  style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
+                  style:
+                      TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
               SizedBox(
                 height: 5,
               ),
@@ -328,107 +334,114 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           itemCount: model.servicesData.length,
           itemBuilder: (context, int index) {
-            return Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: AppColors.instance.backGroundColor),
-              margin: EdgeInsetsDirectional.only(end: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+            return GestureDetector(
+              onTap: (){
+                AppUtils.navigationRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.instance.backGroundColor),
+                margin: EdgeInsetsDirectional.only(end: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          height: 150,
+                          child: Image.network(
+                            model.servicesData[index].serviceImage.toString(),
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                        height: 150,
-                        child: Image.network(
-                          model.servicesData[index].serviceImage.toString(),
-                          fit: BoxFit.fill,
-                        ),
+                        Positioned.fill(
+                            child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      end: 15, bottom: 15),
+                                  child: getPriceTag(model, index),
+                                ))),
+                      ],
+                    ),
+                    Container(
+                      padding: const EdgeInsetsDirectional.only(start: 20,end: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              getRatingStars(
+                                  model,
+                                  index,
+                                  model.servicesData[index]
+                                      .serviceProviderRating!),
+                              // RatingBar.builder(
+                              //   ignoreGestures: false,
+                              //   itemSize: 15,
+                              //   initialRating:
+                              //       model.servicesData[index].serviceProviderRating!,
+                              //   minRating: 1,
+                              //   direction: Axis.horizontal,
+                              //   allowHalfRating: false,
+                              //   itemCount: 5,
+                              //   unratedColor: Colors.transparent,
+                              //   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                              //   itemBuilder: (context, _) =>
+                              //       Image.asset("assets/images/goldenStar.png"),
+                              //   onRatingUpdate: (rating) {
+                              //     print(rating);
+                              //   },
+                              // ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                model.servicesData[index].serviceProviderRating
+                                    .toString(),
+                                style: TextStyleUtil.textStyleRaqiBook(context),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          AutoSizeText(
+                            model.servicesData[index].serviceName!,
+                            maxLines: 2,
+                            style: TextStyleUtil.textStyleRaqiBook(context,
+                                fontWeight: AppFontWeight.bold, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.account_circle),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                model.servicesData[index].serviceProviderName!,
+                                style: TextStyleUtil.textStyleRaqiBook(context,
+                                    color: AppColors.instance.lightGreyText),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                      Positioned.fill(
-                          child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                    end: 15, bottom: 15),
-                                child: getPriceTag(model, index),
-                              ))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        getRatingStars(model, index,
-                            model.servicesData[index].serviceProviderRating!),
-                        // RatingBar.builder(
-                        //   ignoreGestures: false,
-                        //   itemSize: 15,
-                        //   initialRating:
-                        //       model.servicesData[index].serviceProviderRating!,
-                        //   minRating: 1,
-                        //   direction: Axis.horizontal,
-                        //   allowHalfRating: false,
-                        //   itemCount: 5,
-                        //   unratedColor: Colors.transparent,
-                        //   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        //   itemBuilder: (context, _) =>
-                        //       Image.asset("assets/images/goldenStar.png"),
-                        //   onRatingUpdate: (rating) {
-                        //     print(rating);
-                        //   },
-                        // ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          model.servicesData[index].serviceProviderRating
-                              .toString(),
-                          style: TextStyleUtil.textStyleRaqiBook(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 20),
-                    child: Text(
-                      model.servicesData[index].serviceName!,
-                      style: TextStyleUtil.textStyleRaqiBook(context,
-                          fontWeight: AppFontWeight.bold, fontSize: 18),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(start: 20),
-                    child: Row(
-                      children: [
-                        Icon(Icons.account_circle),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          model.servicesData[index].serviceProviderName!,
-                          style: TextStyleUtil.textStyleRaqiBook(context,
-                              color: AppColors.instance.lightGreyText),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             );
           }),

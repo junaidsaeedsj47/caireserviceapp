@@ -1,3 +1,4 @@
+import 'package:caireapp/model/service_data_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class ViewAllServicesViewModel extends ChangeNotifier {
@@ -29,13 +30,20 @@ class ViewAllServicesViewModel extends ChangeNotifier {
           serviceName: "Fixing TV Wire",
           servicePricing: "150",
           serviceProviderName: "Esther Howard",
-          serviceProviderRating: 2.3),
+          serviceProviderRating: 2.3,
+        serviceDiscount: 10,
+        serviceDuration:1,
+        descriptionOfService: "Lorem ipsum dolor sit mit is a dumy text.ipsum dolor sit mit is a dumy text ",
+      ),
       ServiceModel(
           serviceImage:
           'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
           serviceName: "Painting For Home",
           servicePricing: "500",
           serviceProviderName: "Dianne Russell",
+          serviceDuration: 1 ,
+          serviceDiscount: 10,
+          descriptionOfService: "Lorem ipsum dolor sit mit is a dumy text.ipsum dolor sit mit is a dumy text ",
           serviceProviderRating: 3.5),
       ServiceModel(
           serviceImage:
@@ -43,6 +51,8 @@ class ViewAllServicesViewModel extends ChangeNotifier {
           serviceName: "Fixing Android Smart Devices",
           servicePricing: "300",
           serviceProviderName: "Darlene Robertson",
+          serviceDuration: 4,
+          descriptionOfService: "Lorem ipsum dolor sit mit is a dumy text ipsum dolor sit mit is a dumy text ",
           serviceProviderRating: 4.3),
       ServiceModel(
           serviceImage:
@@ -50,6 +60,9 @@ class ViewAllServicesViewModel extends ChangeNotifier {
           serviceName: "Sanitary Wiring",
           servicePricing: "1000",
           serviceProviderName: "Arthur David",
+          serviceDuration: 10,
+          serviceDiscount: 5,
+          descriptionOfService: "Lorem ipsum dolor sit mit is a dumy text.ipsum dolor sit mit is a dumy text ",
           serviceProviderRating: 3),
       ServiceModel(
           serviceImage:
@@ -57,6 +70,8 @@ class ViewAllServicesViewModel extends ChangeNotifier {
           serviceName: "House Cleaning",
           servicePricing: "100",
           serviceProviderName: "Devon Lane",
+          serviceDuration: 5,
+          descriptionOfService: "Lorem ipsum dolor sit mit is a dumy text.ipsum dolor sit mit is a dumy text ",
           serviceProviderRating: 4.4),
     ]);
   }
@@ -98,17 +113,4 @@ class ViewAllServicesViewModel extends ChangeNotifier {
   }
 }
 
-class ServiceModel {
-  String? serviceImage;
-  String? serviceName;
-  String? servicePricing;
-  double? serviceProviderRating;
-  String? serviceProviderName;
 
-  ServiceModel(
-      {this.serviceImage,
-        this.serviceName,
-        this.servicePricing,
-        this.serviceProviderName,
-        this.serviceProviderRating});
-}
