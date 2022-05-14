@@ -1,3 +1,4 @@
+import 'package:caireapp/screens/booking/booking_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/login_viewmodel/login_viewmodel.dart';
@@ -146,8 +147,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen()),
+                                  builder: (context) => BookingScreen()),
                             );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const SignUpScreen()),
+                            // );
                           },
                         ),
                       ),
