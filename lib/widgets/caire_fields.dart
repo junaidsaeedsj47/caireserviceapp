@@ -7,6 +7,7 @@ class AmericanTaxiTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Widget suffix;
+  final Widget? prefixIcon;
 
   // ValueChanged<String> onChanged;
   final TextEditingController controller;
@@ -20,7 +21,7 @@ class AmericanTaxiTextField extends StatelessWidget {
       height: 0,
       width: 0,
     ),
-    this.hintText = "",
+    this.hintText = "", this.prefixIcon,
     // this.onChanged,
   }) : super(key: key);
 
@@ -60,6 +61,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
   final bool obscureText;
   final Widget suffix;
   final Widget prefix;
+  final Widget? prefixIcon;
   final String? errorText;
   final bool filled;
   final Color enableBorderColor;
@@ -88,7 +90,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
     this.filled = false,
     this.fillColor = Colors.transparent,
     this.enableBorderColor = const Color(0xffE7E8EE),
-    this.focusedBorderColor = const Color(0xffE7E8EE),   this.errorText,
+    this.focusedBorderColor = const Color(0xffE7E8EE),   this.errorText, this.prefixIcon,
     // this.onChanged,
   });
 
@@ -102,6 +104,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
         focusColor: Colors.transparent,
         suffix: suffix,
         prefix: prefix,
+        prefixIcon: prefixIcon,
         errorText: errorText,
         fillColor: fillColor,
         filled: filled,

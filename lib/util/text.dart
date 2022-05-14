@@ -14,6 +14,15 @@ class TextStyleUtil {
     );
   }
 
+
+  static TextStyle textStyleRaqiBookBold(BuildContext context, {double fontSize = 16, Color? color}) {
+    return _textStyle(
+      context,
+      fontSize: fontSize,
+      color: color??AppColors.instance.appTextColor,
+      fontWeight: AppFontWeight.bold,
+    );
+  }
   static TextStyle _textStyle(BuildContext context,
       {FontWeight? fontWeight,
       double fontSize = 12,
