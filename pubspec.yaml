@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.0.12
   carousel_slider: ^4.1.1
   animated_text_kit: ^4.2.1
+  stacked:
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,34 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/gilory/Gilroy-Light.ttf
+          weight: 300
+        - asset: assets/fonts/gilory/Gilroy-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/gilory/Gilroy-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/gilory/Gilroy-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/gilory/Gilroy-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/gilory/Gilroy-Heavy.ttf
+          weight: 900
+
+    - family: Raqi
+      fonts:
+        #        - asset: assets/fonts/raqi/Raqi-ExtraLight.ttf
+        #          weight: 200
+        - asset: assets/fonts/raqi/Raqi-Book.ttf
+          weight: 300
+        - asset: assets/fonts/raqi/Raqi-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/raqi/Raqi-Bold.ttf
+          weight: 500
+        - asset: assets/fonts/raqi/Raqi-ExtraBold.ttf
+          weight: 600
   # fonts:
   #   - family: Schyler
   #     fonts:
