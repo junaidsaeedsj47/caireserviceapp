@@ -1,5 +1,6 @@
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/device/device.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/dashboardscreen_viewmodel/dashboard_viewmodel.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,15 +18,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-  ];
-
   @override
   Widget build(BuildContext context) {
     DashboardViewModel dashboardScreenViewModel = DashboardViewModel();
@@ -52,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      getCarouselSlider(context),
+                      getCarouselSlider(context, model),
                       Container(
                         padding: EdgeInsetsDirectional.only(start: 10, end: 10),
                         child: Column(
@@ -70,11 +62,32 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(
                               height: 20,
                             ),
-                            getCategoriesList(context,model),
+                            getCategoriesList(context, model),
                             const SizedBox(
                               height: 20,
                             ),
-                            getSubTitleCategories(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 10, end: 10, top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                            AppColors.instance.themeColor,
+                            AppColors.instance.splashColorThree,
+                          ],
+                        )),
+                        child: Column(
+                          children: [
+                            getSubTitleServices(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            serviceProviderCard(context, model),
                           ],
                         ),
                       ),
@@ -153,7 +166,10 @@ class _HomeScreenState extends State<HomeScreen> {
           borderSide: const BorderSide(color: Colors.grey, width: 0.0),
           borderRadius: BorderRadius.circular(10),
         ),
-        prefixIcon: Icon(Icons.search,color:AppColors.instance.appIconColor,),
+        prefixIcon: Icon(
+          Icons.search,
+          color: AppColors.instance.appIconColor,
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.grey, width: 0.0),
           borderRadius: BorderRadius.circular(10),
@@ -164,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget getCarouselSlider(BuildContext context) {
+  Widget getCarouselSlider(BuildContext context, DashboardViewModel model) {
     return CarouselSlider(
       options: CarouselOptions(
         disableCenter: true,
@@ -180,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
       ),
-      items: imgList.map((images) {
+      items: model.imgList.map((images) {
         return Builder(
           builder: (BuildContext context) {
             return GestureDetector(
@@ -216,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget getCategoriesList(BuildContext context,DashboardViewModel model) {
+  Widget getCategoriesList(BuildContext context, DashboardViewModel model) {
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -231,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      borderRadius:const BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       color: AppColors.instance.backGroundColor),
@@ -259,6 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   Widget getSubTitleServices() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -277,5 +294,76 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  Widget serviceProviderCard(BuildContext context, DashboardViewModel model) {
+    return Container(
+      height: 200,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: model.servicesData.length,
+          itemBuilder: (context, int index) {
+            return Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              padding: EdgeInsetsDirectional.only(end: 20),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: 150,
+                        child: Image.network(
+                          model.servicesData[index].serviceImage.toString(),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Positioned.fill(
+                          child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    end: 15, bottom: 15),
+                                child: getPriceTag(model, index),
+                              ))),
+                    ],
+                  ),
+                  RatingBar.builder(
+                    ignoreGestures: false,
+                    itemSize: 20,
+                    initialRating: model.servicesData[index].serviceProviderRating!,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    unratedColor: Colors.white,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) =>
+                        Image.asset("assets/images/goldenStar.png"),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
+  Widget getPriceTag(DashboardViewModel model, int index) {
+    return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.instance.white,width: 2),
+            color: AppColors.instance.themeColor,
+            borderRadius: BorderRadius.circular(18)),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(start: 12,end: 12,top: 5,bottom: 5),
+          child: Text(
+            AppUtils.getAppCurrency() + model.servicesData[index].servicePricing.toString(),
+            style: TextStyleUtil.textStyleRaqiBook(context,
+                color: AppColors.instance.textWhiteColor),
+          ),
+        ));
   }
 }

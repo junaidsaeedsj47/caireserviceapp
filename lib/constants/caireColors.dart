@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppColors with ChangeNotifier {
-  Color? themeColor;
+  Color themeColor = CaireColor.fromRGB(210, 153, 64);
 
   Color splashColorOne = Color(0xffd29940);
 
@@ -21,9 +21,13 @@ class AppColors with ChangeNotifier {
   Color appTextColor = Color(0xff373733);
 
   Color appIconColor = Color(0xff373733);
-  AppColors._() {
-    themeColor = CaireColor.fromRGB(210, 153, 64);
-  }
+
+  Color textWhiteColor= Color(0xffF0F0FA);
+
+  Color white= Colors.white;
+
+  Color black= Colors.black;
+  AppColors._() {}
 
   static AppColors instance = AppColors._();
 
