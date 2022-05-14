@@ -1,7 +1,9 @@
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/device/device.dart';
+import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/dashboardscreen_viewmodel/dashboard_viewmodel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -36,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (contextBuilder, model, child) {
               return Scaffold(
                 appBar: AppBar(
-                  title: Text("Caire",style:TextStyleUtil.textStyleRaqiBook(context),),
+                  title: Text(
+                    "Caire",
+                    style: TextStyleUtil.textStyleRaqiBook(context),
+                  ),
                   automaticallyImplyLeading: false,
                   systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarColor: AppColors.instance.themeColor, // Status bar
@@ -54,24 +59,85 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             getSearField(context),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             getSubTitleCategories(),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            getCategoriesList(context),
+                            getCategoriesList(context,model),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            getSubTitleCategories(),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
+                bottomNavigationBar: BottomNavigationBar(
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    items: <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        activeIcon: Icon(
+                          Icons.home,
+                          color: AppColors.instance.themeColor,
+                        ),
+                        icon: Icon(
+                          Icons.home,
+                          color: AppColors.instance.appIconColor,
+                        ),
+                        label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                          activeIcon: Icon(
+                            Icons.chat,
+                            color: AppColors.instance.themeColor,
+                          ),
+                          icon: Icon(
+                            Icons.chat,
+                            color: AppColors.instance.appIconColor,
+                          ),
+                          label: 'Chat',
+                          backgroundColor: Colors.yellow),
+                      BottomNavigationBarItem(
+                        activeIcon: Icon(
+                          Icons.notifications,
+                          color: AppColors.instance.themeColor,
+                        ),
+                        icon: Icon(
+                          Icons.notifications,
+                          color: AppColors.instance.appIconColor,
+                        ),
+                        label: 'Notification',
+                        backgroundColor: Colors.blue,
+                      ),
+                      BottomNavigationBarItem(
+                        activeIcon: Icon(
+                          Icons.person,
+                          color: AppColors.instance.themeColor,
+                        ),
+                        icon: Icon(
+                          Icons.person,
+                          color: AppColors.instance.appIconColor,
+                        ),
+                        label: 'Profile',
+                        backgroundColor: Colors.blue,
+                      ),
+                    ],
+                    type: BottomNavigationBarType.fixed,
+                    currentIndex: model.selectedIndex,
+                    selectedItemColor: AppColors.instance.appIconColor,
+                    iconSize: 25,
+                    onTap: model.onItemTapped,
+                    elevation: 5),
               );
             }));
   }
@@ -79,20 +145,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getSearField(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          prefixIconColor: AppColors.instance.themeColor,
-          iconColor: AppColors.instance.themeColor,
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey, width: 0.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          prefixIcon: Icon(Icons.search),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey, width: 0.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          hintText: "Search services",hintStyle: TextStyleUtil.textStyleRaqiBook(context),),
+        filled: true,
+        fillColor: Colors.white,
+        prefixIconColor: AppColors.instance.themeColor,
+        iconColor: AppColors.instance.themeColor,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        prefixIcon: Icon(Icons.search,color:AppColors.instance.appIconColor,),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        hintText: "Search services",
+        hintStyle: TextStyleUtil.textStyleRaqiBook(context),
+      ),
     );
   }
 
@@ -132,20 +200,27 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("Services",style: TextStyleUtil.textStyleRaqiBook(context),),
+        Text(
+          "Categories",
+          style: TextStyleUtil.textStyleRaqiBook(context,
+              fontWeight: AppFontWeight.bold),
+        ),
         GestureDetector(
           onTap: () {},
-          child: Text("See All",style: TextStyleUtil.textStyleRaqiBook(context),),
+          child: Text(
+            "View All",
+            style: TextStyleUtil.textStyleRaqiBook(context),
+          ),
         ),
       ],
     );
   }
 
-  Widget getCategoriesList(BuildContext context) {
+  Widget getCategoriesList(BuildContext context,DashboardViewModel model) {
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 6,
+      itemCount: model.lisOfCategories.length,
       itemBuilder: (context, index) => Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -156,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius:const BorderRadius.only(
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       color: AppColors.instance.backGroundColor),
@@ -168,7 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 5,
             ),
-            Text('Service Name',style: TextStyleUtil.textStyleRaqiBook(context),),
+            Text(model.lisOfCategories[index],
+                style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
             SizedBox(
               height: 5,
             ),
@@ -181,6 +257,25 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisSpacing: 15,
         // childAspectRatio:,
       ),
+    );
+  }
+  Widget getSubTitleServices() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          "Services",
+          style: TextStyleUtil.textStyleRaqiBook(context,
+              fontWeight: AppFontWeight.bold),
+        ),
+        GestureDetector(
+          onTap: () {},
+          child: Text(
+            "View All",
+            style: TextStyleUtil.textStyleRaqiBook(context),
+          ),
+        ),
+      ],
     );
   }
 }

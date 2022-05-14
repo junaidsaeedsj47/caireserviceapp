@@ -5,12 +5,12 @@ import 'extensionForFontWeight.dart';
 
 class TextStyleUtil {
 
-  static TextStyle textStyleRaqiBook(BuildContext context, {double fontSize = 16, Color? color}) {
+  static TextStyle textStyleRaqiBook(BuildContext context, {double fontSize = 16, Color? color,FontWeight? fontWeight}) {
     return _textStyle(
       context,
       fontSize: fontSize,
       color: color??AppColors.instance.appTextColor,
-      fontWeight: AppFontWeight.regular,
+      fontWeight: fontWeight ?? AppFontWeight.regular,
     );
   }
 

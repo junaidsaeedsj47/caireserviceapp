@@ -20,6 +20,7 @@ class AppColors with ChangeNotifier {
 
   Color appTextColor = Color(0xff373733);
 
+  Color appIconColor = Color(0xff373733);
   AppColors._() {
     themeColor = CaireColor.fromRGB(210, 153, 64);
   }
