@@ -1,5 +1,7 @@
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/device/device.dart';
+import 'package:caireapp/screens/categories/viewmall_categories_screen.dart';
+import 'package:caireapp/screens/services/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -30,9 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (contextBuilder, model, child) {
               return Scaffold(
                 appBar: AppBar(
+                  centerTitle: true,
                   title: Text(
                     "Caire",
-                    style: TextStyleUtil.textStyleRaqiBook(context),
+                    style:
+                        TextStyleUtil.textStyleRaqiBook(context, fontSize: 24,color: AppColors.instance.textWhiteColor),
                   ),
                   automaticallyImplyLeading: false,
                   systemOverlayStyle: SystemUiOverlayStyle(
@@ -71,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Container(
                         padding: const EdgeInsetsDirectional.only(
-                            start: 10, end: 10, top: 10, bottom: 10),
+                            start: 10, end: 10, top: 20, bottom: 20),
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                           begin: Alignment.bottomLeft,
@@ -158,24 +163,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getSearField(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
+        contentPadding: EdgeInsetsDirectional.only(top: 12, bottom: 12),
         filled: true,
         fillColor: Colors.white,
-        prefixIconColor: AppColors.instance.themeColor,
-        iconColor: AppColors.instance.themeColor,
+        // prefixIconColor: AppColors.instance.themeColor,
+        // iconColor: AppColors.instance.themeColor,
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+          borderSide:
+              BorderSide(color: AppColors.instance.lightGreyText, width: 0.0),
           borderRadius: BorderRadius.circular(10),
         ),
         prefixIcon: Icon(
           Icons.search,
-          color: AppColors.instance.appIconColor,
+          color: AppColors.instance.lightGreyText,
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+          borderSide:
+              BorderSide(color: AppColors.instance.lightGreyText, width: 0.0),
           borderRadius: BorderRadius.circular(10),
         ),
         hintText: "Search services",
-        hintStyle: TextStyleUtil.textStyleRaqiBook(context),
+        hintStyle: TextStyleUtil.textStyleRaqiBook(
+          context,
+          color: AppColors.instance.lightGreyText,
+        ),
       ),
     );
   }
@@ -219,13 +230,17 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           "Categories",
           style: TextStyleUtil.textStyleRaqiBook(context,
-              fontWeight: AppFontWeight.bold),
+              fontWeight: AppFontWeight.bold, fontSize: 20),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            AppUtils.navigationRoute(
+                context: context, route: ViewAllCategoriesScreen());
+          },
           child: Text(
             "View All",
-            style: TextStyleUtil.textStyleRaqiBook(context),
+            style: TextStyleUtil.textStyleRaqiBook(context,
+                color: AppColors.instance.lightGreyText),
           ),
         ),
       ],
@@ -241,30 +256,36 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey)),
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12)),
-                      color: AppColors.instance.backGroundColor),
-                  child: const Icon(
-                    Icons.home_repair_service,
-                    color: Colors.black,
-                  )),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(model.lisOfCategories[index],
-                style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
-            SizedBox(
-              height: 5,
-            ),
-          ],
+        child: GestureDetector(
+          onTap: (){
+            AppUtils.navigationRoute(
+                context: context, route: ViewAllServicesScreen(title: model.lisOfCategories[index],));
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12)),
+                        color: AppColors.instance.backGroundColor),
+                    child: const Icon(
+                      Icons.home_repair_service,
+                      color: Colors.black,
+                    )),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(model.lisOfCategories[index],
+                  style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
         ),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -283,13 +304,17 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           "Services",
           style: TextStyleUtil.textStyleRaqiBook(context,
-              fontWeight: AppFontWeight.bold),
+              fontWeight: AppFontWeight.bold, fontSize: 20),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            AppUtils.navigationRoute(
+                context: context, route: ViewAllServicesScreen());
+          },
           child: Text(
             "View All",
-            style: TextStyleUtil.textStyleRaqiBook(context),
+            style: TextStyleUtil.textStyleRaqiBook(context,
+                color: AppColors.instance.lightGreyText),
           ),
         ),
       ],
@@ -298,20 +323,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget serviceProviderCard(BuildContext context, DashboardViewModel model) {
     return Container(
-      height: 200,
+      height: 300,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: model.servicesData.length,
           itemBuilder: (context, int index) {
             return Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
-              padding: EdgeInsetsDirectional.only(end: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: AppColors.instance.backGroundColor),
+              margin: EdgeInsetsDirectional.only(end: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Stack(
                     children: [
                       Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         height: 150,
                         child: Image.network(
                           model.servicesData[index].serviceImage.toString(),
@@ -328,22 +359,75 @@ class _HomeScreenState extends State<HomeScreen> {
                               ))),
                     ],
                   ),
-                  RatingBar.builder(
-                    ignoreGestures: false,
-                    itemSize: 20,
-                    initialRating: model.servicesData[index].serviceProviderRating!,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    unratedColor: Colors.white,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) =>
-                        Image.asset("assets/images/goldenStar.png"),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+                  SizedBox(
+                    height: 20,
                   ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        getRatingStars(model, index,
+                            model.servicesData[index].serviceProviderRating!),
+                        // RatingBar.builder(
+                        //   ignoreGestures: false,
+                        //   itemSize: 15,
+                        //   initialRating:
+                        //       model.servicesData[index].serviceProviderRating!,
+                        //   minRating: 1,
+                        //   direction: Axis.horizontal,
+                        //   allowHalfRating: false,
+                        //   itemCount: 5,
+                        //   unratedColor: Colors.transparent,
+                        //   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        //   itemBuilder: (context, _) =>
+                        //       Image.asset("assets/images/goldenStar.png"),
+                        //   onRatingUpdate: (rating) {
+                        //     print(rating);
+                        //   },
+                        // ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          model.servicesData[index].serviceProviderRating
+                              .toString(),
+                          style: TextStyleUtil.textStyleRaqiBook(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 20),
+                    child: Text(
+                      model.servicesData[index].serviceName!,
+                      style: TextStyleUtil.textStyleRaqiBook(context,
+                          fontWeight: AppFontWeight.bold, fontSize: 18),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(start: 20),
+                    child: Row(
+                      children: [
+                        Icon(Icons.account_circle),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          model.servicesData[index].serviceProviderName!,
+                          style: TextStyleUtil.textStyleRaqiBook(context,
+                              color: AppColors.instance.lightGreyText),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             );
@@ -351,16 +435,56 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget getRatingStars(DashboardViewModel model, int index, double ratingNo) {
+    List starToShow = [];
+    if (ratingNo == 1 || ratingNo < 2) {
+      starToShow = [1];
+      debugPrint('starToShow' + starToShow.toString());
+    } else if (ratingNo == 2 || ratingNo < 3) {
+      starToShow = [1, 2];
+      debugPrint('starToShow' + starToShow.toString());
+    } else if (ratingNo == 3 || ratingNo < 4) {
+      starToShow = [1, 2, 3];
+      debugPrint('starToShow' + starToShow.toString());
+    } else if (ratingNo == 4 || ratingNo < 5) {
+      starToShow = [1, 2, 3, 4];
+      debugPrint('starToShow' + starToShow.toString());
+    } else {
+      starToShow = [1, 2, 3, 4, 5];
+      debugPrint('starToShow' + starToShow.toString());
+    }
+    return Row(
+      children: starToShow
+          .map((e) => Padding(
+                padding: const EdgeInsetsDirectional.only(end: 5),
+                child: Image.asset(
+                  "assets/images/goldenStar.png",
+                  fit: BoxFit.cover,
+                  width: 20,
+                ),
+              ))
+          .toList(),
+    );
+
+    // return ListView.builder(
+    //     itemCount: 3,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return Image.asset("assets/images/goldenStar.png}");
+    //     });
+  }
+
   Widget getPriceTag(DashboardViewModel model, int index) {
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.instance.white,width: 2),
+            border: Border.all(color: AppColors.instance.white, width: 2),
             color: AppColors.instance.themeColor,
             borderRadius: BorderRadius.circular(18)),
         child: Padding(
-          padding: const EdgeInsetsDirectional.only(start: 12,end: 12,top: 5,bottom: 5),
+          padding: const EdgeInsetsDirectional.only(
+              start: 12, end: 12, top: 5, bottom: 5),
           child: Text(
-            AppUtils.getAppCurrency() + model.servicesData[index].servicePricing.toString(),
+            AppUtils.getAppCurrency() +
+                model.servicesData[index].servicePricing.toString(),
             style: TextStyleUtil.textStyleRaqiBook(context,
                 color: AppColors.instance.textWhiteColor),
           ),

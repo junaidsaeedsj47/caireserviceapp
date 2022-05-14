@@ -1,4 +1,5 @@
 import 'package:caireapp/screens/splashScreen/splashscreen.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/userDefaults.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,15 +29,15 @@ class CaireApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AppColors>(
-          create: (context) {
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<AppColors>(
+                create: (context) {
             return AppColors.instance;
-          },
-        ),
-      ],
-      child: SplashScreen(),
+                },
+              ),
+            ],
+            child: SplashScreen(),
     );
   }
 }
