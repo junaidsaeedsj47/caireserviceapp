@@ -266,7 +266,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          MaterialPageRoute(builder: (context) => DashboardScreen()),
                         );
                       }),
                 ),

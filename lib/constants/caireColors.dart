@@ -18,13 +18,13 @@ class AppColors with ChangeNotifier {
 
   Color gridBoxColor3 = CaireColor.fromRGB(193, 163, 148);
 
-  Color backGroundColor = Color(0xffF0F0FA);
+  Color backGroundColor = Color(0xfff0f0fa);
 
   Color appTextColor = Color(0xff373733);
 
   Color appIconColor = Color(0xff373733);
 
-  Color textWhiteColor = Color(0xffF0F0FA);
+  Color textWhiteColor = Color(0xfff0f0fa);
 
   Color white = Colors.white;
 

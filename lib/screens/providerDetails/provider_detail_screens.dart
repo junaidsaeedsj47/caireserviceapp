@@ -1,10 +1,14 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
+import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
 import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
+import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
+import 'package:caireapp/viewmodel/providerDetails/provider_details_viewmodel.dart';
 import 'package:caireapp/viewmodel/services/viewall_services_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,26 +16,26 @@ import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stacked/stacked.dart';
 
-class ViewAllServicesScreen extends StatefulWidget {
+class ProviderDetailsScreen extends StatefulWidget {
   final String? title;
   final ServiceModel? servicesData;
-  ViewAllServicesScreen({Key? key,this.title,this.servicesData});
+  ProviderDetailsScreen({Key? key, this.title,this.servicesData});
 
   @override
-  _ViewAllServicesScreenState createState() => _ViewAllServicesScreenState();
+  _ProviderDetailsScreenState createState() => _ProviderDetailsScreenState();
 }
 
-class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
+class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    ViewAllServicesViewModel viewAllServicesViewModel =
-        ViewAllServicesViewModel();
+    ProviderDetailsViewModel providerDetailsViewModel =
+        ProviderDetailsViewModel();
     return SafeArea(
-        child: ViewModelBuilder<ViewAllServicesViewModel>.reactive(
+        child: ViewModelBuilder<ProviderDetailsViewModel>.reactive(
             onModelReady: (model) {
               model.initialize(context);
             },
-            viewModelBuilder: () => viewAllServicesViewModel,
+            viewModelBuilder: () => providerDetailsViewModel,
             builder: (contextBuilder, model, child) {
               return Scaffold(
                 appBar: AppBar(
@@ -41,9 +45,9 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                   ),
                   centerTitle: true,
                   title: Text(
-                    widget.title??"",
-                    style:
-                    TextStyleUtil.textStyleRaqiBook(context, fontSize: 24,color: AppColors.instance.textWhiteColor),
+                    "Provider Detail",
+                    style: TextStyleUtil.textStyleRaqiBook(context,
+                        fontSize: 24, color: AppColors.instance.textWhiteColor),
                   ),
                   systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarColor: AppColors.instance.themeColor, // Status bar
@@ -51,20 +55,34 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                 ),
                 body: SingleChildScrollView(
                   child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
+                      userProfileNameTitle(context, model),
+                      Container(
                         padding: const EdgeInsetsDirectional.only(
-                            start: 10, end: 10, top: 20),
-                        child: getSearchFieldFilter(context),
+                            start: 10, end: 10, top: 20, bottom: 20),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 30,
+                            ),
+                            getAboutSummary(context, model),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            getContactDetails(context, model),
+
+                          ],
+
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsetsDirectional.only(
                             start: 10, end: 10, top: 20, bottom: 20),
                         child: Column(
                           children: [
-                            getSubTitleServices(),
+                            getSubTitleServices(model),
                             const SizedBox(
                               height: 20,
                             ),
@@ -136,155 +154,196 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
             }));
   }
 
-  Widget getSearchFieldFilter(BuildContext context) {
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget userProfileNameTitle(
+      BuildContext context, ProviderDetailsViewModel model) {
+    return Container(
+      padding: const EdgeInsetsDirectional.only(
+          start: 10, end: 10, top: 20, bottom: 20),
+      color: AppColors.instance.textWhiteColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRect(
+            child: Icon(
+              Icons.account_circle,
+              size: 80,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                model.providerDetails.first.providerName ?? "",
+                style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 20),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                model.providerDetails.first.providerJobTitle ?? "",
+                style: TextStyleUtil.textStyleRaqiBook(context,
+                    fontSize: 14,
+                    color: AppColors.instance.lightGreyText,
+                    fontWeight: AppFontWeight.medium),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              getRatingStars(
+                  context, model, model.providerDetails.first.providerRating),
+            ],
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              padding: EdgeInsetsDirectional.all(2.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  20,
+                ),
+                color: Colors.green,
+              ),
+              child: Icon(
+                Icons.check,
+                color: AppColors.instance.white,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget getAboutSummary(BuildContext context, ProviderDetailsViewModel model) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsetsDirectional.only(top: 12, bottom: 12),
-              filled: true,
-              fillColor: Colors.white,
-              // prefixIconColor: AppColors.instance.themeColor,
-              // iconColor: AppColors.instance.themeColor,
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: AppColors.instance.lightGreyText, width: 0.0),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              prefixIcon: Icon(
-                Icons.search,
-                color: AppColors.instance.lightGreyText,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: AppColors.instance.lightGreyText, width: 0.0),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              hintText: "Search here...",
-              hintStyle: TextStyleUtil.textStyleRaqiBook(
+        Text("About"),
+        SizedBox(
+          height: 20,
+        ),
+        AutoSizeText(model.providerDetails.first.userSummaryDetails ?? "",
+            style: TextStyleUtil.textStyleRaqiBook(
+              context,
+              fontSize: 14,
+              color: AppColors.instance.lightGreyText,
+              fontWeight: AppFontWeight.medium,
+            )),
+      ],
+    );
+  }
+
+  Widget getContactDetails(
+      BuildContext context, ProviderDetailsViewModel model) {
+    return Container(
+      padding: const EdgeInsetsDirectional.only(
+          start: 20, end: 20, top: 30, bottom: 30),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: AppColors.instance.textWhiteColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text("Email"),
+          SizedBox(
+            height: 5,
+          ),
+          Text(model.providerDetails.first.providerEmail ?? "",
+              style: TextStyleUtil.textStyleRaqiBook(
                 context,
+                fontSize: 14,
                 color: AppColors.instance.lightGreyText,
-              ),
-            ),
+                fontWeight: AppFontWeight.medium,
+              )),
+          SizedBox(
+            height: 20,
           ),
-        ),
-        // SizedBox(width: 10,),
-        // Container(
-        //     decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(10),
-        //         color: AppColors.instance.themeColor),
-        //     padding: EdgeInsetsDirectional.all(4.0),
-        //     child: IconButton(
-        //         onPressed: () {}, icon: Icon(Icons.filter_alt_outlined,color: AppColors.instance.textWhiteColor,)))
-      ],
-    );
-  }
-
-  Widget getCarouselSlider(
-      BuildContext context, ViewAllServicesViewModel model) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        disableCenter: true,
-        // aspectRatio: 16 / 9,
-        viewportFraction: 1,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        reverse: false,
-        autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        autoPlayCurve: Curves.fastOutSlowIn,
-        // enlargeCenterPage: true,
-        scrollDirection: Axis.horizontal,
+          Text("Number"),
+          SizedBox(
+            height: 5,
+          ),
+          Text(model.providerDetails.first.providerPhoneNumber ?? "",
+              style: TextStyleUtil.textStyleRaqiBook(
+                context,
+                fontSize: 14,
+                color: AppColors.instance.lightGreyText,
+                fontWeight: AppFontWeight.medium,
+              )),
+          SizedBox(
+            height: 20,
+          ),
+          Text("Member Since"),
+          SizedBox(
+            height: 5,
+          ),
+          Text(model.providerDetails.first.providerMemberSince ?? "",
+              style: TextStyleUtil.textStyleRaqiBook(
+                context,
+                fontSize: 14,
+                color: AppColors.instance.lightGreyText,
+                fontWeight: AppFontWeight.medium,
+              )),
+        ],
       ),
-      items: model.imgList.map((images) {
-        return Builder(
-          builder: (BuildContext context) {
-            return GestureDetector(
-              onTap: () {},
-              child: Image.network(
-                images,
-                fit: BoxFit.fill,
-              ),
-            );
-          },
-        );
-      }).toList(),
     );
   }
 
-  Widget getSubTitleCategories() {
+  Widget getRatingStars(
+      BuildContext context, ProviderDetailsViewModel model, double? ratingNo) {
+    List starToShow = [];
+    if (ratingNo == 1 || ratingNo! < 2) {
+      starToShow = [1];
+      debugPrint('starToShow' + starToShow.toString());
+    } else if (ratingNo == 2 || ratingNo! < 3) {
+      starToShow = [1, 2];
+      debugPrint('starToShow' + starToShow.toString());
+    } else if (ratingNo == 3 || ratingNo! < 4) {
+      starToShow = [1, 2, 3];
+      debugPrint('starToShow' + starToShow.toString());
+    } else if (ratingNo == 4 || ratingNo! < 5) {
+      starToShow = [1, 2, 3, 4];
+      debugPrint('starToShow' + starToShow.toString());
+    } else {
+      starToShow = [1, 2, 3, 4, 5];
+      debugPrint('starToShow' + starToShow.toString());
+    }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Categories",
-          style: TextStyleUtil.textStyleRaqiBook(context,
-              fontWeight: AppFontWeight.bold, fontSize: 20),
+        Row(
+          children: starToShow
+              .map((e) => Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 5),
+                    child: Image.asset(
+                      "assets/images/goldenStar.png",
+                      fit: BoxFit.cover,
+                      width: 20,
+                    ),
+                  ))
+              .toList(),
         ),
-        GestureDetector(
-          onTap: () {
-            AppUtils.navigationRoute(
-                context: context, route: ViewAllCategoriesScreen());
-          },
-          child: Text(
-            "View All",
-            style: TextStyleUtil.textStyleRaqiBook(context,
-                color: AppColors.instance.lightGreyText),
-          ),
+        Text(
+          ratingNo.toString() ?? "",
+          style: TextStyleUtil.textStyleRaqiBook(context,
+              fontSize: 14,
+              color: AppColors.instance.lightGreyText,
+              fontWeight: AppFontWeight.medium),
         ),
       ],
     );
-  }
 
-  Widget getCategoriesList(
-      BuildContext context, ViewAllServicesViewModel model) {
-    return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: model.lisOfCategories.length,
-      itemBuilder: (context, index) => Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey)),
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12)),
-                      color: AppColors.instance.backGroundColor),
-                  child: const Icon(
-                    Icons.home_repair_service,
-                    color: Colors.black,
-                  )),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(model.lisOfCategories[index],
-                style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
-            SizedBox(
-              height: 5,
-            ),
-          ],
-        ),
-      ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 15,
-        crossAxisSpacing: 15,
-        // childAspectRatio:,
-      ),
-    );
+    // return ListView.builder(
+    //     itemCount: 3,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return Image.asset("assets/images/goldenStar.png}");
+    //     });
   }
-
-  Widget getSubTitleServices() {
+  Widget getSubTitleServices(ProviderDetailsViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -294,7 +353,13 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
               fontWeight: AppFontWeight.bold, fontSize: 20),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            AppUtils.navigationRoute(
+                context: context,
+                route: ViewAllServicesScreen(
+                  servicesData:  widget.servicesData,
+                ));
+          },
           child: Text(
             "View All",
             style: TextStyleUtil.textStyleRaqiBook(context,
@@ -306,7 +371,7 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
   }
 
   Widget serviceProviderCard(
-      BuildContext context, ViewAllServicesViewModel model) {
+      BuildContext context, ProviderDetailsViewModel model) {
     return Container(
       // height: 300,
       child: ListView.builder(
@@ -361,7 +426,7 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           // mainAxisAlignment: MainAxisAlignment.,
                           children: [
-                            getRatingStars(model, index,
+                            getRatingStars(context, model,
                                 model.servicesData[index].serviceProviderRating!),
                             // RatingBar.builder(
                             //   ignoreGestures: false,
@@ -432,47 +497,7 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
           }),
     );
   }
-
-  Widget getRatingStars(
-      ViewAllServicesViewModel model, int index, double ratingNo) {
-    List starToShow = [];
-    if (ratingNo == 1 || ratingNo < 2) {
-      starToShow = [1];
-      debugPrint('starToShow' + starToShow.toString());
-    } else if (ratingNo == 2 || ratingNo < 3) {
-      starToShow = [1, 2];
-      debugPrint('starToShow' + starToShow.toString());
-    } else if (ratingNo == 3 || ratingNo < 4) {
-      starToShow = [1, 2, 3];
-      debugPrint('starToShow' + starToShow.toString());
-    } else if (ratingNo == 4 || ratingNo < 5) {
-      starToShow = [1, 2, 3, 4];
-      debugPrint('starToShow' + starToShow.toString());
-    } else {
-      starToShow = [1, 2, 3, 4, 5];
-      debugPrint('starToShow' + starToShow.toString());
-    }
-    return Row(
-      children: starToShow
-          .map((e) => Padding(
-                padding: const EdgeInsetsDirectional.only(end: 5),
-                child: Image.asset(
-                  "assets/images/goldenStar.png",
-                  fit: BoxFit.cover,
-                  width: 20,
-                ),
-              ))
-          .toList(),
-    );
-
-    // return ListView.builder(
-    //     itemCount: 3,
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return Image.asset("assets/images/goldenStar.png}");
-    //     });
-  }
-
-  Widget getPriceTag(ViewAllServicesViewModel model, int index) {
+  Widget getPriceTag(ProviderDetailsViewModel model, int index) {
     return Container(
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.instance.white, width: 2),
