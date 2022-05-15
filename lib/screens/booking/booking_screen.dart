@@ -6,6 +6,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../constants/caireColors.dart';
 import '../../viewmodel/booking/booking_screen_viewmodel.dart';
+import '../handyman/handyman_list_screen.dart';
 import '../service/service_screen.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -242,7 +243,8 @@ class _BookingScreenState extends State<BookingScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const ServiceScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const ServiceScreen()),
                         );
                       }),
                 ),
@@ -266,7 +268,8 @@ class _BookingScreenState extends State<BookingScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const HandymanListScreen()),
                         );
                       }),
                 ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 // ignore: must_be_immutable
-class AmericanTaxiTextField extends StatelessWidget {
+class CarieTextField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final bool obscureText;
@@ -12,8 +12,8 @@ class AmericanTaxiTextField extends StatelessWidget {
   // ValueChanged<String> onChanged;
   final TextEditingController controller;
 
-  const AmericanTaxiTextField({
-    required Key key,
+  const CarieTextField({
+
     required this.labelText,
     required this.controller,
     this.obscureText = false,
@@ -23,7 +23,7 @@ class AmericanTaxiTextField extends StatelessWidget {
     ),
     this.hintText = "", this.prefixIcon,
     // this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
