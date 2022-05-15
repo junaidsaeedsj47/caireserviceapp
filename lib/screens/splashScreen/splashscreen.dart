@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         animatedTexts: [
                           WavyAnimatedText(
                             'Caire',
-                            textStyle: TextStyleUtil.textStyleRaqiBook(context),
+                            textStyle: TextStyleUtil.textStyleRaqiBook(context,fontSize: 24,),
                           ),
                         ],
                         isRepeatingAnimation: false,

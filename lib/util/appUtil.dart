@@ -1,8 +1,22 @@
 import 'package:caireapp/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class AppUtils {
   AppUtils._();
+
+  static bool isIOS() {
+    return UniversalPlatform.isIOS;
+  }
+
+  static bool isAndroid() {
+    return UniversalPlatform.isAndroid;
+  }
+
+  static bool isWeb() {
+//    return Platform.isIOS;
+    return UniversalPlatform.isWeb;
+  }
 
   static void navigationRoute(
       {@required BuildContext? context,
