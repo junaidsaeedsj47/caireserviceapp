@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/model/service_data_model.dart';
+import 'package:caireapp/screens/providerDetails/provider_detail_screens.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
@@ -98,6 +99,26 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                         SizedBox(
                           height: 30,
                         ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: CupertinoButton(
+                            // color: AppColors.instance.themeColor,
+                            onPressed: () {
+                              AppUtils.navigationRoute(context: context,
+                                  route: ProviderDetailsScreen(servicesData: widget.servicesData,));
+                            },
+                            padding: EdgeInsetsDirectional.only(
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            child: Text(
+                              "View Profile",
+                              style: TextStyleUtil.textStyleRaqiBook(context,
+                                  color: AppColors.instance.themeColor,
+                                  fontSize: 20),
+                            ),
+                          ),
+                        ),
                         Text(
                           "Description",
                           style: TextStyleUtil.textStyleRaqiBook(context),
@@ -191,8 +212,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         });
   }
 
-  Widget serviceDetailsCard(
-      BuildContext context, ServiceDetailsViewModel model) {
+  Widget serviceDetailsCard(BuildContext context,
+      ServiceDetailsViewModel model) {
     return Container(
       decoration: BoxDecoration(
           boxShadow: [
@@ -206,13 +227,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           color: AppColors.instance.white,
           borderRadius: BorderRadius.circular(20)),
       padding:
-          EdgeInsetsDirectional.only(top: 20, bottom: 20, start: 20, end: 20),
+      EdgeInsetsDirectional.only(top: 20, bottom: 20, start: 20, end: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             widget.servicesData!.serviceName ?? "",
-            style: TextStyleUtil.textStyleRaqiBook(context),
+            style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 20),
           ),
           SizedBox(
             height: 20,
@@ -325,8 +346,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     );
   }
 
-  Widget getContinueButton(
-      BuildContext context, ServiceDetailsViewModel model) {
+  Widget getContinueButton(BuildContext context,
+      ServiceDetailsViewModel model) {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {},
@@ -335,7 +356,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
       child: Text(
         "Continue",
         style: TextStyleUtil.textStyleRaqiBook(context,
-            color: AppColors.instance.white,fontSize: 18),
+            color: AppColors.instance.white, fontSize: 18),
       ),
     );
   }
