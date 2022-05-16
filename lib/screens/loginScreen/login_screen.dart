@@ -144,16 +144,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: TextStyleUtil.textStyleRaqiBook(context),
                           ),
                           onPressed: () {
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BookingScreen()),
+                                  builder: (context) => const SignUpScreen()),
                             );
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const SignUpScreen()),
-                            // );
                           },
                         ),
                       ),
@@ -161,7 +157,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: DynamicSize.height(0.018, context),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BookingScreen()),
+                          );
+                        },
                         child: Text(
                           'Forgot Password?',
                           style: TextStyleUtil.textStyleRaqiBook(context),

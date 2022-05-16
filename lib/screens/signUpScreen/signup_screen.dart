@@ -17,6 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String dropDownValue='yes';
   String ? _salutation = "Yes";
   final _salutations = ["Yes.", "No",];
+ double _currentSliderValue=4;
 
   SignUpScreenViewModel signUpScreenViewModel=SignUpScreenViewModel();
   @override
@@ -139,18 +140,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter radius',
-                    hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                    focusColor: Colors.transparent,
-                    contentPadding:
-                    const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 30),
+                  height: 54,
+                  width: double.infinity,
+                  child: CupertinoButton(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.green,
+                    child: Text(
+                      'Upload Picture',
+                      style: TextStyleUtil.textStyleRaqiBook(context,
+                      color: Colors.white),
                     ),
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => HomeScreen()),
+                      // );
+                    },
                   ),
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  'Pick radius',
+                  style: TextStyleUtil.textStyleRaqiBook(context,
+                      color: Colors.black),
+                ),
+                // TextFormField(
+                //   decoration: InputDecoration(
+                //     hintText: 'Enter radius',
+                //     hintStyle: TextStyleUtil.textStyleRaqiBook(context),
+                //     focusColor: Colors.transparent,
+                //     contentPadding:
+                //     const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(12),
+                //     ),
+                //   ),
+                // ),
+
+            Slider(
+              value: _currentSliderValue,
+              min: 0,
+              max: 100,
+              divisions: 5,
+              label: _currentSliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue = value;
+                });
+              },
+            ),
                 const SizedBox(
                   height: 15,
                 ),
