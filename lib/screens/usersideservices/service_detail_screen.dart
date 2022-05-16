@@ -99,25 +99,34 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                         SizedBox(
                           height: 30,
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: CupertinoButton(
-                            // color: AppColors.instance.themeColor,
-                            onPressed: () {
-                              AppUtils.navigationRoute(context: context,
-                                  route: ProviderDetailsScreen(servicesData: widget.servicesData,));
-                            },
-                            padding: EdgeInsetsDirectional.only(
-                              top: 10,
-                              bottom: 10,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.servicesData!.serviceProviderName ?? "",
+                              style: TextStyleUtil.textStyleRaqiBook(context),
                             ),
-                            child: Text(
-                              "View Profile",
-                              style: TextStyleUtil.textStyleRaqiBook(context,
-                                  color: AppColors.instance.themeColor,
-                                  fontSize: 20),
+                            CupertinoButton(
+                              // color: AppColors.instance.themeColor,
+                              onPressed: () {
+                                AppUtils.navigationRoute(
+                                    context: context,
+                                    route: ProviderDetailsScreen(
+                                      servicesData: widget.servicesData,
+                                    ));
+                              },
+                              padding: EdgeInsetsDirectional.only(
+                                top: 10,
+                                bottom: 10,
+                              ),
+                              child: Text(
+                                "View Profile",
+                                style: TextStyleUtil.textStyleRaqiBook(context,
+                                    color: AppColors.instance.themeColor,
+                                    fontSize: 20),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                         Text(
                           "Description",
@@ -212,8 +221,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         });
   }
 
-  Widget serviceDetailsCard(BuildContext context,
-      ServiceDetailsViewModel model) {
+  Widget serviceDetailsCard(
+      BuildContext context, ServiceDetailsViewModel model) {
     return Container(
       decoration: BoxDecoration(
           boxShadow: [
@@ -227,7 +236,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           color: AppColors.instance.white,
           borderRadius: BorderRadius.circular(20)),
       padding:
-      EdgeInsetsDirectional.only(top: 20, bottom: 20, start: 20, end: 20),
+          EdgeInsetsDirectional.only(top: 20, bottom: 20, start: 20, end: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -346,8 +355,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     );
   }
 
-  Widget getContinueButton(BuildContext context,
-      ServiceDetailsViewModel model) {
+  Widget getContinueButton(
+      BuildContext context, ServiceDetailsViewModel model) {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {},

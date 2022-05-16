@@ -19,7 +19,8 @@ import 'package:stacked/stacked.dart';
 class ProviderDetailsScreen extends StatefulWidget {
   final String? title;
   final ServiceModel? servicesData;
-  ProviderDetailsScreen({Key? key, this.title,this.servicesData});
+
+  ProviderDetailsScreen({Key? key, this.title, this.servicesData});
 
   @override
   _ProviderDetailsScreenState createState() => _ProviderDetailsScreenState();
@@ -72,9 +73,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                               height: 30,
                             ),
                             getContactDetails(context, model),
-
                           ],
-
                         ),
                       ),
                       Container(
@@ -164,10 +163,13 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRect(
-            child: Icon(
-              Icons.account_circle,
-              size: 80,
+          Container(
+            // decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+            // width: 50,
+            child: CircleAvatar(
+              radius: 50,
+              child: Image.network(
+                  'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg',),
             ),
           ),
           Column(
@@ -343,6 +345,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
     //       return Image.asset("assets/images/goldenStar.png}");
     //     });
   }
+
   Widget getSubTitleServices(ProviderDetailsViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -357,7 +360,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
             AppUtils.navigationRoute(
                 context: context,
                 route: ViewAllServicesScreen(
-                  servicesData:  widget.servicesData,
+                  servicesData: widget.servicesData,
                 ));
           },
           child: Text(
@@ -381,8 +384,12 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
           itemCount: model.servicesData.length,
           itemBuilder: (context, int index) {
             return GestureDetector(
-              onTap: (){
-                AppUtils.navigationRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+              onTap: () {
+                AppUtils.navigationRoute(
+                    context: context,
+                    route: ServiceDetailScreen(
+                      servicesData: model.servicesData[index],
+                    ));
               },
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(bottom: 20),
@@ -426,8 +433,11 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           // mainAxisAlignment: MainAxisAlignment.,
                           children: [
-                            getRatingStars(context, model,
-                                model.servicesData[index].serviceProviderRating!),
+                            getRatingStars(
+                                context,
+                                model,
+                                model.servicesData[index]
+                                    .serviceProviderRating!),
                             // RatingBar.builder(
                             //   ignoreGestures: false,
                             //   itemSize: 15,
@@ -497,6 +507,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
           }),
     );
   }
+
   Widget getPriceTag(ProviderDetailsViewModel model, int index) {
     return Container(
         decoration: BoxDecoration(

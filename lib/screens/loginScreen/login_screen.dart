@@ -49,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       //   height: DynamicSize.height(0.01, context),
                       // ),
                       Text(
-                        'Caire App',
-                        style: TextStyleUtil.textStyleRaqiBook(context),
+                        'Caire',
+                        style: TextStyleUtil.textStyleRaqiBook(context,fontSize: 24),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: AppColors.instance.themeColor,
                             child:  Text(
                               'Login',
-                              style: TextStyleUtil.textStyleRaqiBook(context),
+                              style: TextStyleUtil.textStyleRaqiBook(context,color:AppColors.instance.white),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: AppColors.instance.themeColor,
                           child:  Text(
                             'Register Now',
-                            style: TextStyleUtil.textStyleRaqiBook(context),
+                            style: TextStyleUtil.textStyleRaqiBook(context,color:AppColors.instance.white),
                           ),
                           onPressed: () {
 

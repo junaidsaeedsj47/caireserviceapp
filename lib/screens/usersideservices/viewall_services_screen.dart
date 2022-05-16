@@ -409,7 +409,11 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                         padding: EdgeInsetsDirectional.only(start: 20),
                         child: Row(
                           children: [
-                            Icon(Icons.account_circle),
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundImage: NetworkImage(
+                                  'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
+                            ),
                             SizedBox(
                               width: 5,
                             ),
