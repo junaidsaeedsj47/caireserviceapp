@@ -84,11 +84,25 @@ class AppUtils {
     }
     return false;
   }
-  static String getAppCurrency(){
-    String currency="";
-    if(Constants.appCurrency=="dollar"){
-      currency= "\$";
+
+  static String getAppCurrency() {
+    String currency = "";
+    if (Constants.appCurrency == "dollar") {
+      currency = "\$";
     }
     return currency;
+  }
+
+  static EdgeInsetsGeometry unifiedPaddingOfScreen({
+    double? start,
+    double? bottom,
+    double? end,
+    double? top,
+  }) {
+    return EdgeInsetsDirectional.only(
+        start: start ?? 10,
+        end: end ?? 10,
+        top: top ?? 20,
+        bottom: bottom ?? 20);
   }
 }

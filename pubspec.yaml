@@ -42,6 +42,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   auto_size_text: any
   universal_platform: any
+  google_maps_flutter: ^2.1.5
 
 dev_dependencies:
   flutter_test:

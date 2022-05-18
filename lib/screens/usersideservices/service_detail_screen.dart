@@ -3,10 +3,11 @@ import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/screens/providerDetails/provider_detail_screens.dart';
+import 'package:caireapp/screens/usersidebooking/user_side_booking_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
-import 'package:caireapp/viewmodel/services/service_detail_viewmodel.dart';
+import 'package:caireapp/viewmodel/usersideservices/service_detail_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -101,10 +102,25 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              widget.servicesData!.serviceProviderName ?? "",
-                              style: TextStyleUtil.textStyleRaqiBook(context),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                      'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  widget.servicesData!.serviceProviderName ??
+                                      "",
+                                  style:
+                                      TextStyleUtil.textStyleRaqiBook(context),
+                                ),
+                              ],
                             ),
                             CupertinoButton(
                               // color: AppColors.instance.themeColor,
@@ -359,7 +375,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
       BuildContext context, ServiceDetailsViewModel model) {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
-      onPressed: () {},
+      onPressed: () {
+        AppUtils.navigationRoute(
+            context: context, route: UserSideBookingScreen());
+      },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
       child: Text(

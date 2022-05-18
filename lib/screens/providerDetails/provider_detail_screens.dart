@@ -9,7 +9,7 @@ import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/providerDetails/provider_details_viewmodel.dart';
-import 'package:caireapp/viewmodel/services/viewall_services_viewmodel.dart';
+import 'package:caireapp/viewmodel/usersideservices/viewall_services_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
