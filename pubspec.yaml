@@ -43,6 +43,7 @@ dependencies:
   auto_size_text: any
   universal_platform: any
   google_maps_flutter: ^2.1.5
+#  syncfusion_flutter_charts: ^20.1.56
 
 dev_dependencies:
   flutter_test:

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../constants/caireColors.dart';
+import '../handyman/provider_dashboard.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -334,10 +335,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: AppColors.instance.white),
                           ),
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => HomeScreen()),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const ProviderDashboardScreen()),
+                            );
                           },
                         ),
                       ),
