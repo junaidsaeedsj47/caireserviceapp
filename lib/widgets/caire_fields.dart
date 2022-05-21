@@ -1,3 +1,5 @@
+import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/text.dart';
 import 'package:flutter/material.dart';
 
 
@@ -68,7 +70,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
   final Color focusedBorderColor;
   final Color fillColor;
   final EdgeInsetsGeometry contentPadding;
-
+  final TextInputType keyboardType;
   // ValueChanged<String> onChanged;
   final TextEditingController controller;
 
@@ -92,6 +94,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
     this.enableBorderColor = const Color(0xffE7E8EE),
     this.focusedBorderColor = const Color(0xffE7E8EE),   this.errorText, this.prefixIcon,
     // this.onChanged,
+    this.keyboardType=TextInputType.text,
   });
 
   @override
@@ -99,8 +102,10 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText,
       controller: controller,
+      keyboardType: keyboardType,
+      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,customDecoration: TextDecoration.none),
       decoration: InputDecoration(
-        labelStyle: const TextStyle(color: Color(0xffB4B4B4)),
+        labelStyle: const TextStyle(color: Colors.red),
         focusColor: Colors.transparent,
         suffix: suffix,
         prefix: prefix,
@@ -111,9 +116,10 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
         hintText: hintText,
         hintStyle: hintStyle,
         contentPadding: contentPadding,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: InputBorder.none,
+        // border: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(12),
+        // ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: enableBorderColor, width: 1.0),
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),

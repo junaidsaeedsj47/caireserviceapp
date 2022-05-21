@@ -1,0 +1,1 @@
+enum CurrentAccountType { Provider, Consumer }

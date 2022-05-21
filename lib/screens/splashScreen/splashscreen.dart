@@ -17,14 +17,14 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   SplashScreenViewModel splashScreenViewModel = SplashScreenViewModel();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Future.delayed(Duration(seconds: 4), () {
-      AppUtils.navigationRoute(context: context, route: const LoginScreen());
-    });
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   Future.delayed(Duration(seconds: 4), () {
+  //     AppUtils.navigationRoute(context: context, route: const LoginScreen());
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -35,40 +35,45 @@ class _SplashScreenState extends State<SplashScreen> {
         viewModelBuilder: () => splashScreenViewModel,
         builder: (contextBuilder, model, child) {
           return Scaffold(
-            body: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    AppColors.instance.splashColorThree,
-                    AppColors.instance.splashColorOne,
-                    AppColors.instance.splashColorTwo,
-                  ],
-                )),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          WavyAnimatedText(
-                            'Caire',
-                            textStyle: TextStyleUtil.textStyleRaqiBook(context,fontSize: 24,),
-                          ),
-                        ],
-                        isRepeatingAnimation: false,
-                        onTap: () {
-                          print("Tap Event");
-                        },
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      CircularProgressIndicator(
-                          color: CaireColor.fromRGB(237, 234, 231)),
+            body: GestureDetector(
+              onTap: (){
+                AppUtils.navigationRoute(context: context, route: const LoginScreen());
+              },
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      AppColors.instance.splashColorThree,
+                      AppColors.instance.splashColorOne,
+                      AppColors.instance.splashColorTwo,
                     ],
+                  )),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AnimatedTextKit(
+                          animatedTexts: [
+                            WavyAnimatedText(
+                              'Caire',
+                              textStyle: TextStyleUtil.textStyleRaqiBook(context,fontSize: 24,),
+                            ),
+                          ],
+                          isRepeatingAnimation: false,
+                          onTap: () {
+                            print("Tap Event");
+                          },
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        CircularProgressIndicator(
+                            color: CaireColor.fromRGB(237, 234, 231)),
+                      ],
+                    ),
                   ),
                 ),
               ),
