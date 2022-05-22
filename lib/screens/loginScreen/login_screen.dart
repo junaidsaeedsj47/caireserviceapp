@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   LoginViewModel loginViewModel = LoginViewModel();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,45 +33,43 @@ class _LoginScreenState extends State<LoginScreen> {
           viewModelBuilder: () => loginViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              backgroundColor: Colors.white,
-              body: SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsetsDirectional.only(
-                      start: 20, end: 20, bottom: 10),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: DynamicSize.height(0.1, context),
-                      ),
-                      // Image.asset(
-                      //   AmericanTaxiImageConstants.Common + 'logo.png',
-                      // ),
-                      // SizedBox(
-                      //   height: DynamicSize.height(0.01, context),
-                      // ),
-                      Text(
-                        'Caire',
-                        style: TextStyleUtil.textStyleRaqiBook(context,fontSize: 24),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: DynamicSize.height(0.02, context),
-                      ),
-                      Text(
-                          'Caire Inc. is the largest suburban Chicago, Caire service serving all suburbs, airports and downtown',
-                          style: TextStyleUtil.textStyleRaqiBook(context),
-                          textAlign: TextAlign.center),
-                      SizedBox(
-                        height: DynamicSize.height(0.02, context),
-                      ),
-
-                      CarieTextFieldWithoutLabel(
-                        controller: emailController,
-                        hintText: 'Username/Email',
-                        hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 18, horizontal: 20),
-                      ),
+              backgroundColor: AppColors.instance.themeColor,
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsetsDirectional.only(
+                        start: 20, end: 20, bottom: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: DynamicSize.height(0.1, context),
+                        ),
+                        // Image.asset(
+                        //   AmericanTaxiImageConstants.Common + 'logo.png',
+                        // ),
+                        // SizedBox(
+                        //   height: DynamicSize.height(0.01, context),
+                        // ),
+                        Text(
+                          'Caire',
+                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context,
+                              fontSize: 24),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: DynamicSize.height(0.02, context),
+                        ),
+                        CarieTextFieldWithoutLabel(
+                          enableBorderColor: AppColors.instance.black,
+                          controller: emailController,
+                          hintText: 'Username/Email',
+                          hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context,fontSize: 14),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 18, horizontal: 20),
+                        ),
 //              TextFormField(
 //                decoration: InputDecoration(
 //                  hintText: 'Username/Email',
@@ -83,14 +82,38 @@ class _LoginScreenState extends State<LoginScreen> {
 //                  ),
 //                ),
 //              ),
-                      SizedBox(
-                        height: DynamicSize.height(0.024, context),
-                      ),
-                      CarieTextFieldWithoutLabel(
-                        controller: passwordController,
-                        hintText: 'Password',
-                        hintStyle:  TextStyleUtil.textStyleRaqiBook(context),
-                      ),
+                        SizedBox(
+                          height: DynamicSize.height(0.024, context),
+                        ),
+                        CarieTextFieldWithoutLabel(
+                          enableBorderColor: AppColors.instance.black,
+                          obscureText: true,
+                          controller: passwordController,
+                          hintText: 'Password',
+                          hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context,fontSize: 14),
+                        ),
+                        SizedBox(
+                          height: DynamicSize.height(0.024, context),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BookingScreen()),
+                              );
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                  context),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
 //                TextFormField(
 //                  obscureText: true,
 //                  decoration: InputDecoration(
@@ -107,98 +130,86 @@ class _LoginScreenState extends State<LoginScreen> {
 //                    ),
 //                  ),
 //                ),
-                      SizedBox(
-                        height: DynamicSize.height(0.034, context),
-                      ),
-                      Container(
-                        height: 50,
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(horizontal: 35),
-                        child: CupertinoButton(
-                            borderRadius: BorderRadius.circular(12),
-                            color: AppColors.instance.themeColor,
-                            child:  Text(
-                              'Login',
-                              style: TextStyleUtil.textStyleRaqiBook(context,color:AppColors.instance.white),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DashboardScreen()),
-                              );
-                            }),
-                      ),
-                      SizedBox(
-                        height: DynamicSize.height(0.017, context),
-                      ),
-                      Container(
-                        height: 50,
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(horizontal: 35),
-                        child: CupertinoButton(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColors.instance.themeColor,
-                          child:  Text(
-                            'Register Now',
-                            style: TextStyleUtil.textStyleRaqiBook(context,color:AppColors.instance.white),
-                          ),
-                          onPressed: () {
+                        SizedBox(
+                          height: DynamicSize.height(0.024, context),
+                        ),
+                        Container(
+                          height: 50,
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(horizontal: 35),
+                          child: CupertinoButton(
+                              borderRadius: BorderRadius.circular(12),
+                              color: AppColors.instance.white,
+                              pressedOpacity: 0.8,
+                              child: Text(
+                                'Login',
+                                style:
+                                    TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                        context,
+                                        color: AppColors.instance.black),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DashboardScreen()),
+                                );
+                              }),
+                        ),
+                        SizedBox(
+                          height: DynamicSize.height(0.024, context),
+                        ),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              child: Text(
+                                'Register Now',
+                                style:
+                                    TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                        context,),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpScreen()),
+                                );
+                              },
+                            )),
+                        // SizedBox(
+                        //   height: DynamicSize.height(0.024, context),
+                        // ),
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen()),
-                            );
-                          },
+                        // SizedBox(
+                        //   height: DynamicSize.height(0.018, context),
+                        // ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     // Navigator.push(
+                        //     //   context,
+                        //     //   MaterialPageRoute(
+                        //     //       builder: (context) => const ForgotUsernameScreen()),
+                        //     // );
+                        //   },
+                        //   child: Text(
+                        //     'Forgot Username?',
+                        //     style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                        //         context),
+                        //     textAlign: TextAlign.center,
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: DynamicSize.height(0.05, context),
                         ),
-                      ),
-                      SizedBox(
-                        height: DynamicSize.height(0.018, context),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BookingScreen()),
-                          );
-                        },
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyleUtil.textStyleRaqiBook(context),
+                        Text(
+                          'Copyright 2022 Caire App',
+                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context),
                           textAlign: TextAlign.center,
                         ),
-                      ),
-                      SizedBox(
-                        height: DynamicSize.height(0.018, context),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => const ForgotUsernameScreen()),
-                          // );
-                        },
-                        child: Text(
-                          'Forgot Username?',
-                          style: TextStyleUtil.textStyleRaqiBook(context),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      SizedBox(
-                        height: DynamicSize.height(0.05, context),
-                      ),
-                      Text(
-                        'Copyright 2013 Caire App',
-                        style: TextStyleUtil.textStyleRaqiBook(context),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

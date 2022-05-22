@@ -44,7 +44,7 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
 
   List<String> providerList = [
     'John',
-    'Mariyam',
+    'Alex',
     'Abraham',
     'Aley',
   ];

@@ -4,23 +4,34 @@ import 'package:flutter/material.dart';
 import 'extensionForFontWeight.dart';
 
 class TextStyleUtil {
+  static TextStyle textStyleBeforeLoginRaqiBook(BuildContext context, {double fontSize = 16, Color? color,FontWeight? fontWeight,TextDecoration? customDecoration}) {
+    return _textStyle(
+      context,
+      fontSize: fontSize,
+      color: color??AppColors.instance.black,
+      fontWeight: fontWeight ?? AppFontWeight.regular,
+      decoration: customDecoration
+    );
+  }
 
-  static TextStyle textStyleRaqiBook(BuildContext context, {double fontSize = 16, Color? color,FontWeight? fontWeight}) {
+  static TextStyle textStyleRaqiBook(BuildContext context, {double fontSize = 16, Color? color,FontWeight? fontWeight,TextDecoration? customDecoration}) {
     return _textStyle(
       context,
       fontSize: fontSize,
       color: color??AppColors.instance.appTextColor,
       fontWeight: fontWeight ?? AppFontWeight.regular,
+      decoration: customDecoration,
     );
   }
 
 
-  static TextStyle textStyleRaqiBookBold(BuildContext context, {double fontSize = 16, Color? color}) {
+  static TextStyle textStyleRaqiBookBold(BuildContext context, {double fontSize = 16, Color? color,TextDecoration? customDecoration}) {
     return _textStyle(
       context,
       fontSize: fontSize,
       color: color??AppColors.instance.appTextColor,
       fontWeight: AppFontWeight.bold,
+      decoration: customDecoration,
     );
   }
   static TextStyle _textStyle(BuildContext context,

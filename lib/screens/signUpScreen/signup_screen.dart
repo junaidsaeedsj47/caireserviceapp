@@ -1,13 +1,16 @@
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
+import 'package:caireapp/screens/signUpScreen/provider_signup_second-screen.dart';
+import 'package:caireapp/screens/signUpScreen/user_signup_second_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/signup_viewmodel/signup_viewmodel.dart';
+import 'package:caireapp/widgets/caire_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../constants/caireColors.dart';
-import '../handyman/provider_dashboard.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -37,19 +40,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
           viewModelBuilder: () => signUpScreenViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.instance.themeColor,
               body: SingleChildScrollView(
                 child: Container(
                   margin: const EdgeInsetsDirectional.only(
                       start: 20, end: 20, bottom: 30, top: 40),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: Alignment.center,
                         child: Text(
                           'Caire',
-                          style: TextStyleUtil.textStyleRaqiBook(context,
+                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context,
                               fontSize: 24),
                           textAlign: TextAlign.center,
                         ),
@@ -60,285 +64,230 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Align(
                         alignment: Alignment.center,
                         child: Text('Enter Details For Sign-Up',
-                            style: TextStyleUtil.textStyleRaqiBook(context),
+                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context),
                             textAlign: TextAlign.center),
                       ),
                       const SizedBox(
                         height: 19,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Name',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                      CarieTextFieldWithoutLabel(
+                        enableBorderColor: AppColors.instance.black,
+                        controller: model.nameController,
+                        hintText: 'Name',
+                        hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18, horizontal: 20),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                      CarieTextFieldWithoutLabel(
+                        enableBorderColor: AppColors.instance.black,
+                        controller: model.emailController,
+                        hintText: 'Email',
+                        hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18, horizontal: 20),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Phone',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                      CarieTextFieldWithoutLabel(
+                        enableBorderColor: AppColors.instance.black,
+                        controller: model.phoneController,
+                        hintText: 'Phone',
+                        hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18, horizontal: 20),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Address',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                      CarieTextFieldWithoutLabel(
+                        enableBorderColor: AppColors.instance.black,
+                        controller: model.addressController,
+                        hintText: 'Address',
+                        hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18, horizontal: 20),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Skills',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Consent',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // Container(
-                      //   margin: const EdgeInsets.symmetric(horizontal: 30),
-                      //   height: 54,
-                      //   width: double.infinity,
-                      //   child: CupertinoButton(
-                      //     borderRadius: BorderRadius.circular(12),
-                      //     color: Colors.green,
-                      //     child: Text(
-                      //       'Upload Picture',
-                      //       style: TextStyleUtil.textStyleRaqiBook(context,
-                      //       color: Colors.white),
-                      //     ),
-                      //     onPressed: () {
-                      //       // Navigator.push(
-                      //       //   context,
-                      //       //   MaterialPageRoute(builder: (context) => HomeScreen()),
-                      //       // );
-                      //     },
-                      //   ),
-                      // ),
-                      Text(
-                        'Upload License',
-                        style: TextStyleUtil.textStyleRaqiBook(
-                          context,
-                        ),
-                        // textAlign: TextAlign.l,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 150,
-                        margin: const EdgeInsetsDirectional.only(
-                            start: 30, end: 30, top: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            border: Border.all(),
-                            color: Colors.white),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Choose Image',
-                              style: TextStyleUtil.textStyleRaqiBook(
-                                context,
-                              ),
-                              textAlign: TextAlign.center,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CarieTextFieldWithoutLabel(
+                              enableBorderColor: AppColors.instance.black,
+                              obscureText: true,
+                              controller: model.passwordController,
+                              hintText: 'Password',
+                              hintStyle:
+                                  TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                      context,
+                                      fontSize: 14),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 18, horizontal: 20),
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            child: CarieTextFieldWithoutLabel(
+                              enableBorderColor: AppColors.instance.black,
+                              obscureText: true,
+                              controller: model.confirmPasswordController,
+                              hintText: 'Confirm Password',
+                              hintStyle:
+                                  TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                      context,
+                                      fontSize: 14),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 18, horizontal: 20),
+                            ),
+                          ),
+                        ],
                       ),
-
                       const SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        'Pick radius',
-                        style: TextStyleUtil.textStyleRaqiBook(context,
-                            color: Colors.black),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Account Type : ',
+                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            // margin: const EdgeInsetsDirectional.only(
+                            //     start: 20, end: 20),
+                            padding: EdgeInsetsDirectional.only(
+                                top: 8, start: 20, bottom: 8, end: 20),
+                            decoration: BoxDecoration(
+                              color: AppColors.instance.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: DropdownButton<dynamic>(
+                              hint: Text(
+                                'Select Type',
+                                style:
+                                    TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                        context,
+                                        fontSize: 14,
+                                        color: AppColors.instance.black),
+                              ),
+                              value: model.dropdownValue!.isNotEmpty
+                                  ? model.dropdownValue
+                                  : null,
+                              isDense: true,
+                              isExpanded: true,
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: AppColors.instance.black,
+                              ),
+                              iconSize: 24,
+                              underline: SizedBox(
+                                height: 0,
+                                width: 0,
+                              ),
+                              style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context,
+                                fontSize: 14,
+                              ),
+                              onChanged: (dynamic dropDownValue) {
+                                model.updateSelectedValue(dropDownValue);
+                              },
+                              items: model.accountTypes
+                                  .map<DropdownMenuItem>((dynamic value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(
+                                    value ?? "",
+                                    style: TextStyleUtil
+                                        .textStyleBeforeLoginRaqiBook(context,
+                                            fontSize: 14,
+                                            color: AppColors.instance.black),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
                       ),
-                      // TextFormField(
-                      //   decoration: InputDecoration(
-                      //     hintText: 'Enter radius',
-                      //     hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                      //     focusColor: Colors.transparent,
-                      //     contentPadding:
-                      //     const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(12),
+                      //   child: DropdownButton<String>(
+                      //     hint: Text('Account Type'),
+                      //     value: model.dropdownValue,
+                      //     isExpanded: true,
+                      //     icon: const Icon(Icons.arrow_drop_down),
+                      //     iconSize: 24,
+                      //     elevation: 16,
+                      //     underline: SizedBox(
+                      //       height: 0,
+                      //       width: 0,
                       //     ),
+                      //     style: TextStyleUtil.textStyleRaqiBookBold(context),
+                      //     onChanged: (String? newValue) {
+                      //       setState(() {
+                      //         model.dropdownValue = newValue!;
+                      //       });
+                      //     },
+                      //     items: <String>[
+                      //       'Provider',
+                      //       'Consumers',
+                      //     ].map<DropdownMenuItem<String>>((String value) {
+                      //       return DropdownMenuItem<String>(
+                      //         value: value!,
+                      //         child: Text(value!),
+                      //       );
+                      //     }).toList(),
                       //   ),
                       // ),
-
-                      Slider(
-                        value: _currentSliderValue,
-                        min: 0,
-                        max: 100,
-                        divisions: 5,
-                        label: _currentSliderValue.round().toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            _currentSliderValue = value;
-                          });
-                        },
-                      ),
                       const SizedBox(
-                        height: 15,
+                        height: 17,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Estimated Time',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Availability',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Price',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // DropdownButton(
-                      //   items: _salutations
-                      //       .map((String item) =>
-                      //       DropdownMenuItem<String>(child: Text(item), value: item))
-                      //       .toList(),
-                      //   onChanged: (String ?value) {
-                      //     setState(() {
-                      //       print("previous ${this._salutation}");
-                      //       print("selected $value");
-                      //       this._salutation = value;
-                      //     });
-                      //   },
-                      //   value: _salutation,
-                      // ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          hintText: 'Experiences',
-                          hintStyle: TextStyleUtil.textStyleRaqiBook(context),
-                          focusColor: Colors.transparent,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 15,
-                      ),
-
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 30),
                         height: 54,
                         width: double.infinity,
                         child: CupertinoButton(
                           borderRadius: BorderRadius.circular(12),
-                          color: AppColors.instance.themeColor,
+                          color: AppColors.instance.white,
                           child: Text(
                             'Sign up',
-                            style: TextStyleUtil.textStyleRaqiBook(context,
-                                color: AppColors.instance.white),
+                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context,
+                                color: AppColors.instance.black),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ProviderDashboardScreen()),
-                            );
+                            if (model.accountType ==
+                                CurrentAccountType.Provider) {
+                              AppUtils.navigationRoute(
+                                  context: context,
+                                  route: ProviderSignUpSecondScreen());
+                            } else if (model.accountType ==
+                                CurrentAccountType.Consumer) {
+                              AppUtils.navigationRoute(
+                                  context: context,
+                                  route: UserSignUpSecondScreen());
+                            }
                           },
                         ),
                       ),
@@ -361,7 +310,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Text(
                             'Have an account ? ',
-                            style: TextStyleUtil.textStyleRaqiBook(context),
+                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -370,7 +320,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             child: Text(
                               'Log in ',
-                              style: TextStyleUtil.textStyleRaqiBook(context),
+                              style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                  context),
                             ),
                           )
                         ],
