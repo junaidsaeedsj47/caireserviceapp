@@ -1,3 +1,4 @@
+import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
@@ -302,6 +303,8 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                   color: AppColors.instance.black),
                             ),
                             onPressed: () {
+                              AppUtils.navigationRoute(
+                                  context: context, route: ProviderDashboardScreen());
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(builder: (context) => HomeScreen()),

@@ -1,3 +1,4 @@
+import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
@@ -465,6 +466,9 @@ class _ProviderSignUpSecondScreenState
                             //   context,
                             //   MaterialPageRoute(builder: (context) => HomeScreen()),
                             // );
+                            AppUtils.navigationRoute(
+                                context: context, route: ProviderDashboardScreen());
+
                           },
                         ),
                       ),
