@@ -1,3 +1,6 @@
+import 'package:caireapp/screens/booking/booking_screen.dart';
+import 'package:caireapp/screens/chat/chat_screen.dart';
+import 'package:caireapp/screens/review/review_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:syncfusion_flutter_charts/charts.dart';
@@ -119,7 +122,7 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
                                 onTap: (){
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const HandymanListScreen()),
+                                    MaterialPageRoute(builder: (context) => const ServiceScreen()),
                                   );
                                 },
                                 child: Text(
@@ -143,44 +146,52 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
                             ),
                             itemCount: providerList.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black,
-                                    ),
-                                    borderRadius: new BorderRadius.only(
-                                      topLeft: const Radius.circular(20.0),
-                                      topRight: const Radius.circular(20.0),
-                                      bottomRight: const Radius.circular(20.0),
-                                      bottomLeft: const Radius.circular(20.0),
-                                    ) // green as background color
-                                ),
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
+                              return InkWell(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const ChatScreen()),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.black,
+                                      ),
                                       borderRadius: new BorderRadius.only(
                                         topLeft: const Radius.circular(20.0),
                                         topRight: const Radius.circular(20.0),
+                                        bottomRight: const Radius.circular(20.0),
+                                        bottomLeft: const Radius.circular(20.0),
+                                      ) // green as background color
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: new BorderRadius.only(
+                                          topLeft: const Radius.circular(20.0),
+                                          topRight: const Radius.circular(20.0),
+                                        ),
+                                        child: Image.network(
+                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU_phbARGGUeQyPqIBfE6KTNWcjP4lP3IzGQ&usqp=CAU'),
                                       ),
-                                      child: Image.network(
-                                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU_phbARGGUeQyPqIBfE6KTNWcjP4lP3IzGQ&usqp=CAU'),
-                                    ),
-                                    Text(
-                                      providerList.elementAt(index),
-                                      style: TextStyleUtil.textStyleRaqiBookBold(context,
-                                        color: AppColors.instance.black),
-                                    ),
-                                    SizedBox(height: 12,),
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Icon(Icons.phone),
-                                        Icon(Icons.mail_outline),
-                                        Icon(Icons.chat),
-                                      ],
-                                    ),
-                                  ],
+                                      Text(
+                                        providerList.elementAt(index),
+                                        style: TextStyleUtil.textStyleRaqiBookBold(context,
+                                          color: AppColors.instance.black),
+                                      ),
+                                      SizedBox(height: 12,),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Icon(Icons.phone),
+                                          Icon(Icons.mail_outline),
+                                          Icon(Icons.chat),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -220,37 +231,60 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
   }
 
   Widget userData(StatsModel statsModel) {
-    return Container(
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey.shade300,
-          ),
-          borderRadius:
-          new BorderRadius.circular(12) // green as background color
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                statsModel.title!,
-                style: TextStyleUtil.textStyleRaqiBookBold(context,
-                    color: AppColors.instance.themeColor),
-              ),
-              statsModel.icon!,
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            statsModel.description!,
-            style: TextStyle(color: Colors.black),
-          ),
-        ],
+
+
+    return InkWell(
+      onTap: (){
+        if(statsModel.description=="Total Bookings")
+          {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BookingScreen()),
+            );
+          }
+
+          else if(statsModel.description=="Total Users")
+          {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ReviewScreen()),
+            );
+          }
+
+
+      },
+      child: Container(
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey.shade300,
+            ),
+            borderRadius:
+            new BorderRadius.circular(12) // green as background color
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  statsModel.title!,
+                  style: TextStyleUtil.textStyleRaqiBookBold(context,
+                      color: AppColors.instance.themeColor),
+                ),
+                statsModel.icon!,
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              statsModel.description!,
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
       ),
     );
   }
