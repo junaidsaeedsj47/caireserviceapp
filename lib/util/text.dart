@@ -8,7 +8,7 @@ class TextStyleUtil {
     return _textStyle(
       context,
       fontSize: fontSize,
-      color: color??AppColors.instance.black,
+      color: color??AppColors.instance.appTextColor,
       fontWeight: fontWeight ?? AppFontWeight.regular,
       decoration: customDecoration
     );

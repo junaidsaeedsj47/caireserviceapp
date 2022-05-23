@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           viewModelBuilder: () => signUpScreenViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              backgroundColor: AppColors.instance.themeColor,
+              backgroundColor: AppColors.instance.beforeLoginScreensBackground,
               body: SingleChildScrollView(
                 child: Container(
                   margin: const EdgeInsetsDirectional.only(
@@ -72,7 +72,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 19,
                       ),
                       CarieTextFieldWithoutLabel(
-                        enableBorderColor: AppColors.instance.black,
+                        focusedBorderColor: AppColors.instance.appTextColor,
+                        enableBorderColor: AppColors.instance.appTextColor,
                         controller: model.nameController,
                         hintText: 'Name',
                         hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
@@ -85,7 +86,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 15,
                       ),
                       CarieTextFieldWithoutLabel(
-                        enableBorderColor: AppColors.instance.black,
+                        focusedBorderColor: AppColors.instance.appTextColor,
+                        enableBorderColor: AppColors.instance.appTextColor,
                         controller: model.emailController,
                         hintText: 'Email',
                         hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
@@ -98,7 +100,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 15,
                       ),
                       CarieTextFieldWithoutLabel(
-                        enableBorderColor: AppColors.instance.black,
+                        focusedBorderColor: AppColors.instance.appTextColor,
+                        enableBorderColor: AppColors.instance.appTextColor,
                         controller: model.phoneController,
                         hintText: 'Phone',
                         hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
@@ -111,7 +114,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 15,
                       ),
                       CarieTextFieldWithoutLabel(
-                        enableBorderColor: AppColors.instance.black,
+                        focusedBorderColor: AppColors.instance.appTextColor,
+                        enableBorderColor: AppColors.instance.appTextColor,
                         controller: model.addressController,
                         hintText: 'Address',
                         hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
@@ -127,7 +131,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Expanded(
                             child: CarieTextFieldWithoutLabel(
-                              enableBorderColor: AppColors.instance.black,
+                              focusedBorderColor:
+                                  AppColors.instance.appTextColor,
+                              enableBorderColor:
+                                  AppColors.instance.appTextColor,
                               obscureText: true,
                               controller: model.passwordController,
                               hintText: 'Password',
@@ -144,7 +151,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Expanded(
                             child: CarieTextFieldWithoutLabel(
-                              enableBorderColor: AppColors.instance.black,
+                              focusedBorderColor:
+                                  AppColors.instance.appTextColor,
+                              enableBorderColor:
+                                  AppColors.instance.appTextColor,
                               obscureText: true,
                               controller: model.confirmPasswordController,
                               hintText: 'Confirm Password',
@@ -183,6 +193,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: AppColors.instance.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)),
+                              border: Border.all(
+                                  color: AppColors.instance.appTextColor),
                             ),
                             child: DropdownButton<dynamic>(
                               hint: Text(
@@ -191,7 +203,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                         context,
                                         fontSize: 14,
-                                        color: AppColors.instance.black),
+                                        color: AppColors.instance.appTextColor),
                               ),
                               value: model.dropdownValue!.isNotEmpty
                                   ? model.dropdownValue
@@ -200,7 +212,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               isExpanded: true,
                               icon: Icon(
                                 Icons.arrow_drop_down,
-                                color: AppColors.instance.black,
+                                color: AppColors.instance.appTextColor,
                               ),
                               iconSize: 24,
                               underline: SizedBox(
@@ -223,7 +235,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     style: TextStyleUtil
                                         .textStyleBeforeLoginRaqiBook(context,
                                             fontSize: 14,
-                                            color: AppColors.instance.black),
+                                            color: AppColors
+                                                .instance.appTextColor),
                                     textAlign: TextAlign.start,
                                   ),
                                 );
@@ -269,24 +282,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         child: CupertinoButton(
                           borderRadius: BorderRadius.circular(12),
-                          color: AppColors.instance.white,
+                          color: AppColors.instance.themeColor,
                           child: Text(
                             'Sign up',
                             style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                 context,
-                                color: AppColors.instance.black),
+                                color: AppColors.instance.white),
                           ),
                           onPressed: () {
-                            if (model.accountType ==
-                                CurrentAccountType.Provider) {
-                              AppUtils.navigationRoute(
-                                  context: context,
-                                  route: ProviderSignUpSecondScreen());
-                            } else if (model.accountType ==
-                                CurrentAccountType.Consumer) {
-                              AppUtils.navigationRoute(
-                                  context: context,
-                                  route: UserSignUpSecondScreen());
+                            if (model.accountType != null) {
+                              if (model.accountType ==
+                                  CurrentAccountType.Provider) {
+                                AppUtils.navigationRoute(
+                                    context: context,
+                                    route: ProviderSignUpSecondScreen());
+                              } else if (model.accountType ==
+                                  CurrentAccountType.Consumer) {
+                                AppUtils.navigationRoute(
+                                    context: context,
+                                    route: UserSignUpSecondScreen());
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                             }
                           },
                         ),
@@ -334,4 +352,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           }),
     );
   }
+  final snackBar = SnackBar(
+    duration: Duration(seconds: 2),
+    content: Text('Please select type!'),
+  );
 }

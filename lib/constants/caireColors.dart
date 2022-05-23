@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppColors with ChangeNotifier {
+
+  Color beforeLoginScreensBackground = Colors.white;
+
   Color themeColor = CaireColor.fromRGB(210, 153, 64);
 
   Color clear = Colors.transparent;

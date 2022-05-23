@@ -33,7 +33,7 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
           viewModelBuilder: () => userSignUpScreenViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              backgroundColor: AppColors.instance.themeColor,
+              backgroundColor: AppColors.instance.beforeLoginScreensBackground,
               body: Center(
                 child: SingleChildScrollView(
                   child: Container(
@@ -70,10 +70,11 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                           children: [
                             Expanded(
                               child: CarieTextFieldWithoutLabel(
-                                obscureText: true,
+                                obscureText: false,
                                 controller: model.cardNumberController,
                                 hintText: 'Tools and Equipment Checklist',
-                                enableBorderColor: AppColors.instance.black,
+                                enableBorderColor:
+                                    AppColors.instance.appTextColor,
                                 hintStyle:
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                         context,
@@ -111,6 +112,8 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                   color: AppColors.instance.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
+                                  border: Border.all(
+                                      color: AppColors.instance.appTextColor),
                                 ),
                                 child: DropdownButton<dynamic>(
                                   hint: Text(
@@ -118,7 +121,8 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                     style: TextStyleUtil
                                         .textStyleBeforeLoginRaqiBook(context,
                                             fontSize: 14,
-                                            color: AppColors.instance.black),
+                                            color: AppColors
+                                                .instance.appTextColor),
                                   ),
                                   value:
                                       model.offerPlaceDropdownValue!.isNotEmpty
@@ -128,7 +132,7 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                   isExpanded: true,
                                   icon: Icon(
                                     Icons.arrow_drop_down,
-                                    color: AppColors.instance.black,
+                                    color: AppColors.instance.appTextColor,
                                   ),
                                   iconSize: 24,
                                   underline: SizedBox(
@@ -153,8 +157,8 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                             .textStyleBeforeLoginRaqiBook(
                                                 context,
                                                 fontSize: 14,
-                                                color:
-                                                    AppColors.instance.black),
+                                                color: AppColors
+                                                    .instance.appTextColor),
                                         textAlign: TextAlign.start,
                                       ),
                                     );
@@ -173,29 +177,29 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                               start: 20, end: 20, top: 30, bottom: 30),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.instance.white),
+                              color: AppColors.instance.backGroundColor),
                           child: Column(
                             children: [
                               Text(
                                 'Credit Card Information',
                                 style:
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                        context,
-                                        color: AppColors.instance.black),
+                                  context,
+                                ),
                               ),
                               SizedBox(
                                 height: 20,
                               ),
                               CarieTextFieldWithoutLabel(
-                                obscureText: true,
+                                obscureText: false,
                                 controller: model.cardNumberController,
                                 hintText: 'Enter Card Number',
-                                enableBorderColor: AppColors.instance.black,
+                                enableBorderColor:
+                                    AppColors.instance.appTextColor,
                                 hintStyle:
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                         context,
-                                        fontSize: 14,
-                                        color: AppColors.instance.black),
+                                        fontSize: 14),
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 14, horizontal: 14),
                               ),
@@ -213,25 +217,22 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                             style: TextStyleUtil
                                                 .textStyleBeforeLoginRaqiBook(
                                                     context,
-                                                    fontSize: 14,
-                                                    color: AppColors
-                                                        .instance.black)),
+                                                    fontSize: 14)),
                                         SizedBox(
                                           width: 15,
                                         ),
                                         Expanded(
                                           child: CarieTextFieldWithoutLabel(
-                                            obscureText: true,
+                                            obscureText: false,
                                             controller: model.cvcController,
                                             hintText: 'Enter',
                                             enableBorderColor:
-                                                AppColors.instance.black,
+                                                AppColors.instance.appTextColor,
                                             hintStyle: TextStyleUtil
                                                 .textStyleBeforeLoginRaqiBook(
-                                                    context,
-                                                    fontSize: 14,
-                                                    color: AppColors
-                                                        .instance.black),
+                                              context,
+                                              fontSize: 14,
+                                            ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     vertical: 14,
@@ -244,41 +245,48 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                   SizedBox(
                                     width: 30,
                                   ),
-                                  Text('Expiry :',
+                                  Text('Expiry : ',
                                       style: TextStyleUtil
-                                          .textStyleBeforeLoginRaqiBook(context,
-                                              fontSize: 14,
-                                              color: AppColors.instance.black)),
-                                  TextButton(
-                                    onPressed: () {
-                                      DatePicker.showDatePicker(
+                                          .textStyleBeforeLoginRaqiBook(
                                         context,
-                                        showTitleActions: true,
-                                        onChanged: (date) {
-                                          model.updateExpiryDate(date);
-                                          // model.selectedDate = date;
-                                          print('change $date in time zone ' +
-                                              date.timeZoneOffset.inHours
-                                                  .toString());
-                                        },
-                                        onConfirm: (date) {
-                                          print('confirm $date');
-                                        },
-                                        currentTime: DateTime.now(),
-                                      );
-                                    },
-                                    child: Text(
-                                        model.selectedDate.month.toString() +
-                                            "/" +
-                                            model.selectedDate.year
-                                                .toString()
-                                                .substring(2, 4),
-                                        style: TextStyleUtil
-                                            .textStyleBeforeLoginRaqiBook(
-                                                context,
-                                                fontSize: 14,
-                                                color:
-                                                    AppColors.instance.black)),
+                                        fontSize: 14,
+                                      )),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: AppColors
+                                                .instance.appTextColor)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        DatePicker.showDatePicker(
+                                          context,
+                                          showTitleActions: true,
+                                          onChanged: (date) {
+                                            model.updateExpiryDate(date);
+                                            // model.selectedDate = date;
+                                            print('change $date in time zone ' +
+                                                date.timeZoneOffset.inHours
+                                                    .toString());
+                                          },
+                                          onConfirm: (date) {
+                                            print('confirm $date');
+                                          },
+                                          currentTime: DateTime.now(),
+                                        );
+                                      },
+                                      child: Text(
+                                          model.selectedDate.month.toString() +
+                                              "/" +
+                                              model.selectedDate.year
+                                                  .toString()
+                                                  .substring(2, 4),
+                                          style: TextStyleUtil
+                                              .textStyleBeforeLoginRaqiBook(
+                                            context,
+                                            fontSize: 14,
+                                          )),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -295,16 +303,17 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                           width: double.infinity,
                           child: CupertinoButton(
                             borderRadius: BorderRadius.circular(12),
-                            color: AppColors.instance.white,
+                            color: AppColors.instance.themeColor,
                             child: Text(
                               'Sign up',
                               style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                   context,
-                                  color: AppColors.instance.black),
+                                  color: AppColors.instance.white),
                             ),
                             onPressed: () {
                               AppUtils.navigationRoute(
-                                  context: context, route: ProviderDashboardScreen());
+                                  context: context,
+                                  route: ProviderDashboardScreen());
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(builder: (context) => HomeScreen()),

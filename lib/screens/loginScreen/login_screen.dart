@@ -1,5 +1,6 @@
 import 'package:caireapp/screens/booking/booking_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/login_viewmodel/login_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
           viewModelBuilder: () => loginViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              backgroundColor: AppColors.instance.themeColor,
+              backgroundColor: AppColors.instance.beforeLoginScreensBackground,
               body: Center(
                 child: SingleChildScrollView(
                   child: Container(
@@ -62,36 +63,38 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: DynamicSize.height(0.02, context),
                         ),
                         CarieTextFieldWithoutLabel(
-                          enableBorderColor: AppColors.instance.black,
+                          focusedBorderColor: AppColors.instance.appTextColor,
+                          enableBorderColor: AppColors.instance.appTextColor,
                           controller: emailController,
                           hintText: 'Username/Email',
                           hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                              context,fontSize: 14),
+                              context,),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 18, horizontal: 20),
                         ),
-//              TextFormField(
-//                decoration: InputDecoration(
-//                  hintText: 'Username/Email',
-//                  hintStyle: const TextStyle(color: Color(0xffB4B4B4)),
-//                  focusColor: Colors.transparent,
-//                  contentPadding:
-//                  const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-//                  border: OutlineInputBorder(
-//                    borderRadius: BorderRadius.circular(12),
-//                  ),
-//                ),
-//              ),
+             // TextFormField(
+             //   decoration: InputDecoration(
+             //     hintText: 'Username/Email',
+             //     hintStyle: const TextStyle(color: Color(0xffB4B4B4)),
+             //     focusColor: Colors.transparent,
+             //     contentPadding:
+             //     const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+             //     border: OutlineInputBorder(
+             //       borderRadius: BorderRadius.circular(12),
+             //     ),
+             //   ),
+             // ),
                         SizedBox(
                           height: DynamicSize.height(0.024, context),
                         ),
                         CarieTextFieldWithoutLabel(
-                          enableBorderColor: AppColors.instance.black,
+                          focusedBorderColor: AppColors.instance.appTextColor,
+                          enableBorderColor: AppColors.instance.appTextColor,
                           obscureText: true,
                           controller: passwordController,
                           hintText: 'Password',
                           hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                              context,fontSize: 14),
+                              context,),
                         ),
                         SizedBox(
                           height: DynamicSize.height(0.024, context),
@@ -139,14 +142,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 35),
                           child: CupertinoButton(
                               borderRadius: BorderRadius.circular(12),
-                              color: AppColors.instance.white,
+                              color: AppColors.instance.themeColor,
                               pressedOpacity: 0.8,
                               child: Text(
                                 'Login',
                                 style:
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                         context,
-                                        color: AppColors.instance.black),
+                                        fontWeight: AppFontWeight.medium,
+                                        color: AppColors.instance.white),
                               ),
                               onPressed: () {
                                 Navigator.push(
@@ -166,7 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'Register Now',
                                 style:
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                        context,),
+                                  context,
+                                ),
                               ),
                               onTap: () {
                                 Navigator.push(

@@ -8,7 +8,7 @@ class SignUpScreenViewModel extends ChangeNotifier {
     'Provider',
     'Consumer',
   ];
-  late CurrentAccountType accountType;
+  CurrentAccountType? accountType;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();

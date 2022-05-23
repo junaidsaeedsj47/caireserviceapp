@@ -43,7 +43,7 @@ class _ProviderSignUpSecondScreenState
           viewModelBuilder: () => providerSignUpScreenViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              backgroundColor: AppColors.instance.themeColor,
+              backgroundColor: AppColors.instance.beforeLoginScreensBackground,
               body: SingleChildScrollView(
                 child: Container(
                   margin: const EdgeInsetsDirectional.only(
@@ -90,7 +90,8 @@ class _ProviderSignUpSecondScreenState
                             start: 30, end: 30, top: 0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
-                            border: Border.all(),
+                            border: Border.all(
+                                color: AppColors.instance.appTextColor),
                             color: Colors.white),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -98,8 +99,8 @@ class _ProviderSignUpSecondScreenState
                             Text(
                               'Choose Image',
                               style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                  context,
-                                  color: AppColors.instance.black),
+                                context,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -113,8 +114,11 @@ class _ProviderSignUpSecondScreenState
                         children: [
                           Expanded(
                             child: CarieTextFieldWithoutLabel(
-                              enableBorderColor: AppColors.instance.black,
-                              obscureText: true,
+                              focusedBorderColor:
+                                  AppColors.instance.appTextColor,
+                              enableBorderColor:
+                                  AppColors.instance.appTextColor,
+                              obscureText: false,
                               controller: model.consentController,
                               hintText: 'Consent',
                               hintStyle:
@@ -139,6 +143,8 @@ class _ProviderSignUpSecondScreenState
                                 color: AppColors.instance.white,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                    color: AppColors.instance.appTextColor),
                               ),
                               child: DropdownButton<dynamic>(
                                 hint: Text(
@@ -146,7 +152,8 @@ class _ProviderSignUpSecondScreenState
                                   style: TextStyleUtil
                                       .textStyleBeforeLoginRaqiBook(context,
                                           fontSize: 14,
-                                          color: AppColors.instance.black),
+                                          color:
+                                              AppColors.instance.appTextColor),
                                 ),
                                 value: model.serviceDropdownValue!.isNotEmpty
                                     ? model.serviceDropdownValue
@@ -155,7 +162,7 @@ class _ProviderSignUpSecondScreenState
                                 isExpanded: true,
                                 icon: Icon(
                                   Icons.arrow_drop_down,
-                                  color: AppColors.instance.black,
+                                  color: AppColors.instance.appTextColor,
                                 ),
                                 iconSize: 24,
                                 underline: SizedBox(
@@ -179,7 +186,8 @@ class _ProviderSignUpSecondScreenState
                                       style: TextStyleUtil
                                           .textStyleBeforeLoginRaqiBook(context,
                                               fontSize: 14,
-                                              color: AppColors.instance.black),
+                                              color: AppColors
+                                                  .instance.appTextColor),
                                       textAlign: TextAlign.start,
                                     ),
                                   );
@@ -225,8 +233,8 @@ class _ProviderSignUpSecondScreenState
                         max: 100,
                         divisions: 5,
                         inactiveColor: AppColors.instance.lightGreyText,
-                        thumbColor: AppColors.instance.black,
-                        activeColor: AppColors.instance.white,
+                        thumbColor: AppColors.instance.themeColor,
+                        activeColor: AppColors.instance.themeColor,
                         label: _currentSliderValue.round().toString(),
                         onChanged: (double value) {
                           setState(() {
@@ -259,6 +267,8 @@ class _ProviderSignUpSecondScreenState
                               color: AppColors.instance.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                    color: AppColors.instance.appTextColor)
                             ),
                             child: DropdownButton<dynamic>(
                               hint: Text(
@@ -267,7 +277,7 @@ class _ProviderSignUpSecondScreenState
                                     TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                         context,
                                         fontSize: 14,
-                                        color: AppColors.instance.black),
+                                        color: AppColors.instance.appTextColor),
                               ),
                               value: model.offerPlaceDropdownValue!.isNotEmpty
                                   ? model.offerPlaceDropdownValue
@@ -276,7 +286,7 @@ class _ProviderSignUpSecondScreenState
                               isExpanded: true,
                               icon: Icon(
                                 Icons.arrow_drop_down,
-                                color: AppColors.instance.black,
+                                color: AppColors.instance.appTextColor,
                               ),
                               iconSize: 24,
                               underline: SizedBox(
@@ -299,7 +309,7 @@ class _ProviderSignUpSecondScreenState
                                     style: TextStyleUtil
                                         .textStyleBeforeLoginRaqiBook(context,
                                             fontSize: 14,
-                                            color: AppColors.instance.black),
+                                            color: AppColors.instance.appTextColor),
                                     textAlign: TextAlign.start,
                                   ),
                                 );
@@ -312,8 +322,9 @@ class _ProviderSignUpSecondScreenState
                         height: 15,
                       ),
                       CarieTextFieldWithoutLabel(
-                        enableBorderColor: AppColors.instance.black,
-                        obscureText: true,
+                        focusedBorderColor: AppColors.instance.appTextColor,
+                        enableBorderColor: AppColors.instance.appTextColor,
+                        obscureText: false,
                         controller: model.experienceController,
                         hintText: 'Experience',
                         hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
@@ -355,7 +366,10 @@ class _ProviderSignUpSecondScreenState
                                 Container(
                                   child: Expanded(
                                     child: CarieTextFieldWithoutLabel(
-                                      enableBorderColor: AppColors.instance.black,
+                                      focusedBorderColor:
+                                          AppColors.instance.appTextColor,
+                                      enableBorderColor:
+                                          AppColors.instance.appTextColor,
                                       keyboardType: TextInputType.number,
                                       obscureText: false,
                                       controller: model.availabilityController,
@@ -376,7 +390,7 @@ class _ProviderSignUpSecondScreenState
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text('Time :',
+                                Text('Select Time :',
                                     style: TextStyleUtil
                                         .textStyleBeforeLoginRaqiBook(context,
                                             fontSize: 14)),
@@ -434,8 +448,9 @@ class _ProviderSignUpSecondScreenState
                                 inactiveThumbColor: AppColors.instance.white,
                                 inactiveTrackColor:
                                     AppColors.instance.lightGreyText,
-                                activeColor: AppColors.instance.black,
-                                activeTrackColor: AppColors.instance.white,
+                                activeColor: AppColors.instance.themeColor,
+                                activeTrackColor:
+                                    AppColors.instance.lightGreyText,
                                 value: model.isToolsAvailable,
                                 onChanged: (value) {
                                   model.updateTheToolsStatus(value);
@@ -454,12 +469,12 @@ class _ProviderSignUpSecondScreenState
                         width: double.infinity,
                         child: CupertinoButton(
                           borderRadius: BorderRadius.circular(12),
-                          color: AppColors.instance.white,
+                          color: AppColors.instance.themeColor,
                           child: Text(
                             'Sign up',
                             style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
                                 context,
-                                color: AppColors.instance.black),
+                                color: AppColors.instance.white),
                           ),
                           onPressed: () {
                             // Navigator.push(
@@ -467,8 +482,8 @@ class _ProviderSignUpSecondScreenState
                             //   MaterialPageRoute(builder: (context) => HomeScreen()),
                             // );
                             AppUtils.navigationRoute(
-                                context: context, route: ProviderDashboardScreen());
-
+                                context: context,
+                                route: ProviderDashboardScreen());
                           },
                         ),
                       ),
