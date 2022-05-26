@@ -1,4 +1,5 @@
 import 'package:caireapp/constants/constants.dart';
+import 'package:caireapp/device/device.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -104,5 +105,20 @@ class AppUtils {
         end: end ?? 10,
         top: top ?? 20,
         bottom: bottom ?? 20);
+  }
+  static SizedBox webTitleSpacing(BuildContext context){
+   return SizedBox(
+      height: DynamicSize.height(0.04, context),
+    );
+  }
+  static SizedBox webSubTitleSpacing(BuildContext context){
+    return SizedBox(
+      height: DynamicSize.height(0.04, context),
+    );
+  }
+  static SizedBox webSpacingBetween(BuildContext context){
+    return SizedBox(
+      height: DynamicSize.height(0.04, context),
+    );
   }
 }

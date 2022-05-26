@@ -85,4 +85,10 @@ class ProviderSignUpScreenViewModel extends ChangeNotifier {
     }
     isToolsAvailable = status;
     updateState();
-  }}
+  }
+  updateSelectedTime(DateTime date){
+    selectedDate = date;
+    updateState();
+  }
+
+}

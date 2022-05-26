@@ -6,6 +6,7 @@ import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:stacked/stacked.dart';
 
 class UserSideBookingScreen extends StatefulWidget {
@@ -129,7 +130,8 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
                                       "Step 2",
                                       style: TextStyleUtil.textStyleRaqiBook(
                                           context,
-                                          color: AppColors.instance.lightGreyText),
+                                          color:
+                                              AppColors.instance.lightGreyText),
                                     )
                                   ],
                                 )
@@ -253,21 +255,65 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
           SizedBox(
             height: 10,
           ),
-          Container(
-            padding: EdgeInsetsDirectional.only(
-                start: 10, end: 10, top: 10, bottom: 10),
-            decoration: BoxDecoration(
-                color: AppColors.instance.white,
-                borderRadius: BorderRadius.circular(10)),
-            child: TextField(
-              controller: model.userAddressField,
-              decoration: InputDecoration(
-                  icon: Icon(Icons.location_on_outlined),
-                  border: InputBorder.none,
-                  hintText: "Enter Your Address",
-                  hintStyle: TextStyleUtil.textStyleRaqiBook(context,
-                      fontSize: 12, color: AppColors.instance.lightGreyText)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Select Date : ',
+                      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                          fontSize: 14)),
+                  GestureDetector(
+                      onTap: () {
+                        DatePicker.showDatePicker(context,
+                            minTime: DateTime.now(),
+                            maxTime: DateTime(2050, 01, 01),
+                            showTitleActions: true, onChanged: (date) {
+                          model.updateSelectedDate(date);
+                        }, onConfirm: (date) {}, currentTime: DateTime.now());
+                      },
+                      child: Text(
+                        model.selectedDate.day.toString() +
+                            "/" +
+                            model.selectedDate.month.toString() +
+                            "/" +
+                            model.selectedDate.year.toString(),
+                        style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                      )),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Select Time : ',
+                      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                          fontSize: 14)),
+                  GestureDetector(
+                      onTap: () {
+                        DatePicker.showTimePicker(
+                          context,
+                          showTitleActions: true,
+                          onChanged: (date) {
+                            model.updateSelectedTime(date);
+                          },
+                          onConfirm: (date) {},
+                          currentTime: DateTime.now(),
+                        );
+                      },
+                      child: Text(
+                        model.selectedTime.hour.toString() +
+                            ":" +
+                            model.selectedTime.minute.toString(),
+                        style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                      )),
+                ],
+              ),
+            ],
           ),
           SizedBox(
             height: 20,

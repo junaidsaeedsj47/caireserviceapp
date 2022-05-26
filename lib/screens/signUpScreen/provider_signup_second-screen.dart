@@ -394,13 +394,13 @@ class _ProviderSignUpSecondScreenState
                                     style: TextStyleUtil
                                         .textStyleBeforeLoginRaqiBook(context,
                                             fontSize: 14)),
-                                TextButton(
-                                    onPressed: () {
+                                GestureDetector(
+                                    onTap: () {
                                       DatePicker.showTimePicker(
                                         context,
                                         showTitleActions: true,
                                         onChanged: (date) {
-                                          model.selectedDate = date;
+                                          model.updateSelectedTime(date);
                                           print('change $date in time zone ' +
                                               date.timeZoneOffset.inHours
                                                   .toString());
