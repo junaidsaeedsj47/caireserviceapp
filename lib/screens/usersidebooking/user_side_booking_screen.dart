@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/screens/usersidebooking/user_side_booking_second_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/viewmodel/usersidebooking/user_side_booking_viewmodel.dart';
@@ -7,7 +8,9 @@ import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class UserSideBookingScreen extends StatefulWidget {
   final ServiceModel? servicesData;
@@ -30,18 +33,7 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
         builder: (contextBuilder, model, child) {
           return SafeArea(
             child: Scaffold(
-              appBar: AppBar(
-                iconTheme: IconThemeData(
-                  color: AppColors
-                      .instance.textWhiteColor, //change your color here
-                ),
-                centerTitle: true,
-                title: Text(
-                  "Book Service",
-                  style: TextStyleUtil.textStyleRaqiBook(context,
-                      fontSize: 24, color: AppColors.instance.textWhiteColor),
-                ),
-              ),
+              appBar: AppUtils.showAppBar(context: context,title: "Service Booking",showBack:UniversalPlatform.isWeb? false : true),
               body: SingleChildScrollView(
                 child: Container(
                   padding: AppUtils.unifiedPaddingOfScreen(),
@@ -93,11 +85,15 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
                                   ],
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: AppUtils.isDesktopDevice(context)
+                                      ? 20
+                                      : 10,
                                 ),
                                 dashedHorizontalLine(),
                                 SizedBox(
-                                  width: 10,
+                                  width: AppUtils.isDesktopDevice(context)
+                                      ? 20
+                                      : 10,
                                 ),
                                 Column(
                                   children: [
@@ -223,9 +219,10 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
   }
 
   Widget dashedHorizontalLine() {
+    int dottedLines = AppUtils.isDesktopDevice(context) ? 16 : 12;
     return Row(
       children: [
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < dottedLines; i++)
           Container(
             margin: EdgeInsetsDirectional.only(end: 6, bottom: 8),
             width: 5,
@@ -255,62 +252,76 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
           SizedBox(
             height: 10,
           ),
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Select Date : ',
-                      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
-                          fontSize: 14)),
-                  GestureDetector(
-                      onTap: () {
-                        DatePicker.showDatePicker(context,
-                            minTime: DateTime.now(),
-                            maxTime: DateTime(2050, 01, 01),
-                            showTitleActions: true, onChanged: (date) {
-                          model.updateSelectedDate(date);
-                        }, onConfirm: (date) {}, currentTime: DateTime.now());
-                      },
-                      child: Text(
-                        model.selectedDate.day.toString() +
-                            "/" +
-                            model.selectedDate.month.toString() +
-                            "/" +
-                            model.selectedDate.year.toString(),
-                        style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                            context,
-                            fontSize: 14),
+                      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                        context,
                       )),
+                  Container(
+                    padding: EdgeInsetsDirectional.all(4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: AppColors.instance.white),
+                    child: GestureDetector(
+                        onTap: () {
+                          DatePicker.showDatePicker(context,
+                              minTime: DateTime.now(),
+                              maxTime: DateTime(2050, 01, 01),
+                              showTitleActions: true,
+                              onChanged: (date) {}, onConfirm: (date) {
+                            model.updateSelectedDate(date);
+                          }, currentTime: DateTime.now());
+                        },
+                        child: AutoSizeText(
+                          AppUtils.showFormattedDate(model.selectedDate),
+                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context),
+                        )),
+                  ),
                 ],
+              ),
+              SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Select Time : ',
-                      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
-                          fontSize: 14)),
-                  GestureDetector(
-                      onTap: () {
-                        DatePicker.showTimePicker(
-                          context,
-                          showTitleActions: true,
-                          onChanged: (date) {
-                            model.updateSelectedTime(date);
-                          },
-                          onConfirm: (date) {},
-                          currentTime: DateTime.now(),
-                        );
-                      },
-                      child: Text(
-                        model.selectedTime.hour.toString() +
-                            ":" +
-                            model.selectedTime.minute.toString(),
-                        style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                      style:
+                          TextStyleUtil.textStyleBeforeLoginRaqiBook(context)),
+                  Container(
+                    padding: EdgeInsetsDirectional.all(4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: AppColors.instance.white),
+                    child: GestureDetector(
+                        onTap: () {
+                          DatePicker.showTimePicker(
                             context,
-                            fontSize: 14),
-                      )),
+                            showTitleActions: true,
+                            onChanged: (date) {
+                              // model.updateSelectedTime(date);
+                            },
+                            onConfirm: (date) {
+                              model.updateSelectedTime(date);
+                            },
+                            currentTime: DateTime.now(),
+                          );
+                        },
+                        child: AutoSizeText(
+                          AppUtils.showFormattedTime(model.selectedTime),
+                          // model.selectedTime.hour.toString() +
+                          //     ":" +
+                          //     model.selectedTime.minute.toString(),
+                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                              context),
+                        )),
+                  ),
                 ],
               ),
             ],
@@ -364,8 +375,11 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {
-        AppUtils.navigationRoute(
-            context: context, route: UserSideBookingSecondScreen());
+        AppUtils.pushRoute(
+            context: context,
+            route: UserSideBookingSecondScreen(
+              servicesData: widget.servicesData,
+            ));
       },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),

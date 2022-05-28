@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/viewmodel/usersidebooking/userside_booking_second_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class UserSideBookingSecondScreen extends StatefulWidget {
   final ServiceModel? servicesData;
@@ -31,18 +33,7 @@ class _UserSideBookingSecondScreenState
         builder: (contextBuilder, model, child) {
           return SafeArea(
             child: Scaffold(
-              appBar: AppBar(
-                iconTheme: IconThemeData(
-                  color: AppColors
-                      .instance.textWhiteColor, //change your color here
-                ),
-                centerTitle: true,
-                title: Text(
-                  "Book Service",
-                  style: TextStyleUtil.textStyleRaqiBook(context,
-                      fontSize: 24, color: AppColors.instance.textWhiteColor),
-                ),
-              ),
+              appBar: AppUtils.showAppBar(context: context,title: "Confirm Service Booking",showBack:UniversalPlatform.isWeb? false : true),
               body: SingleChildScrollView(
                 child: Container(
                   padding: AppUtils.unifiedPaddingOfScreen(),
@@ -93,11 +84,15 @@ class _UserSideBookingSecondScreenState
                                   ],
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: AppUtils.isDesktopDevice(context)
+                                      ? 20
+                                      : 10,
                                 ),
                                 dashedHorizontalLine(),
                                 SizedBox(
-                                  width: 10,
+                                  width: AppUtils.isDesktopDevice(context)
+                                      ? 20
+                                      : 10,
                                 ),
                                 Column(
                                   children: [
@@ -139,10 +134,14 @@ class _UserSideBookingSecondScreenState
                         ],
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20,
+                      ),
+                      userBookingServiceInformation(model),
+                      SizedBox(
+                        height: 20,
                       ),
                       Text(
-                        "Confirm Price Details",
+                        "Price Details",
                         style: TextStyleUtil.textStyleRaqiBook(context,
                             fontSize: 20),
                       ),
@@ -158,7 +157,9 @@ class _UserSideBookingSecondScreenState
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           getPreviousButton(context, model),
-                          SizedBox(width: 5,),
+                          SizedBox(
+                            width: 5,
+                          ),
                           getNextButton(context, model),
                         ],
                       )
@@ -229,9 +230,10 @@ class _UserSideBookingSecondScreenState
   }
 
   Widget dashedHorizontalLine() {
+    int dottedLines = AppUtils.isDesktopDevice(context) ? 16 : 12;
     return Row(
       children: [
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < dottedLines; i++)
           Container(
             margin: EdgeInsetsDirectional.only(end: 6, bottom: 8),
             width: 5,
@@ -240,6 +242,26 @@ class _UserSideBookingSecondScreenState
                     width: 0.5, color: AppColors.instance.lightGreyText)),
           ),
       ],
+    );
+  }
+
+  Widget userBookingServiceInformation(UserSideBookingSecondViewModel model) {
+    return Container(
+      padding: AppUtils.unifiedPaddingOfScreen(
+          start: 20, end: 20, top: 20, bottom: 20),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.instance.backGroundColor),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          selectedServiceName(),
+          Container(
+              width: 70,
+              // height: 50,
+              child: Image.network(widget.servicesData?.serviceImage ?? "",fit: BoxFit.cover,)),
+        ],
+      ),
     );
   }
 
@@ -258,7 +280,7 @@ class _UserSideBookingSecondScreenState
           Divider(),
           getLabelAndAmount(label: "Sub Total", price: "120 * 2 = \$240"),
           Divider(),
-          getLabelAndAmount(label: "Discount", price: "\$50"),
+          getLabelAndAmount(label: "Discount", price: "-\$50"),
           Divider(),
           getLabelAndAmount(label: "Tax", price: "\$100"),
           Divider(),
@@ -266,6 +288,13 @@ class _UserSideBookingSecondScreenState
         ],
       ),
     );
+  }
+
+  Widget selectedServiceName() {
+    return AutoSizeText(widget.servicesData?.serviceName ?? '',
+        style: TextStyleUtil.textStyleRaqiBook(
+          context,
+        ));
   }
 
   Widget getLabelAndAmount(
@@ -319,7 +348,7 @@ class _UserSideBookingSecondScreenState
       BuildContext context, UserSideBookingSecondViewModel model) {
     return Expanded(
       child: CupertinoButton(
-        color: AppColors.instance.white,
+        color: AppColors.instance.backGroundColor,
         onPressed: () {
           AppUtils.pop(context: context);
         },
@@ -339,8 +368,6 @@ class _UserSideBookingSecondScreenState
       child: CupertinoButton(
         color: AppColors.instance.themeColor,
         onPressed: () {
-          AppUtils.navigationRoute(
-              context: context, route: UserSideBookingSecondScreen());
         },
         borderRadius: BorderRadius.circular(12),
         padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),

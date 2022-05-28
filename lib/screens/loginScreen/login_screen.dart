@@ -162,11 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                          color: AppColors.instance.white),
                                    ),
                                    onPressed: () {
-                                     Navigator.push(
-                                       context,
-                                       MaterialPageRoute(
-                                           builder: (context) => DashboardScreen()),
-                                     );
+                                     AppUtils.pushRoute(context: context, route: DashboardScreen());
                                    }),
                              ),
                              UniversalPlatform.isWeb ? AppUtils.webSpacingBetween(context) :  SizedBox(

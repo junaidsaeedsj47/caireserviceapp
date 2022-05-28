@@ -6,4 +6,14 @@ class Constants {
   static double webTitleFontSize=30;
   static double webSubTitleFontSize=24;
   static double webDescriptionFontSize=20;
+
+  ///different screens width
+  static int webScreenWidth=1300;
+
+  static int desktopScreenWidth=1000;
+
+  static int tabletScreenWidth=800;
+
+  static int mobileScreenWidth=640;
+
 }

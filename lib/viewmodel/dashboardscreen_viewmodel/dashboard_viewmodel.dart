@@ -15,10 +15,12 @@ class DashboardViewModel extends ChangeNotifier {
   List lisOfCategories = [
     "Plumber",
     "Carpenter",
+    "Packing and Movers",
     "Painting",
     "Salon",
     "Smart Home",
-    "AC Repair"
+    "AC Repair",
+    "Car Mechanic"
   ];
   List<ServiceModel> servicesData = [];
 

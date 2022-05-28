@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
@@ -263,7 +264,7 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                           context,
                                           showTitleActions: true,
                                           onChanged: (date) {
-                                            model.updateExpiryDate(date);
+
                                             // model.selectedDate = date;
                                             print('change $date in time zone ' +
                                                 date.timeZoneOffset.inHours
@@ -271,16 +272,13 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                           },
                                           onConfirm: (date) {
                                             print('confirm $date');
+                                            model.updateExpiryDate(date);
                                           },
                                           currentTime: DateTime.now(),
                                         );
                                       },
-                                      child: Text(
-                                          model.selectedDate.month.toString() +
-                                              "/" +
-                                              model.selectedDate.year
-                                                  .toString()
-                                                  .substring(2, 4),
+                                      child: AutoSizeText(
+                                         AppUtils.showFormattedDate(model.selectedDate),
                                           style: TextStyleUtil
                                               .textStyleBeforeLoginRaqiBook(
                                             context,
@@ -311,7 +309,7 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                   color: AppColors.instance.white),
                             ),
                             onPressed: () {
-                              AppUtils.navigationRoute(
+                              AppUtils.pushRoute(
                                   context: context,
                                   route: ProviderDashboardScreen());
                               // Navigator.push(
@@ -345,7 +343,7 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                AppUtils.navigationRoute(
+                                AppUtils.pushRoute(
                                     context: context, route: LoginScreen());
                               },
                               child: Text(

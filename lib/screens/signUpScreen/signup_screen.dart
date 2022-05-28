@@ -293,12 +293,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (model.accountType != null) {
                               if (model.accountType ==
                                   CurrentAccountType.Provider) {
-                                AppUtils.navigationRoute(
+                                AppUtils.pushRoute(
                                     context: context,
                                     route: ProviderSignUpSecondScreen());
                               } else if (model.accountType ==
                                   CurrentAccountType.Consumer) {
-                                AppUtils.navigationRoute(
+                                AppUtils.pushRoute(
                                     context: context,
                                     route: UserSignUpSecondScreen());
                               }
@@ -333,7 +333,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              AppUtils.navigationRoute(
+                              AppUtils.pushRoute(
                                   context: context, route: LoginScreen());
                             },
                             child: Text(

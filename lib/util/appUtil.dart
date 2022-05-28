@@ -1,6 +1,10 @@
+import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/device/device.dart';
+import 'package:caireapp/util/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class AppUtils {
@@ -18,8 +22,46 @@ class AppUtils {
 //    return Platform.isIOS;
     return UniversalPlatform.isWeb;
   }
+  static showFormattedDate(DateTime date){
+    return DateFormat('dd-MM-yyyy').format(date);
+  }
 
-  static void navigationRoute(
+  static showFormattedTime(DateTime time){
+    return DateFormat('kk:mm a').format(time);
+  }
+  static bool isTabletDevice(BuildContext context) {
+    return MediaQuery.of(context).size.width < 1100 &&
+        MediaQuery.of(context).size.width >= 650;
+  }
+
+  static bool isMobileDevice(BuildContext context) {
+    return MediaQuery.of(context).size.width < 650;
+  }
+
+  static bool isDesktopDevice(BuildContext context) {
+    return MediaQuery.of(context).size.width >= 1100;
+  }
+
+  static AppBar showAppBar(
+      {BuildContext? context, String? title, bool showBack = true}) {
+    return AppBar(
+      automaticallyImplyLeading: showBack ? true : false,
+      iconTheme: IconThemeData(
+        color: AppColors.instance.textWhiteColor, //change your color here
+      ),
+      centerTitle: true,
+      title: Text(
+        title ?? "",
+        style: TextStyleUtil.textStyleRaqiBook(context!,
+            fontSize: 24, color: AppColors.instance.textWhiteColor),
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: AppColors.instance.themeColor, // Status bar
+      ),
+    );
+  }
+
+  static void pushRoute(
       {@required BuildContext? context,
       bool fromRoot = false,
       required Widget route,
@@ -106,17 +148,20 @@ class AppUtils {
         top: top ?? 20,
         bottom: bottom ?? 20);
   }
-  static SizedBox webTitleSpacing(BuildContext context){
-   return SizedBox(
-      height: DynamicSize.height(0.04, context),
-    );
-  }
-  static SizedBox webSubTitleSpacing(BuildContext context){
+
+  static SizedBox webTitleSpacing(BuildContext context) {
     return SizedBox(
       height: DynamicSize.height(0.04, context),
     );
   }
-  static SizedBox webSpacingBetween(BuildContext context){
+
+  static SizedBox webSubTitleSpacing(BuildContext context) {
+    return SizedBox(
+      height: DynamicSize.height(0.04, context),
+    );
+  }
+
+  static SizedBox webSpacingBetween(BuildContext context) {
     return SizedBox(
       height: DynamicSize.height(0.04, context),
     );

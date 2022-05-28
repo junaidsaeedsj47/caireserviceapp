@@ -4,6 +4,15 @@ import 'package:flutter/material.dart';
 import 'extensionForFontWeight.dart';
 
 class TextStyleUtil {
+  static TextStyle textStyleForAppLogo(BuildContext context, {double fontSize = 16, Color? color,FontWeight? fontWeight,TextDecoration? customDecoration}) {
+    return _textStyle(
+      context,
+      fontSize: fontSize,
+      color: color??AppColors.instance.white,
+      fontWeight: fontWeight ?? AppFontWeight.regular,
+      decoration: customDecoration,
+    );
+  }
   static TextStyle textStyleBeforeLoginRaqiBook(BuildContext context, {double fontSize = 16, Color? color,FontWeight? fontWeight,TextDecoration? customDecoration}) {
     return _textStyle(
       context,

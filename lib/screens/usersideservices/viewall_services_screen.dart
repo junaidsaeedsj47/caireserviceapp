@@ -8,9 +8,9 @@ import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/usersideservices/viewall_services_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ViewAllServicesScreen extends StatefulWidget {
   final String? title;
@@ -34,45 +34,37 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
             viewModelBuilder: () => viewAllServicesViewModel,
             builder: (contextBuilder, model, child) {
               return Scaffold(
-                appBar: AppBar(
-                  iconTheme: IconThemeData(
-                    color: AppColors
-                        .instance.textWhiteColor, //change your color here
-                  ),
-                  centerTitle: true,
-                  title: Text(
-                    widget.title??"",
-                    style:
-                    TextStyleUtil.textStyleRaqiBook(context, fontSize: 24,color: AppColors.instance.textWhiteColor),
-                  ),
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: AppColors.instance.themeColor, // Status bar
-                  ),
-                ),
+                appBar: AppUtils.showAppBar(title: widget.title??"",context: context,showBack:UniversalPlatform.isWeb ? false : true, ),
                 body: SingleChildScrollView(
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 10, end: 10, top: 20),
-                        child: getSearchFieldFilter(context),
-                      ),
-                      Container(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 10, end: 10, top: 20, bottom: 20),
-                        child: Column(
-                          children: [
-                            getSubTitleServices(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            serviceProviderCard(context, model),
-                          ],
+                  child: Container(
+                    padding: UniversalPlatform.isWeb
+                        ? EdgeInsetsDirectional.only(start: 30, end: 30)
+                        : EdgeInsetsDirectional.only(
+                        start: 10, end: 10),
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 10, end: 10, top: 20),
+                          child: getSearchFieldFilter(context),
                         ),
-                      ),
-                    ],
+                        Container(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 10, end: 10, top: 20, bottom: 20),
+                          child: Column(
+                            children: [
+                              getSubTitleServices(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            AppUtils.isDesktopDevice(context) ? getWebServicesListCard(context, model) : serviceProviderCard(context, model) ,
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 bottomNavigationBar: BottomNavigationBar(
@@ -215,71 +207,136 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
     );
   }
 
-  Widget getSubTitleCategories() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "Categories",
-          style: TextStyleUtil.textStyleRaqiBook(context,
-              fontWeight: AppFontWeight.bold, fontSize: 20),
-        ),
-        GestureDetector(
-          onTap: () {
-            AppUtils.navigationRoute(
-                context: context, route: ViewAllCategoriesScreen());
-          },
-          child: Text(
-            "View All",
-            style: TextStyleUtil.textStyleRaqiBook(context,
-                color: AppColors.instance.lightGreyText),
-          ),
-        ),
-      ],
-    );
-  }
 
-  Widget getCategoriesList(
+  Widget getWebServicesListCard(
       BuildContext context, ViewAllServicesViewModel model) {
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: model.lisOfCategories.length,
-      itemBuilder: (context, index) => Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey)),
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12)),
-                      color: AppColors.instance.backGroundColor),
-                  child: const Icon(
-                    Icons.home_repair_service,
-                    color: Colors.black,
-                  )),
+      itemCount: model.servicesData.length,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: (){
+          AppUtils.pushRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+        },
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(bottom: 20),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.instance.backGroundColor),
+            // margin: EdgeInsetsDirectional.only(end: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      // height: 150,
+                      child: Image.network(
+                        model.servicesData[index].serviceImage.toString(),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Positioned.fill(
+                        child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                  end: 15, bottom: 15),
+                              child: getPriceTag(model, index),
+                            ))),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.,
+                    children: [
+                      getRatingStars(model, index,
+                          model.servicesData[index].serviceProviderRating!),
+                      // RatingBar.builder(
+                      //   ignoreGestures: false,
+                      //   itemSize: 15,
+                      //   initialRating:
+                      //       model.servicesData[index].serviceProviderRating!,
+                      //   minRating: 1,
+                      //   direction: Axis.horizontal,
+                      //   allowHalfRating: false,
+                      //   itemCount: 5,
+                      //   unratedColor: Colors.transparent,
+                      //   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      //   itemBuilder: (context, _) =>
+                      //       Image.asset("assets/images/goldenStar.png"),
+                      //   onRatingUpdate: (rating) {
+                      //     print(rating);
+                      //   },
+                      // ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        model.servicesData[index].serviceProviderRating
+                            .toString(),
+                        style: TextStyleUtil.textStyleRaqiBook(context),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    model.servicesData[index].serviceName!,
+                    style: TextStyleUtil.textStyleRaqiBook(context,
+                        fontWeight: AppFontWeight.bold, fontSize: 18),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.only(start: 20),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: NetworkImage(
+                            'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        model.servicesData[index].serviceProviderName!,
+                        style: TextStyleUtil.textStyleRaqiBook(context,
+                            color: AppColors.instance.lightGreyText),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(model.lisOfCategories[index],
-                style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14)),
-            SizedBox(
-              height: 5,
-            ),
-          ],
+          ),
         ),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 15,
         crossAxisSpacing: 15,
-        // childAspectRatio:,
+        childAspectRatio: 0.85,
       ),
     );
   }
@@ -293,14 +350,14 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
           style: TextStyleUtil.textStyleRaqiBook(context,
               fontWeight: AppFontWeight.bold, fontSize: 20),
         ),
-        GestureDetector(
-          onTap: () {},
-          child: Text(
-            "View All",
-            style: TextStyleUtil.textStyleRaqiBook(context,
-                color: AppColors.instance.lightGreyText),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () {},
+        //   child: Text(
+        //     "View All",
+        //     style: TextStyleUtil.textStyleRaqiBook(context,
+        //         color: AppColors.instance.lightGreyText),
+        //   ),
+        // ),
       ],
     );
   }
@@ -317,7 +374,7 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
           itemBuilder: (context, int index) {
             return GestureDetector(
               onTap: (){
-                AppUtils.navigationRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+                AppUtils.pushRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
               },
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(bottom: 20),

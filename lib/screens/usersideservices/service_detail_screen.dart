@@ -11,6 +11,7 @@ import 'package:caireapp/viewmodel/usersideservices/service_detail_viewmodel.dar
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ServiceDetailScreen extends StatefulWidget {
   final ServiceModel? servicesData;
@@ -32,6 +33,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         viewModelBuilder: () => serviceDetailsViewModel,
         builder: (contextBuilder, model, child) {
           return Scaffold(
+            appBar: AppUtils.showAppBar(context: context,title: "Service Details",showBack:UniversalPlatform.isWeb? false : true),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,10 +50,11 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          width: double.infinity,
                           height: 400,
                           child: Image.network(
                             widget.servicesData!.serviceImage.toString(),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -125,7 +128,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             CupertinoButton(
                               // color: AppColors.instance.themeColor,
                               onPressed: () {
-                                AppUtils.navigationRoute(
+                                AppUtils.pushRoute(
                                     context: context,
                                     route: ProviderDetailsScreen(
                                       servicesData: widget.servicesData,
@@ -376,8 +379,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {
-        AppUtils.navigationRoute(
-            context: context, route: UserSideBookingScreen());
+        AppUtils.pushRoute(
+            context: context, route: UserSideBookingScreen(servicesData: widget.servicesData,));
       },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),

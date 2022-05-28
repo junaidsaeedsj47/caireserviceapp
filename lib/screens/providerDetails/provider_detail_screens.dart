@@ -357,7 +357,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
         ),
         GestureDetector(
           onTap: () {
-            AppUtils.navigationRoute(
+            AppUtils.pushRoute(
                 context: context,
                 route: ViewAllServicesScreen(
                   servicesData: widget.servicesData,
@@ -385,7 +385,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
           itemBuilder: (context, int index) {
             return GestureDetector(
               onTap: () {
-                AppUtils.navigationRoute(
+                AppUtils.pushRoute(
                     context: context,
                     route: ServiceDetailScreen(
                       servicesData: model.servicesData[index],

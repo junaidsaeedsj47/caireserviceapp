@@ -81,7 +81,7 @@ class ProviderDetailsViewModel extends ChangeNotifier {
         providerProfileImage:
         'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
         providerJobTitle: "Fixing TV Wire",
-        providerPhoneNumber: "+915434424234",
+        providerPhoneNumber: "+922423422221",
         providerName: "Esther Howard",
         providerRating: 2.3,
         providerMemberSince:"2022",

@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
           return Scaffold(
             body: GestureDetector(
               onTap: (){
-                AppUtils.navigationRoute(context: context, route: const LoginScreen());
+                AppUtils.pushRoute(context: context, route: const LoginScreen());
               },
               child: Center(
                 child: Container(
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           animatedTexts: [
                             WavyAnimatedText(
                               'Caire',
-                              textStyle: TextStyleUtil.textStyleRaqiBook(context,fontSize: 24,),
+                              textStyle: TextStyleUtil.textStyleForAppLogo(context,fontSize: 24,),
                             ),
                           ],
                           isRepeatingAnimation: false,

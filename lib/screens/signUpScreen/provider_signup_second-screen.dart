@@ -109,94 +109,124 @@ class _ProviderSignUpSecondScreenState
                       const SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: CarieTextFieldWithoutLabel(
-                              focusedBorderColor:
-                                  AppColors.instance.appTextColor,
-                              enableBorderColor:
-                                  AppColors.instance.appTextColor,
-                              obscureText: false,
-                              controller: model.consentController,
-                              hintText: 'Consent',
-                              hintStyle:
-                                  TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                      context,
-                                      fontSize: 14),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 14, horizontal: 14),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 2.5,
-                              // margin: const EdgeInsetsDirectional.only(
-                              //     start: 20, end: 20),
-                              padding: EdgeInsetsDirectional.only(
-                                  top: 8, start: 20, bottom: 8, end: 20),
-                              decoration: BoxDecoration(
-                                color: AppColors.instance.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                border: Border.all(
-                                    color: AppColors.instance.appTextColor),
-                              ),
-                              child: DropdownButton<dynamic>(
-                                hint: Text(
-                                  'Select Service',
-                                  style: TextStyleUtil
-                                      .textStyleBeforeLoginRaqiBook(context,
-                                          fontSize: 14,
-                                          color:
-                                              AppColors.instance.appTextColor),
-                                ),
-                                value: model.serviceDropdownValue!.isNotEmpty
-                                    ? model.serviceDropdownValue
-                                    : null,
-                                isDense: true,
-                                isExpanded: true,
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: AppColors.instance.appTextColor,
-                                ),
-                                iconSize: 24,
-                                underline: SizedBox(
-                                  height: 0,
-                                  width: 0,
-                                ),
-                                style:
-                                    TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                  context,
-                                  fontSize: 14,
-                                ),
-                                onChanged: (dynamic dropDownValue) {
-                                  model.updateSelectedValue(dropDownValue);
-                                },
-                                items: model.listOfServices
-                                    .map<DropdownMenuItem>((dynamic value) {
-                                  return DropdownMenuItem(
-                                    value: value,
-                                    child: Text(
-                                      value ?? "",
-                                      style: TextStyleUtil
-                                          .textStyleBeforeLoginRaqiBook(context,
-                                              fontSize: 14,
-                                              color: AppColors
-                                                  .instance.appTextColor),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ],
+                      CarieTextFieldWithoutLabel(
+                        focusedBorderColor:
+                        AppColors.instance.appTextColor,
+                        enableBorderColor:
+                        AppColors.instance.appTextColor,
+                        obscureText: false,
+                        controller: model.consentController,
+                        hintText: 'Consent',
+                        hintStyle:
+                        TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 14, horizontal: 14),
                       ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CarieTextFieldWithoutLabel(
+                        focusedBorderColor: AppColors.instance.appTextColor,
+                        enableBorderColor: AppColors.instance.appTextColor,
+                        obscureText: false,
+                        controller: model.experienceController,
+                        hintText: 'Experience',
+                        hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                            context,
+                            fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 14, horizontal: 14),
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Expanded(
+                      //       child: CarieTextFieldWithoutLabel(
+                      //         focusedBorderColor:
+                      //             AppColors.instance.appTextColor,
+                      //         enableBorderColor:
+                      //             AppColors.instance.appTextColor,
+                      //         obscureText: false,
+                      //         controller: model.consentController,
+                      //         hintText: 'Consent',
+                      //         hintStyle:
+                      //             TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                      //                 context,
+                      //                 fontSize: 14),
+                      //         contentPadding: const EdgeInsets.symmetric(
+                      //             vertical: 14, horizontal: 14),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 15,
+                      //     ),
+                      //     Expanded(
+                      //       child: Container(
+                      //         width: MediaQuery.of(context).size.width / 2.5,
+                      //         // margin: const EdgeInsetsDirectional.only(
+                      //         //     start: 20, end: 20),
+                      //         padding: EdgeInsetsDirectional.only(
+                      //             top: 8, start: 20, bottom: 8, end: 20),
+                      //         decoration: BoxDecoration(
+                      //           color: AppColors.instance.white,
+                      //           borderRadius:
+                      //               BorderRadius.all(Radius.circular(5)),
+                      //           border: Border.all(
+                      //               color: AppColors.instance.appTextColor),
+                      //         ),
+                      //         child: DropdownButton<dynamic>(
+                      //           hint: Text(
+                      //             'Select Service',
+                      //             style: TextStyleUtil
+                      //                 .textStyleBeforeLoginRaqiBook(context,
+                      //                     fontSize: 14,
+                      //                     color:
+                      //                         AppColors.instance.appTextColor),
+                      //           ),
+                      //           value: model.serviceDropdownValue!.isNotEmpty
+                      //               ? model.serviceDropdownValue
+                      //               : null,
+                      //           isDense: true,
+                      //           isExpanded: true,
+                      //           icon: Icon(
+                      //             Icons.arrow_drop_down,
+                      //             color: AppColors.instance.appTextColor,
+                      //           ),
+                      //           iconSize: 24,
+                      //           underline: SizedBox(
+                      //             height: 0,
+                      //             width: 0,
+                      //           ),
+                      //           style:
+                      //               TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                      //             context,
+                      //             fontSize: 14,
+                      //           ),
+                      //           onChanged: (dynamic dropDownValue) {
+                      //             model.updateSelectedValue(dropDownValue);
+                      //           },
+                      //           items: model.listOfServices
+                      //               .map<DropdownMenuItem>((dynamic value) {
+                      //             return DropdownMenuItem(
+                      //               value: value,
+                      //               child: Text(
+                      //                 value ?? "",
+                      //                 style: TextStyleUtil
+                      //                     .textStyleBeforeLoginRaqiBook(context,
+                      //                         fontSize: 14,
+                      //                         color: AppColors
+                      //                             .instance.appTextColor),
+                      //                 textAlign: TextAlign.start,
+                      //               ),
+                      //             );
+                      //           }).toList(),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       // Container(
                       //   margin: const EdgeInsets.symmetric(horizontal: 30),
                       //   height: 54,
@@ -221,39 +251,78 @@ class _ProviderSignUpSecondScreenState
                       const SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        'Pick radius',
-                        style:
-                            TextStyleUtil.textStyleBeforeLoginRaqiBook(context),
-                      ),
-
-                      Slider(
-                        value: _currentSliderValue,
-                        min: 0,
-                        max: 100,
-                        divisions: 5,
-                        inactiveColor: AppColors.instance.lightGreyText,
-                        thumbColor: AppColors.instance.themeColor,
-                        activeColor: AppColors.instance.themeColor,
-                        label: _currentSliderValue.round().toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            _currentSliderValue = value;
-                          });
-                        },
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Offer Services At : ',
-                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                context,
-                                fontSize: 14),
+                          Expanded(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              // margin: const EdgeInsetsDirectional.only(
+                              //     start: 20, end: 20),
+                              padding: EdgeInsetsDirectional.only(
+                                  top: 8, start: 20, bottom: 8, end: 20),
+                              decoration: BoxDecoration(
+                                color: AppColors.instance.white,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                    color: AppColors.instance.appTextColor),
+                              ),
+                              child: DropdownButton<dynamic>(
+                                hint: Text(
+                                  'Select Service',
+                                  style: TextStyleUtil
+                                      .textStyleBeforeLoginRaqiBook(context,
+                                      fontSize: 14,
+                                      color:
+                                      AppColors.instance.appTextColor),
+                                ),
+                                value: model.serviceDropdownValue!.isNotEmpty
+                                    ? model.serviceDropdownValue
+                                    : null,
+                                isDense: true,
+                                isExpanded: true,
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: AppColors.instance.appTextColor,
+                                ),
+                                iconSize: 24,
+                                underline: SizedBox(
+                                  height: 0,
+                                  width: 0,
+                                ),
+                                style:
+                                TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                  context,
+                                  fontSize: 14,
+                                ),
+                                onChanged: (dynamic dropDownValue) {
+                                  model.updateSelectedValue(dropDownValue);
+                                },
+                                items: model.listOfServices
+                                    .map<DropdownMenuItem>((dynamic value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Text(
+                                      value ?? "",
+                                      style: TextStyleUtil
+                                          .textStyleBeforeLoginRaqiBook(context,
+                                          fontSize: 14,
+                                          color: AppColors
+                                              .instance.appTextColor),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                           ),
+                          // Text(
+                          //   'Offer Services At : ',
+                          //   style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                          //       context,
+                          //       fontSize: 14),
+                          // ),
                           SizedBox(
                             width: 10,
                           ),
@@ -321,18 +390,39 @@ class _ProviderSignUpSecondScreenState
                       const SizedBox(
                         height: 15,
                       ),
-                      CarieTextFieldWithoutLabel(
-                        focusedBorderColor: AppColors.instance.appTextColor,
-                        enableBorderColor: AppColors.instance.appTextColor,
-                        obscureText: false,
-                        controller: model.experienceController,
-                        hintText: 'Experience',
-                        hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                            context,
-                            fontSize: 14),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 14, horizontal: 14),
+                      Text(
+                        'Pick radius',
+                        style:
+                        TextStyleUtil.textStyleBeforeLoginRaqiBook(context),
                       ),
+
+                      Slider(
+                        value: _currentSliderValue,
+                        min: 0,
+                        max: 100,
+                        divisions: 5,
+                        inactiveColor: AppColors.instance.lightGreyText,
+                        thumbColor: AppColors.instance.themeColor,
+                        activeColor: AppColors.instance.themeColor,
+                        label: _currentSliderValue.round().toString(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _currentSliderValue = value;
+                          });
+                        },
+                      ),
+                      // CarieTextFieldWithoutLabel(
+                      //   focusedBorderColor: AppColors.instance.appTextColor,
+                      //   enableBorderColor: AppColors.instance.appTextColor,
+                      //   obscureText: false,
+                      //   controller: model.experienceController,
+                      //   hintText: 'Experience',
+                      //   hintStyle: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                      //       context,
+                      //       fontSize: 14),
+                      //   contentPadding: const EdgeInsets.symmetric(
+                      //       vertical: 14, horizontal: 14),
+                      // ),
                       // const SizedBox(
                       //   height: 15,
                       // ),
@@ -400,21 +490,20 @@ class _ProviderSignUpSecondScreenState
                                         context,
                                         showTitleActions: true,
                                         onChanged: (date) {
-                                          model.updateSelectedTime(date);
+
                                           print('change $date in time zone ' +
                                               date.timeZoneOffset.inHours
                                                   .toString());
                                         },
                                         onConfirm: (date) {
+                                          model.updateSelectedTime(date);
                                           print('confirm $date');
                                         },
                                         currentTime: DateTime.now(),
                                       );
                                     },
                                     child: Text(
-                                      model.selectedDate.hour.toString() +
-                                          ":" +
-                                          model.selectedDate.minute.toString(),
+                                      AppUtils.showFormattedTime(model.selectedDate),
                                       style: TextStyleUtil
                                           .textStyleBeforeLoginRaqiBook(context,
                                               fontSize: 14),
@@ -481,7 +570,7 @@ class _ProviderSignUpSecondScreenState
                             //   context,
                             //   MaterialPageRoute(builder: (context) => HomeScreen()),
                             // );
-                            AppUtils.navigationRoute(
+                            AppUtils.pushRoute(
                                 context: context,
                                 route: ProviderDashboardScreen());
                           },
@@ -511,7 +600,7 @@ class _ProviderSignUpSecondScreenState
                           ),
                           GestureDetector(
                             onTap: () {
-                              AppUtils.navigationRoute(
+                              AppUtils.pushRoute(
                                   context: context, route: LoginScreen());
                             },
                             child: Text(

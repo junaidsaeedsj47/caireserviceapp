@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
@@ -7,7 +8,9 @@ import 'package:caireapp/viewmodel/categories/viewall_categories_viewmodel.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ViewAllCategoriesScreen extends StatefulWidget {
   final bool showBack, showMenuIcon;
@@ -35,104 +38,106 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
             },
             viewModelBuilder: () => viewAllCategoriesViewModel,
             builder: (contextBuilder, model, child) {
-              return Scaffold(
-                appBar: AppBar(
-                  iconTheme: IconThemeData(
-                    color: AppColors
-                        .instance.textWhiteColor, //change your color here
-                  ),
-                  centerTitle: true,
-                  title: Text(
-                    "Categories",
-                    style: TextStyleUtil.textStyleRaqiBook(context,
-                        fontSize: 24, color: AppColors.instance.textWhiteColor),
-                  ),
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: AppColors.instance.themeColor, // Status bar
-                  ),
-                ),
-                body: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsetsDirectional.only(start: 10, end: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 20,
+              return ResponsiveWrapper.builder(
+                  Scaffold(
+                    appBar: AppUtils.showAppBar(
+                        context: context,
+                        showBack: UniversalPlatform.isWeb ? false : true,
+                        title: "Categories"),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: UniversalPlatform.isWeb
+                                ? EdgeInsetsDirectional.only(start: 30, end: 30)
+                                : EdgeInsetsDirectional.only(
+                                    start: 10, end: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: UniversalPlatform.isWeb ? 40 : 20,
+                                ),
+                                getCategoriesList(context, model),
+                                SizedBox(
+                                  height: UniversalPlatform.isWeb ? 40 : 20,
+                                ),
+                              ],
                             ),
-                            getCategoriesList(context, model),
-                            const SizedBox(
-                              height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    bottomNavigationBar: BottomNavigationBar(
+                        showSelectedLabels: false,
+                        showUnselectedLabels: false,
+                        items: <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                            activeIcon: Icon(
+                              Icons.home,
+                              color: AppColors.instance.themeColor,
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                            icon: Icon(
+                              Icons.home,
+                              color: AppColors.instance.appIconColor,
+                            ),
+                            label: 'Home',
+                          ),
+                          BottomNavigationBarItem(
+                              activeIcon: Icon(
+                                Icons.chat,
+                                color: AppColors.instance.themeColor,
+                              ),
+                              icon: Icon(
+                                Icons.chat,
+                                color: AppColors.instance.appIconColor,
+                              ),
+                              label: 'Chat',
+                              backgroundColor: Colors.yellow),
+                          BottomNavigationBarItem(
+                            activeIcon: Icon(
+                              Icons.notifications,
+                              color: AppColors.instance.themeColor,
+                            ),
+                            icon: Icon(
+                              Icons.notifications,
+                              color: AppColors.instance.appIconColor,
+                            ),
+                            label: 'Notification',
+                            backgroundColor: Colors.blue,
+                          ),
+                          BottomNavigationBarItem(
+                            activeIcon: Icon(
+                              Icons.person,
+                              color: AppColors.instance.themeColor,
+                            ),
+                            icon: Icon(
+                              Icons.person,
+                              color: AppColors.instance.appIconColor,
+                            ),
+                            label: 'Profile',
+                            backgroundColor: Colors.blue,
+                          ),
+                        ],
+                        type: BottomNavigationBarType.fixed,
+                        currentIndex: model.selectedIndex,
+                        selectedItemColor: AppColors.instance.appIconColor,
+                        iconSize: 25,
+                        onTap: model.onItemTapped,
+                        elevation: 5),
                   ),
-                ),
-                bottomNavigationBar: BottomNavigationBar(
-                    showSelectedLabels: false,
-                    showUnselectedLabels: false,
-                    items: <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                        activeIcon: Icon(
-                          Icons.home,
-                          color: AppColors.instance.themeColor,
-                        ),
-                        icon: Icon(
-                          Icons.home,
-                          color: AppColors.instance.appIconColor,
-                        ),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                          activeIcon: Icon(
-                            Icons.chat,
-                            color: AppColors.instance.themeColor,
-                          ),
-                          icon: Icon(
-                            Icons.chat,
-                            color: AppColors.instance.appIconColor,
-                          ),
-                          label: 'Chat',
-                          backgroundColor: Colors.yellow),
-                      BottomNavigationBarItem(
-                        activeIcon: Icon(
-                          Icons.notifications,
-                          color: AppColors.instance.themeColor,
-                        ),
-                        icon: Icon(
-                          Icons.notifications,
-                          color: AppColors.instance.appIconColor,
-                        ),
-                        label: 'Notification',
-                        backgroundColor: Colors.blue,
-                      ),
-                      BottomNavigationBarItem(
-                        activeIcon: Icon(
-                          Icons.person,
-                          color: AppColors.instance.themeColor,
-                        ),
-                        icon: Icon(
-                          Icons.person,
-                          color: AppColors.instance.appIconColor,
-                        ),
-                        label: 'Profile',
-                        backgroundColor: Colors.blue,
-                      ),
-                    ],
-                    type: BottomNavigationBarType.fixed,
-                    currentIndex: model.selectedIndex,
-                    selectedItemColor: AppColors.instance.appIconColor,
-                    iconSize: 25,
-                    onTap: model.onItemTapped,
-                    elevation: 5),
-              );
+                  // maxWidth:700,
+                  // minWidth: 480,
+                  // defaultScale: true,
+                  breakpoints: [
+                    ResponsiveBreakpoint.resize(480, name: MOBILE),
+                    ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                    ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                  ],
+                  background: Container(color: Color(0xFFF5F5F5)));
             }));
   }
 
@@ -148,7 +153,7 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
             border: Border.all(color: Colors.grey)),
         child: GestureDetector(
           onTap: () {
-            AppUtils.navigationRoute(
+            AppUtils.pushRoute(
                 context: context,
                 route: ViewAllServicesScreen(
                   title: model.lisOfCategories[index],
@@ -164,7 +169,7 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
                             topLeft: Radius.circular(12),
                             topRight: Radius.circular(12)),
                         color: AppColors.instance.backGroundColor),
-                    child: const Icon(
+                    child: Icon(
                       Icons.home_repair_service,
                       color: Colors.black,
                       size: 40,
@@ -175,9 +180,10 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
-                child: Text(model.lisOfCategories[index],
+                child: AutoSizeText(model.lisOfCategories[index],
+                    softWrap: true,
                     style: TextStyleUtil.textStyleRaqiBook(context,
-                        fontSize: 18, fontWeight: AppFontWeight.regular)),
+                        fontSize: 16, fontWeight: AppFontWeight.regular)),
               ),
               SizedBox(
                 height: 5,
@@ -186,10 +192,11 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
           ),
         ),
       ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 15,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: UniversalPlatform.isWeb ? 1.5 : 1,
+        crossAxisCount: AppUtils.isDesktopDevice(context) ? 3 :  2,
+        mainAxisSpacing: UniversalPlatform.isWeb ? 30 : 20,
+        crossAxisSpacing: UniversalPlatform.isWeb ? 30 : 15,
         // childAspectRatio:,
       ),
     );
