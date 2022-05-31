@@ -1,4 +1,5 @@
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,25 +32,10 @@ class _BookingScreenState extends State<BookingScreen> {
           builder: (contextBuilder, model, child) {
             return Scaffold(
               backgroundColor: Colors.white,
+              appBar: AppUtils.showAppBar(context: context,title: "Booking",showBack: false),
+              // bottomNavigationBar: AppUtils.appBottomBar(context),
               body: Column(
                 children: [
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    color: AppColors.instance.themeColor,
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 30),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Booking',
-                          style: TextStyleUtil.textStyleRaqiBookBold(context,
-                              color: Colors.white, fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
                   // SizedBox(
                   //   height: DynamicSize.height(0.1, context),
                   // ),

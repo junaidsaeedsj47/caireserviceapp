@@ -1,7 +1,11 @@
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/device/device.dart';
+import 'package:caireapp/screens/booking/booking_screen.dart';
+import 'package:caireapp/screens/chat/chat_screen.dart';
+import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
 import 'package:caireapp/util/text.dart';
+import 'package:caireapp/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +13,7 @@ import 'package:universal_platform/universal_platform.dart';
 
 class AppUtils {
   AppUtils._();
-
+ static int selectedIndex = 0;
   static bool isIOS() {
     return UniversalPlatform.isIOS;
   }
@@ -43,13 +47,13 @@ class AppUtils {
   }
 
   static AppBar showAppBar(
-      {BuildContext? context, String? title, bool showBack = true}) {
+      {BuildContext? context, String? title, bool showBack = true,bool centerTitle=true,}) {
     return AppBar(
       automaticallyImplyLeading: showBack ? true : false,
       iconTheme: IconThemeData(
         color: AppColors.instance.textWhiteColor, //change your color here
       ),
-      centerTitle: true,
+      centerTitle: centerTitle,
       title: Text(
         title ?? "",
         style: TextStyleUtil.textStyleRaqiBook(context!,
@@ -60,7 +64,67 @@ class AppUtils {
       ),
     );
   }
-
+  static Widget appBottomBar(BuildContext context){
+    return BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.home,
+              color: AppColors.instance.themeColor,
+            ),
+            icon: Icon(
+              Icons.home,
+              color: AppColors.instance.appIconColor,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+              activeIcon: Icon(
+                Icons.chat,
+                color: AppColors.instance.themeColor,
+              ),
+              icon: Icon(
+                Icons.chat,
+                color: AppColors.instance.appIconColor,
+              ),
+              label: 'Chat',
+              backgroundColor: Colors.yellow),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.notifications,
+              color: AppColors.instance.themeColor,
+            ),
+            icon: Icon(
+              Icons.event_note_rounded,
+              color: AppColors.instance.appIconColor,
+            ),
+            label: 'Orders',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.person,
+              color: AppColors.instance.themeColor,
+            ),
+            icon: Icon(
+              Icons.person,
+              color: AppColors.instance.appIconColor,
+            ),
+            label: 'Profile',
+            backgroundColor: Colors.blue,
+          ),
+        ],
+        type: BottomNavigationBarType.fixed,
+        currentIndex: selectedIndex,
+        selectedItemColor: AppColors.instance.appIconColor,
+        iconSize: 25,
+        onTap: (index){
+          // changeSelectedScreen(index);
+        },
+        elevation: 5);
+}
   static void pushRoute(
       {@required BuildContext? context,
       bool fromRoot = false,

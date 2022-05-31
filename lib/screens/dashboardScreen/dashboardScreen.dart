@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/device/device.dart';
 import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
+import 'package:caireapp/screens/chat/chat_screen.dart';
 import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
 import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
@@ -73,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                         Container(
                           padding: const EdgeInsetsDirectional.only(
-                              start: 10, end: 10, top: 20, bottom: 20),
+                              start: 10, end: 10, top: 20, bottom: 70),
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                             begin: Alignment.bottomLeft,
@@ -96,63 +97,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ],
                     ),
                   ),
-                  bottomNavigationBar: BottomNavigationBar(
-                      showSelectedLabels: false,
-                      showUnselectedLabels: false,
-                      items: <BottomNavigationBarItem>[
-                        BottomNavigationBarItem(
-                          activeIcon: Icon(
-                            Icons.home,
-                            color: AppColors.instance.themeColor,
-                          ),
-                          icon: Icon(
-                            Icons.home,
-                            color: AppColors.instance.appIconColor,
-                          ),
-                          label: 'Home',
-                        ),
-                        BottomNavigationBarItem(
-                            activeIcon: Icon(
-                              Icons.chat,
-                              color: AppColors.instance.themeColor,
-                            ),
-                            icon: Icon(
-                              Icons.chat,
-                              color: AppColors.instance.appIconColor,
-                            ),
-                            label: 'Chat',
-                            backgroundColor: Colors.yellow),
-                        BottomNavigationBarItem(
-                          activeIcon: Icon(
-                            Icons.notifications,
-                            color: AppColors.instance.themeColor,
-                          ),
-                          icon: Icon(
-                            Icons.notifications,
-                            color: AppColors.instance.appIconColor,
-                          ),
-                          label: 'Notification',
-                          backgroundColor: Colors.blue,
-                        ),
-                        BottomNavigationBarItem(
-                          activeIcon: Icon(
-                            Icons.person,
-                            color: AppColors.instance.themeColor,
-                          ),
-                          icon: Icon(
-                            Icons.person,
-                            color: AppColors.instance.appIconColor,
-                          ),
-                          label: 'Profile',
-                          backgroundColor: Colors.blue,
-                        ),
-                      ],
-                      type: BottomNavigationBarType.fixed,
-                      currentIndex: model.selectedIndex,
-                      selectedItemColor: AppColors.instance.appIconColor,
-                      iconSize: 25,
-                      onTap: model.onItemTapped,
-                      elevation: 5),
+                  // bottomNavigationBar: AppUtils.appBottomBar(context),
+                  // bottomNavigationBar: BottomNavigationBar(
+                  //     showSelectedLabels: false,
+                  //     showUnselectedLabels: false,
+                  //     items: <BottomNavigationBarItem>[
+                  //       BottomNavigationBarItem(
+                  //         activeIcon: Icon(
+                  //           Icons.home,
+                  //           color: AppColors.instance.themeColor,
+                  //         ),
+                  //         icon: Icon(
+                  //           Icons.home,
+                  //           color: AppColors.instance.appIconColor,
+                  //         ),
+                  //         label: 'Home',
+                  //       ),
+                  //       BottomNavigationBarItem(
+                  //           activeIcon: Icon(
+                  //             Icons.chat,
+                  //             color: AppColors.instance.themeColor,
+                  //           ),
+                  //           icon: Icon(
+                  //             Icons.chat,
+                  //             color: AppColors.instance.appIconColor,
+                  //           ),
+                  //           label: 'Chat',
+                  //           backgroundColor: Colors.yellow),
+                  //       BottomNavigationBarItem(
+                  //         activeIcon: Icon(
+                  //           Icons.notifications,
+                  //           color: AppColors.instance.themeColor,
+                  //         ),
+                  //         icon: Icon(
+                  //           Icons.notifications,
+                  //           color: AppColors.instance.appIconColor,
+                  //         ),
+                  //         label: 'Notification',
+                  //         backgroundColor: Colors.blue,
+                  //       ),
+                  //       BottomNavigationBarItem(
+                  //         activeIcon: Icon(
+                  //           Icons.person,
+                  //           color: AppColors.instance.themeColor,
+                  //         ),
+                  //         icon: Icon(
+                  //           Icons.person,
+                  //           color: AppColors.instance.appIconColor,
+                  //         ),
+                  //         label: 'Profile',
+                  //         backgroundColor: Colors.blue,
+                  //       ),
+                  //     ],
+                  //     type: BottomNavigationBarType.fixed,
+                  //     currentIndex: model.selectedIndex,
+                  //     selectedItemColor: AppColors.instance.appIconColor,
+                  //     iconSize: 25,
+                  //     onTap: (index){
+                  //       model.onItemTapped(index);
+                  //       if(index==0){
+                  //         AppUtils.pushRoute(context: context, route: DashboardScreen());
+                  //       }else if( index==1){
+                  //         AppUtils.pushRoute(context: context, route: ChatScreen());
+                  //       }else if(index==2){
+                  //         AppUtils.pushRoute(context: context, route: DashboardScreen());
+                  //       }else if(index==3){
+                  //         AppUtils.pushRoute(context: context, route: DashboardScreen());
+                  //       }
+                  //     },
+                  //     elevation: 5),
                 ),
               ),
               // maxWidth:700,
@@ -381,8 +394,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          height: 150,
-                          width: 300,
+                          height: 160,
+                          width: 270,
                           child: Image.network(
                             model.servicesData[index].serviceImage.toString(),
                             fit:  BoxFit.fill,
@@ -465,19 +478,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     List starToShow = [];
     if (ratingNo == 1 || ratingNo < 2) {
       starToShow = [1];
-      debugPrint('starToShow' + starToShow.toString());
+      // debugPrint('starToShow' + starToShow.toString());
     } else if (ratingNo == 2 || ratingNo < 3) {
       starToShow = [1, 2];
-      debugPrint('starToShow' + starToShow.toString());
+      // debugPrint('starToShow' + starToShow.toString());
     } else if (ratingNo == 3 || ratingNo < 4) {
       starToShow = [1, 2, 3];
-      debugPrint('starToShow' + starToShow.toString());
+      // debugPrint('starToShow' + starToShow.toString());
     } else if (ratingNo == 4 || ratingNo < 5) {
       starToShow = [1, 2, 3, 4];
-      debugPrint('starToShow' + starToShow.toString());
+      // debugPrint('starToShow' + starToShow.toString());
     } else {
       starToShow = [1, 2, 3, 4, 5];
-      debugPrint('starToShow' + starToShow.toString());
+      // debugPrint('starToShow' + starToShow.toString());
     }
     return Row(
       children: starToShow

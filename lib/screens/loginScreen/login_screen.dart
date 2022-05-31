@@ -1,10 +1,12 @@
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/screens/booking/booking_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/login_viewmodel/login_viewmodel.dart';
+import 'package:caireapp/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -115,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                    Navigator.push(
                                      context,
                                      MaterialPageRoute(
-                                         builder: (context) => BookingScreen()),
+                                         builder: (context) => PasswordResetScreen()),
                                    );
                                  },
                                  child: Text(
@@ -162,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                          color: AppColors.instance.white),
                                    ),
                                    onPressed: () {
-                                     AppUtils.pushRoute(context: context, route: DashboardScreen());
+                                     AppUtils.pushRoute(context: context, route: AppBottomBar());
                                    }),
                              ),
                              UniversalPlatform.isWeb ? AppUtils.webSpacingBetween(context) :  SizedBox(
@@ -198,9 +200,9 @@ class _LoginScreenState extends State<LoginScreen> {
                              //   onTap: () {
                              //     // Navigator.push(
                              //     //   context,
-                             //     //   MaterialPageRoute(
-                             //     //       builder: (context) => const ForgotUsernameScreen()),
-                             //     // );
+                                 //   MaterialPageRoute(
+                                 //       builder: (context) => const ForgotUsernameScreen()),
+                                 // );
                              //   },
                              //   child: Text(
                              //     'Forgot Username?',

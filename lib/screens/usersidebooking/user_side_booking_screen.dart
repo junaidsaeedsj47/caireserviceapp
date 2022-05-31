@@ -156,63 +156,6 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
                   ),
                 ),
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  items: <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      activeIcon: Icon(
-                        Icons.home,
-                        color: AppColors.instance.themeColor,
-                      ),
-                      icon: Icon(
-                        Icons.home,
-                        color: AppColors.instance.appIconColor,
-                      ),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                        activeIcon: Icon(
-                          Icons.chat,
-                          color: AppColors.instance.themeColor,
-                        ),
-                        icon: Icon(
-                          Icons.chat,
-                          color: AppColors.instance.appIconColor,
-                        ),
-                        label: 'Chat',
-                        backgroundColor: Colors.yellow),
-                    BottomNavigationBarItem(
-                      activeIcon: Icon(
-                        Icons.notifications,
-                        color: AppColors.instance.themeColor,
-                      ),
-                      icon: Icon(
-                        Icons.notifications,
-                        color: AppColors.instance.appIconColor,
-                      ),
-                      label: 'Notification',
-                      backgroundColor: Colors.blue,
-                    ),
-                    BottomNavigationBarItem(
-                      activeIcon: Icon(
-                        Icons.person,
-                        color: AppColors.instance.themeColor,
-                      ),
-                      icon: Icon(
-                        Icons.person,
-                        color: AppColors.instance.appIconColor,
-                      ),
-                      label: 'Profile',
-                      backgroundColor: Colors.blue,
-                    ),
-                  ],
-                  type: BottomNavigationBarType.fixed,
-                  currentIndex: model.selectedIndex,
-                  selectedItemColor: AppColors.instance.appIconColor,
-                  iconSize: 25,
-                  onTap: model.onItemTapped,
-                  elevation: 5),
             ),
           );
         });
