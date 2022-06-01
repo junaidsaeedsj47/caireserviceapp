@@ -314,7 +314,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: UniversalPlatform.isWeb ? 1.5 : 1,
+        childAspectRatio: UniversalPlatform.isWeb ? 1.5 : 1.1,
         crossAxisCount: AppUtils.isDesktopDevice(context) ? 3 :  2,
         mainAxisSpacing: UniversalPlatform.isWeb ? 30 : 20,
         crossAxisSpacing: UniversalPlatform.isWeb ? 30 : 15,

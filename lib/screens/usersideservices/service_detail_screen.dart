@@ -14,9 +14,10 @@ import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class ServiceDetailScreen extends StatefulWidget {
+  final bool? userFromViewProfile;
   final ServiceModel? servicesData;
 
-  ServiceDetailScreen({Key? key, this.servicesData});
+  ServiceDetailScreen({Key? key, this.servicesData,this.userFromViewProfile=false});
 
   @override
   _ServiceDetailScreenState createState() => _ServiceDetailScreenState();
@@ -125,6 +126,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                 ),
                               ],
                             ),
+                            if(!widget.userFromViewProfile!)
                             CupertinoButton(
                               // color: AppColors.instance.themeColor,
                               onPressed: () {

@@ -247,7 +247,7 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
           {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ReviewScreen()),
+              MaterialPageRoute(builder: (context) => const ProviderReviewsScreen()),
             );
           }
 

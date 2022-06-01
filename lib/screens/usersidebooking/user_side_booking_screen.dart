@@ -322,6 +322,8 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
             context: context,
             route: UserSideBookingSecondScreen(
               servicesData: widget.servicesData,
+              selectedDate: model.selectedDate,
+              selectedTime: model.selectedTime,
             ));
       },
       borderRadius: BorderRadius.circular(12),

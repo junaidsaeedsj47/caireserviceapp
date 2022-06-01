@@ -1,4 +1,5 @@
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import '../../constants/caireColors.dart';
 import '../../viewmodel/booking/booking_screen_viewmodel.dart';
 import '../../viewmodel/service/service_screen_viewmodel.dart';
 import '../../widgets/caire_fields.dart';
+import 'add_service_screen.dart';
 
 class ServiceScreen extends StatefulWidget {
   const ServiceScreen({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class ServiceScreen extends StatefulWidget {
 class _ServiceScreenState extends State<ServiceScreen> {
   ServiceScreenViewModel serviceScreenViewModel = ServiceScreenViewModel();
   TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,38 +33,68 @@ class _ServiceScreenState extends State<ServiceScreen> {
           viewModelBuilder: () => serviceScreenViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
+              appBar: AppUtils.showAppBarWithAction(
+                showBack: true,
+                title: "All Services",
+                context: context,
+                actionWidget:   IconButton(
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            AppUtils.pushRoute(
+                                context: context, route: AddServiceScreen());
+                          },
+                        ),
+              ),
               backgroundColor: Colors.white,
               body: Column(
                 children: [
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    color: AppColors.instance.themeColor,
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 30, end: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Service List',
-                              style: TextStyleUtil.textStyleRaqiBookBold(
-                                  context,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Icon(
-                            Icons.storage,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 60,
+                  //   width: double.infinity,
+                  //   color: AppColors.instance.themeColor,
+                  //   child: Padding(
+                  //     padding:
+                  //         const EdgeInsetsDirectional.only(start: 30, end: 30),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         IconButton(
+                  //           icon: Icon(
+                  //             Icons.arrow_back_ios,
+                  //             color: Colors.white,
+                  //           ),
+                  //           onPressed: () {
+                  //             AppUtils.pop(context: context);
+                  //           },
+                  //         ),
+                  //         Align(
+                  //           alignment: Alignment.center,
+                  //           child: Text(
+                  //             'Service List',
+                  //             style: TextStyleUtil.textStyleRaqiBookBold(
+                  //                 context,
+                  //                 color: Colors.white,
+                  //                 fontSize: 18),
+                  //             textAlign: TextAlign.center,
+                  //           ),
+                  //         ),
+                  //         IconButton(
+                  //           icon: Icon(
+                  //             Icons.add,
+                  //             color: Colors.white,
+                  //           ),
+                  //           onPressed: () {
+                  //             AppUtils.pushRoute(
+                  //                 context: context, route: AddServiceScreen());
+                  //           },
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   // SizedBox(
                   //   height: DynamicSize.height(0.1, context),
                   // ),

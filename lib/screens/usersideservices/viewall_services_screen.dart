@@ -34,7 +34,7 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
             viewModelBuilder: () => viewAllServicesViewModel,
             builder: (contextBuilder, model, child) {
               return Scaffold(
-                appBar: AppUtils.showAppBar(title: widget.title??"",context: context,showBack:UniversalPlatform.isWeb ? false : true, ),
+                appBar: AppUtils.showAppBar(title: widget.title??"Services",context: context,showBack:UniversalPlatform.isWeb ? false : true, ),
                 body: SingleChildScrollView(
                   child: Container(
                     padding: UniversalPlatform.isWeb

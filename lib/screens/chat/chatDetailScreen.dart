@@ -38,7 +38,7 @@ class _ChattingDetailScreenState extends State<ChattingDetailScreen> {
                   },
                   icon: Icon(
                     Icons.arrow_back,
-                    color: AppColors.instance.appTextColor,
+                    color: AppColors.instance.white,
                   ),
                 ),
                 SizedBox(
@@ -59,7 +59,10 @@ class _ChattingDetailScreenState extends State<ChattingDetailScreen> {
                     children: <Widget>[
                       Text(
                         "John",
-                        style: TextStyleUtil.textStyleRaqiBookBold(context),
+                        style: TextStyleUtil.textStyleRaqiBookBold(
+                          context,
+                          color: AppColors.instance.white,
+                        ),
                       ),
                       SizedBox(
                         height: 6,
@@ -73,7 +76,7 @@ class _ChattingDetailScreenState extends State<ChattingDetailScreen> {
                 ),
                 Icon(
                   Icons.call,
-                  color: AppColors.instance.appTextColor,
+                  color: AppColors.instance.white,
                 ),
               ],
             ),
@@ -93,8 +96,7 @@ class _ChattingDetailScreenState extends State<ChattingDetailScreen> {
                     EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
                 child: Text(
                   messages[index].messageContent!,
-                  style: TextStyleUtil.textStyleRaqiBook(context,
-                      fontSize: 14),
+                  style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 14),
                 ),
               );
             },
@@ -131,11 +133,12 @@ class _ChattingDetailScreenState extends State<ChattingDetailScreen> {
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: "Write message...",
-                          hintStyle: TextStyleUtil.textStyleRaqiBookBold(context,
-                              fontSize: 14, color: Color(0xffB4B4B4)),
+                          hintStyle: TextStyleUtil.textStyleRaqiBookBold(
+                              context,
+                              fontSize: 14,
+                              color: Color(0xffB4B4B4)),
                           border: InputBorder.none),
                     ),
-
                   ),
                   SizedBox(
                     width: 15,

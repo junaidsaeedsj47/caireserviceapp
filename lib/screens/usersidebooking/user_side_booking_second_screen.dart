@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:caireapp/screens/bookingProgressDetails/booking_progress_details_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/viewmodel/usersidebooking/userside_booking_second_viewmodel.dart';
 import 'package:caireapp/widgets/bottom_navigation_bar.dart';
@@ -12,8 +13,11 @@ import 'package:universal_platform/universal_platform.dart';
 
 class UserSideBookingSecondScreen extends StatefulWidget {
   final ServiceModel? servicesData;
+  final DateTime? selectedTime;
+  final DateTime? selectedDate;
 
-  UserSideBookingSecondScreen({Key? key, this.servicesData});
+  UserSideBookingSecondScreen(
+      {Key? key, this.servicesData, this.selectedDate, this.selectedTime});
 
   @override
   _UserSideBookingSecondScreenState createState() =>
@@ -34,7 +38,10 @@ class _UserSideBookingSecondScreenState
         builder: (contextBuilder, model, child) {
           return SafeArea(
             child: Scaffold(
-              appBar: AppUtils.showAppBar(context: context,title: "Confirm Service Booking",showBack:UniversalPlatform.isWeb? false : true),
+              appBar: AppUtils.showAppBar(
+                  context: context,
+                  title: "Confirm Service Booking",
+                  showBack: UniversalPlatform.isWeb ? false : true),
               body: SingleChildScrollView(
                 child: Container(
                   padding: AppUtils.unifiedPaddingOfScreen(),
@@ -203,7 +210,10 @@ class _UserSideBookingSecondScreenState
           Container(
               width: 70,
               // height: 50,
-              child: Image.network(widget.servicesData?.serviceImage ?? "",fit: BoxFit.cover,)),
+              child: Image.network(
+                widget.servicesData?.serviceImage ?? "",
+                fit: BoxFit.cover,
+              )),
         ],
       ),
     );
@@ -312,6 +322,13 @@ class _UserSideBookingSecondScreenState
       child: CupertinoButton(
         color: AppColors.instance.themeColor,
         onPressed: () {
+          AppUtils.pushRoute(
+              context: context,
+              route: BookingProgressDetailsScreen(
+                servicesData: widget.servicesData,
+                selectedDate: widget.selectedDate,
+                selectedTime: widget.selectedTime,
+              ));
         },
         borderRadius: BorderRadius.circular(12),
         padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),

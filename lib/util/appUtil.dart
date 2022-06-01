@@ -13,7 +13,9 @@ import 'package:universal_platform/universal_platform.dart';
 
 class AppUtils {
   AppUtils._();
- static int selectedIndex = 0;
+
+  static int selectedIndex = 0;
+
   static bool isIOS() {
     return UniversalPlatform.isIOS;
   }
@@ -26,13 +28,17 @@ class AppUtils {
 //    return Platform.isIOS;
     return UniversalPlatform.isWeb;
   }
-  static showFormattedDate(DateTime date){
+
+  static showFormattedDate(DateTime date) {
     return DateFormat('dd-MM-yyyy').format(date);
   }
-
-  static showFormattedTime(DateTime time){
+  static showFormattedDateWithMonthName(DateTime date) {
+    return DateFormat('dd MMMM, yyyy').format(date);
+  }
+  static showFormattedTime(DateTime time) {
     return DateFormat('kk:mm a').format(time);
   }
+
   static bool isTabletDevice(BuildContext context) {
     return MediaQuery.of(context).size.width < 1100 &&
         MediaQuery.of(context).size.width >= 650;
@@ -46,8 +52,12 @@ class AppUtils {
     return MediaQuery.of(context).size.width >= 1100;
   }
 
-  static AppBar showAppBar(
-      {BuildContext? context, String? title, bool showBack = true,bool centerTitle=true,}) {
+  static AppBar showAppBar({
+    BuildContext? context,
+    String? title,
+    bool showBack = true,
+    bool centerTitle = true,
+  }) {
     return AppBar(
       automaticallyImplyLeading: showBack ? true : false,
       iconTheme: IconThemeData(
@@ -64,7 +74,34 @@ class AppUtils {
       ),
     );
   }
-  static Widget appBottomBar(BuildContext context){
+
+  static AppBar showAppBarWithAction(
+      {BuildContext? context,
+      String? title,
+      bool showBack = true,
+      bool centerTitle = true,
+      Widget? actionWidget}) {
+    return AppBar(
+      actions: [
+        actionWidget!
+      ],
+      automaticallyImplyLeading: showBack ? true : false,
+      iconTheme: IconThemeData(
+        color: AppColors.instance.textWhiteColor, //change your color here
+      ),
+      centerTitle: centerTitle,
+      title: Text(
+        title ?? "",
+        style: TextStyleUtil.textStyleRaqiBook(context!,
+            fontSize: 24, color: AppColors.instance.textWhiteColor),
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: AppColors.instance.themeColor, // Status bar
+      ),
+    );
+  }
+
+  static Widget appBottomBar(BuildContext context) {
     return BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -120,11 +157,12 @@ class AppUtils {
         currentIndex: selectedIndex,
         selectedItemColor: AppColors.instance.appIconColor,
         iconSize: 25,
-        onTap: (index){
+        onTap: (index) {
           // changeSelectedScreen(index);
         },
         elevation: 5);
-}
+  }
+
   static void pushRoute(
       {@required BuildContext? context,
       bool fromRoot = false,

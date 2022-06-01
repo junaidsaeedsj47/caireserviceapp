@@ -1,5 +1,6 @@
 import 'package:caireapp/device/device.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,37 +38,38 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
           viewModelBuilder: () => addServiceScreenViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
+              appBar: AppUtils.showAppBar(context: context,title: "Add Service",showBack: true),
               backgroundColor: Colors.white,
               body: Column(
                 children: [
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    color: AppColors.instance.themeColor,
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 20, end: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'Add Service',
-                              style: TextStyleUtil.textStyleRaqiBookBold(
-                                  context,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 60,
+                  //   width: double.infinity,
+                  //   color: AppColors.instance.themeColor,
+                  //   child: Padding(
+                  //     padding:
+                  //         const EdgeInsetsDirectional.only(start: 20, end: 20),
+                  //     child: Align(
+                  //       alignment: Alignment.centerLeft,
+                  //       child: Row(
+                  //         children: [
+                  //           Icon(
+                  //             Icons.arrow_back_ios,
+                  //             color: Colors.white,
+                  //           ),
+                  //           Text(
+                  //             'Add Service',
+                  //             style: TextStyleUtil.textStyleRaqiBookBold(
+                  //                 context,
+                  //                 color: Colors.white,
+                  //                 fontSize: 18),
+                  //             textAlign: TextAlign.center,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(children: [

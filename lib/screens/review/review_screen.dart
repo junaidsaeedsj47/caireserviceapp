@@ -1,6 +1,7 @@
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stacked/stacked.dart';
 
@@ -8,14 +9,14 @@ import '../../constants/caireColors.dart';
 import '../../viewmodel/handyman/handyman_list_viewmodel.dart';
 import '../../widgets/caire_fields.dart';
 
-class ReviewScreen extends StatefulWidget {
-  const ReviewScreen({Key? key}) : super(key: key);
+class ProviderReviewsScreen extends StatefulWidget {
+  const ProviderReviewsScreen({Key? key}) : super(key: key);
 
   @override
-  _ReviewScreenState createState() => _ReviewScreenState();
+  _ProviderReviewsScreenState createState() => _ProviderReviewsScreenState();
 }
 
-class _ReviewScreenState extends State<ReviewScreen> {
+class _ProviderReviewsScreenState extends State<ProviderReviewsScreen> {
   HandymanListViewModel handymanListViewModel = HandymanListViewModel();
   TextEditingController controller=TextEditingController();
   @override
@@ -28,50 +29,65 @@ class _ReviewScreenState extends State<ReviewScreen> {
           viewModelBuilder: () => handymanListViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
+              appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: AppColors
+                      .instance.textWhiteColor, //change your color here
+                ),
+                centerTitle: true,
+                title: Text(
+                  "Reviews",
+                  style: TextStyleUtil.textStyleRaqiBook(context,
+                      fontSize: 24, color: AppColors.instance.textWhiteColor),
+                ),
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: AppColors.instance.themeColor, // Status bar
+                ),
+              ),
               backgroundColor: Colors.white,
               body: Column(
                 children: [
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    color: AppColors.instance.themeColor,
-                    child: Padding(
-                      padding:
-                      const EdgeInsetsDirectional.only(start: 20, end: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Review On Services',
-                              style: TextStyleUtil.textStyleRaqiBookBold(
-                                  context,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 60,
+                  //   width: double.infinity,
+                  //   color: AppColors.instance.themeColor,
+                  //   child: Padding(
+                  //     padding:
+                  //     const EdgeInsetsDirectional.only(start: 20, end: 20),
+                  //     child: Align(
+                  //       alignment: Alignment.centerLeft,
+                  //       child: Row(
+                  //         children: [
+                  //           Icon(
+                  //             Icons.arrow_back_ios,
+                  //             color: Colors.white,
+                  //           ),
+                  //           SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           Text(
+                  //             'Review On Services',
+                  //             style: TextStyleUtil.textStyleRaqiBookBold(
+                  //                 context,
+                  //                 color: Colors.white,
+                  //                 fontSize: 18),
+                  //             textAlign: TextAlign.center,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   // SizedBox(
                   //   height: DynamicSize.height(0.1, context),
                   // ),
-                  Text(
-                    'Customer Review',
-                    style: TextStyleUtil.textStyleRaqiBookBold(context,
-                        fontSize: 20,
-                        color: Colors.black),
-                    textAlign: TextAlign.start,
-                  ),
+                  // Text(
+                  //   'Customer Review',
+                  //   style: TextStyleUtil.textStyleRaqiBookBold(context,
+                  //       fontSize: 20,
+                  //       color: Colors.black),
+                  //   textAlign: TextAlign.start,
+                  // ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(

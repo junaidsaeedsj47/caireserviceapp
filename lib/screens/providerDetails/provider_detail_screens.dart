@@ -3,6 +3,7 @@ import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
+import 'package:caireapp/screens/review/review_screen.dart';
 import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
 import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stacked/stacked.dart';
 
 class ProviderDetailsScreen extends StatefulWidget {
@@ -65,20 +67,22 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                             start: 10, end: 10, top: 20, bottom: 20),
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 30,
-                            ),
+                            // SizedBox(
+                            //   height: 30,
+                            // ),
                             getAboutSummary(context, model),
                             SizedBox(
                               height: 30,
                             ),
                             getContactDetails(context, model),
+
                           ],
                         ),
                       ),
+
                       Container(
                         padding: const EdgeInsetsDirectional.only(
-                            start: 10, end: 10, top: 20, bottom: 20),
+                            start: 10, end: 10, ),
                         child: Column(
                           children: [
                             getSubTitleServices(model),
@@ -86,6 +90,19 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                               height: 20,
                             ),
                             serviceProviderCard(context, model),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsetsDirectional.only(
+                          start: 10, end: 10,),
+                        child: Column(
+                          children: [
+                            getReviewsTitle(model),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            providerReviewsCard(context, model),
                           ],
                         ),
                       ),
@@ -164,21 +181,27 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
   }
 
   Widget getAboutSummary(BuildContext context, ProviderDetailsViewModel model) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("About"),
-        SizedBox(
-          height: 20,
-        ),
-        AutoSizeText(model.providerDetails.first.userSummaryDetails ?? "",
-            style: TextStyleUtil.textStyleRaqiBook(
-              context,
-              fontSize: 14,
-              color: AppColors.instance.lightGreyText,
-              fontWeight: AppFontWeight.medium,
-            )),
-      ],
+    return Container(
+      padding: const EdgeInsetsDirectional.only(
+          start: 20, end: 20,),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("About",   style: TextStyleUtil.textStyleRaqiBook(
+            context,
+          )),
+          SizedBox(
+            height: 20,
+          ),
+          AutoSizeText(model.providerDetails.first.userSummaryDetails ?? "",
+              style: TextStyleUtil.textStyleRaqiBook(
+                context,
+                fontSize: 14,
+                color: AppColors.instance.lightGreyText,
+                // fontWeight: AppFontWeight.medium,
+              )),
+        ],
+      ),
     );
   }
 
@@ -194,7 +217,9 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("Email"),
+          Text("Email",   style: TextStyleUtil.textStyleRaqiBook(
+            context,
+          )),
           SizedBox(
             height: 5,
           ),
@@ -203,12 +228,14 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                 context,
                 fontSize: 14,
                 color: AppColors.instance.lightGreyText,
-                fontWeight: AppFontWeight.medium,
+                // fontWeight: AppFontWeight.medium,
               )),
           SizedBox(
             height: 20,
           ),
-          Text("Number"),
+          Text("Number",   style: TextStyleUtil.textStyleRaqiBook(
+            context,
+          )),
           SizedBox(
             height: 5,
           ),
@@ -217,12 +244,14 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                 context,
                 fontSize: 14,
                 color: AppColors.instance.lightGreyText,
-                fontWeight: AppFontWeight.medium,
+                // fontWeight: AppFontWeight.medium,
               )),
           SizedBox(
             height: 20,
           ),
-          Text("Member Since"),
+          Text("Member Since",   style: TextStyleUtil.textStyleRaqiBook(
+            context,
+          )),
           SizedBox(
             height: 5,
           ),
@@ -237,7 +266,133 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
       ),
     );
   }
+  Widget getReviewsTitle(ProviderDetailsViewModel model) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          "Reviews",
+          style: TextStyleUtil.textStyleRaqiBook(context,
+              fontWeight: AppFontWeight.bold, fontSize: 20),
+        ),
+        GestureDetector(
+          onTap: () {
+            AppUtils.pushRoute(
+                context: context,
+                route: ProviderReviewsScreen(
+                ));
+          },
+          child: Text(
+            "View All",
+            style: TextStyleUtil.textStyleRaqiBook(context,
+                color: AppColors.instance.lightGreyText),
+          ),
+        ),
+      ],
+    );
+  }
 
+  Widget providerReviewsCard(
+      BuildContext context, ProviderDetailsViewModel model) {
+    return Container(
+      // height: 300,
+      child:   ListView.builder(
+        itemCount: 1,
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+        itemBuilder: (context, i) {
+          return _reviewContainer();
+        },
+      ),
+    );
+  }
+  Widget _reviewContainer() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(
+                    'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
+              ),
+              SizedBox(
+                width: 25,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'John',
+                        style: TextStyleUtil.textStyleRaqiBookBold(context,
+                            color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.4,
+                      ),
+                      Text(
+                        '02 Dec',
+                        style: TextStyleUtil.textStyleRaqiBookBold(context,
+                            color: Colors.grey, fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  Row(children: [
+                    RatingBar.builder(
+                      initialRating: 3.5,
+                      minRating: 1,
+                      itemSize: 15,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      '3.5',
+                      style: TextStyleUtil.textStyleRaqiBookBold(context,
+                          fontSize: 13, color: Colors.grey),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],),
+                  Container(
+                    // height: 33,
+                    width:200,
+                    child: Text(
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit',
+                      style: TextStyleUtil.textStyleRaqiBookBold(context,
+
+                          color: Colors.grey),
+                      overflow: TextOverflow.ellipsis,
+
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Divider()
+        ],
+      ),
+    );
+  }
   Widget getRatingStars(
       BuildContext context, ProviderDetailsViewModel model, double? ratingNo) {
     List starToShow = [];
@@ -324,13 +479,14 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
-          itemCount: model.servicesData.length,
+          itemCount: model.servicesData.take(1).length,
           itemBuilder: (context, int index) {
             return GestureDetector(
               onTap: () {
                 AppUtils.pushRoute(
                     context: context,
                     route: ServiceDetailScreen(
+                      userFromViewProfile: true,
                       servicesData: model.servicesData[index],
                     ));
               },
