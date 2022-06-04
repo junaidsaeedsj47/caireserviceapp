@@ -1,7 +1,9 @@
 import 'package:caireapp/constants/constants.dart';
-import 'package:caireapp/screens/booking/booking_screen.dart';
+import 'package:caireapp/screens/chat/chat_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
 import 'package:caireapp/screens/forgotPassword/forgot_password_screen.dart';
+import 'package:caireapp/screens/profile/profile_screen.dart';
+import 'package:caireapp/screens/userBookingMain/booking_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
@@ -164,7 +166,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                          color: AppColors.instance.white),
                                    ),
                                    onPressed: () {
-                                     AppUtils.pushRoute(context: context, route: AppBottomBar());
+                                     AppUtils.pushRoute(context: context, route: AppBottomBar(bottomBarPages: [  //    DashboardScreen(),
+                                      DashboardScreen(),
+                                       ChatScreen(),
+                                       BookingMainScreen(),
+                                       ProfileScreen(),]));
                                    }),
                              ),
                              UniversalPlatform.isWeb ? AppUtils.webSpacingBetween(context) :  SizedBox(

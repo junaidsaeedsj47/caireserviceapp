@@ -1,8 +1,8 @@
 import 'package:caireapp/constants/caireColors.dart';
-import 'package:caireapp/screens/booking/booking_screen.dart';
 import 'package:caireapp/screens/chat/chat_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
 import 'package:caireapp/screens/profile/profile_screen.dart';
+import 'package:caireapp/screens/userBookingMain/booking_screen.dart';
 import 'package:caireapp/util/enum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +167,8 @@ import 'package:flutter/material.dart';
 //   }
 // }
 class AppBottomBar extends StatefulWidget {
-  const AppBottomBar({Key? key}) : super(key: key);
+  final List bottomBarPages;
+  const AppBottomBar({Key? key,required this.bottomBarPages}) : super(key: key);
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -176,17 +177,17 @@ class AppBottomBar extends StatefulWidget {
 class _AppBottomBarState extends State<AppBottomBar> {
   int pageIndex = 0;
 
-  final pages = [
-     DashboardScreen(),
-     ChatScreen(),
-     BookingScreen(),
-     ProfileScreen(),
-  ];
+  // final pages = [
+  //    DashboardScreen(),
+  //    ChatScreen(),
+  //    BookingMainScreen(),
+  //    ProfileScreen(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[pageIndex],
+      body: widget.bottomBarPages[pageIndex],
       bottomNavigationBar: buildMyNavBar(context),
     );
   }

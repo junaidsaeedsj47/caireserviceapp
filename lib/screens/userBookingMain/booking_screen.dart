@@ -1,30 +1,35 @@
+import 'package:caireapp/screens/bookingProgressDetails/booking_progress_details_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/screens/paymentDetails/payment_details_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/text.dart';
+import 'package:caireapp/viewmodel/userBookingMain/booking_screen_viewmodel.dart';
+import 'package:caireapp/widgets/custom_popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../constants/caireColors.dart';
-import '../../viewmodel/booking/booking_screen_viewmodel.dart';
 import '../handyman/handyman_list_screen.dart';
 import '../service/service_screen.dart';
 
-class BookingScreen extends StatefulWidget {
-  const BookingScreen({Key? key}) : super(key: key);
+class BookingMainScreen extends StatefulWidget {
+  const BookingMainScreen({Key? key}) : super(key: key);
 
   @override
-  _BookingScreenState createState() => _BookingScreenState();
+  _BookingMainScreenState createState() => _BookingMainScreenState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
-  BookingViewModel bookingViewModel = BookingViewModel();
-  String dropdownValue = 'Pending';
+class _BookingMainScreenState extends State<BookingMainScreen> {
+  BookingMainViewModel bookingViewModel = BookingMainViewModel();
+
+  // String dropdownValue = 'In Progress';
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ViewModelBuilder<BookingViewModel>.reactive(
+      child: ViewModelBuilder<BookingMainViewModel>.reactive(
           onModelReady: (model) {
             model.initialize(context);
           },
@@ -32,7 +37,8 @@ class _BookingScreenState extends State<BookingScreen> {
           builder: (contextBuilder, model, child) {
             return Scaffold(
               backgroundColor: Colors.white,
-              appBar: AppUtils.showAppBar(context: context,title: "Booking",showBack: false),
+              appBar: AppUtils.showAppBar(
+                  context: context, title: "Booking", showBack: false),
               // bottomNavigationBar: AppUtils.appBottomBar(context),
               body: Column(
                 children: [
@@ -55,7 +61,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   BorderRadius.all(Radius.circular(5)),
                             ),
                             child: DropdownButton<String>(
-                              value: dropdownValue,
+                              value: model.selectedValue,
                               isExpanded: true,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 24,
@@ -67,18 +73,12 @@ class _BookingScreenState extends State<BookingScreen> {
                               style:
                                   TextStyleUtil.textStyleRaqiBookBold(context),
                               onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue!;
-                                });
+                                model.updateBookingTypes(newValue!);
                               },
-                              items: <String>[
-                                'Pending',
-                                'Completed',
-                                'Done'
-                              ].map<DropdownMenuItem<String>>((String value) {
+                              items: model.listOfBookingServices.map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Text(value),
+                                  child: Text( value),
                                 );
                               }).toList(),
                             ),
@@ -89,7 +89,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemBuilder: (context, i) {
-                              return _bookingContainer(context);
+                              return _bookingContainer(context,model);
                             },
                           ),
                         ],
@@ -103,7 +103,7 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Container _bookingContainer(BuildContext context) {
+  Container _bookingContainer(BuildContext context,BookingMainViewModel model) {
     return Container(
       margin: const EdgeInsetsDirectional.only(start: 20, end: 20, bottom: 10),
       padding: EdgeInsets.all(12),
@@ -210,7 +210,9 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
             ],
           ),
+          if(model.bookingTypes==BookingTypes.New)
           Divider(),
+          if(model.bookingTypes==BookingTypes.New)
           Row(
             children: [
               Expanded(
@@ -222,7 +224,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       borderRadius: BorderRadius.circular(8),
                       color: AppColors.instance.themeColor,
                       child: Text(
-                        'Accept',
+                        'Check Status',
                         style: TextStyleUtil.textStyleRaqiBook(context,
                             color: Colors.white),
                       ),
@@ -230,7 +232,11 @@ class _BookingScreenState extends State<BookingScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ServiceScreen()),
+                              builder: (context) =>  BookingProgressDetailsScreen(
+                                servicesData: model.servicesData.first,
+                                selectedDate: DateTime.now(),
+                                selectedTime: DateTime.now(),
+                              )),
                         );
                       }),
                 ),
@@ -247,23 +253,74 @@ class _BookingScreenState extends State<BookingScreen> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.grey.withOpacity(0.1),
                       child: Text(
-                        'Decline',
+                        'Cancel Booking',
                         style: TextStyleUtil.textStyleRaqiBook(context,
                             color: Colors.black),
                       ),
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const HandymanListScreen()),
-                        // );
+                        cancelBookingShowDialog(context);
                       }),
                 ),
               ),
             ],
           ),
+          if(model.bookingTypes==BookingTypes.InProgress)
+            Divider(),
+          if(model.bookingTypes==BookingTypes.InProgress)
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 45,
+                    width: double.infinity,
+                    child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        borderRadius: BorderRadius.circular(8),
+                        color: AppColors.instance.themeColor,
+                        child: Text(
+                          'Complete Booking',
+                          style: TextStyleUtil.textStyleRaqiBook(context,
+                              color: Colors.white),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PaymentDetailsScreen()),
+                          );
+                        }),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
+  }
+  cancelBookingShowDialog(BuildContext context){
+    return    showDialog(
+        context: context,
+        builder: (contextBuilder) => ShowPopup(
+          title: "Warning!",
+          description: "Do you want to cancel the booking?",
+          actions: [
+            AppAlertAction(
+              title: "Yes",
+              handler: (_) {
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+              },
+              showWhiteButton: false,
+            ),
+            AppAlertAction(
+              title: "Cancel",
+              showWhiteButton: true,
+            ),
+          ],
+          // image: Image.asset(MobilyConstants.baseImagePath + "common/info.png"),
+        ),
+        barrierDismissible: true);
   }
 }

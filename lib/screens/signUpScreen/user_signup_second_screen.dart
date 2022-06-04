@@ -1,9 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:caireapp/screens/chat/chat_screen.dart';
 import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
+import 'package:caireapp/screens/profile/profile_screen.dart';
+import 'package:caireapp/screens/providerSideBooking/provider_side_booking_main_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/signup_viewmodel/signup-second_viewmodel.dart';
+import 'package:caireapp/widgets/bottom_navigation_bar.dart';
 import 'package:caireapp/widgets/caire_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -254,7 +258,7 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                       )),
                                   Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                             color: AppColors
                                                 .instance.appTextColor)),
@@ -264,7 +268,6 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                           context,
                                           showTitleActions: true,
                                           onChanged: (date) {
-
                                             // model.selectedDate = date;
                                             print('change $date in time zone ' +
                                                 date.timeZoneOffset.inHours
@@ -278,7 +281,8 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                         );
                                       },
                                       child: AutoSizeText(
-                                         AppUtils.showFormattedDate(model.selectedDate),
+                                          AppUtils.showFormattedDate(
+                                              model.selectedDate),
                                           style: TextStyleUtil
                                               .textStyleBeforeLoginRaqiBook(
                                             context,
@@ -311,7 +315,12 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                             onPressed: () {
                               AppUtils.pushRoute(
                                   context: context,
-                                  route: ProviderDashboardScreen());
+                                  route: AppBottomBar(bottomBarPages: [
+                                    ProviderDashboardScreen(),
+                                    ChatScreen(),
+                                    ProviderSideBookingScreen(),
+                                    ProfileScreen(),
+                                  ]));
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(builder: (context) => HomeScreen()),

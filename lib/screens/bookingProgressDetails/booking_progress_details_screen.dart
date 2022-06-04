@@ -5,11 +5,12 @@ import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/bookingProgressDetails/booking_progress_details_viewmodel.dart';
+import 'package:caireapp/widgets/custom_popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:universal_platform/universal_platform.dart';
-
+import 'check_user_booking_status.dart';
 class BookingProgressDetailsScreen extends StatefulWidget {
   final ServiceModel? servicesData;
   final DateTime? selectedDate;
@@ -26,9 +27,7 @@ class BookingProgressDetailsScreen extends StatefulWidget {
 class _BookingProgressDetailsScreenState
     extends State<BookingProgressDetailsScreen> {
   BookingProgressDetailsViewModel bookingProgressDetailsViewModel =
-      BookingProgressDetailsViewModel();
-  TextEditingController searchController = TextEditingController();
-
+  BookingProgressDetailsViewModel();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,32 +38,10 @@ class _BookingProgressDetailsScreenState
           viewModelBuilder: () => bookingProgressDetailsViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              // floatingActionButton: Container(
-              //   padding: UniversalPlatform.isWeb
-              //       ? EdgeInsetsDirectional.only(start: 30, end: 30)
-              //       : EdgeInsetsDirectional.only(
-              //       top: 20, bottom: 20, start: 20, end: 20),
-              //   child: Expanded(
-              //     child: CupertinoButton(
-              //       color: AppColors.instance.themeColor,
-              //       onPressed: () {
-              //         AppUtils.pop(context: context);
-              //       },
-              //       borderRadius: BorderRadius.circular(12),
-              //       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
-              //       child: Expanded(
-              //         child: Text(
-              //           "Cancel Booking",
-              //           style: TextStyleUtil.textStyleRaqiBook(context,
-              //               fontSize: 18, color: AppColors.instance.white),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               appBar: AppUtils.showAppBarWithAction(
                 showBack: true,
                 title: "Pending",
+                titleFontSize: 20,
                 centerTitle: false,
                 context: context,
                 actionWidget: Column(
@@ -80,8 +57,8 @@ class _BookingProgressDetailsScreenState
                               color: AppColors.instance.textWhiteColor),
                         ),
                         onTap: () {
-                          // AppUtils.pushRoute(
-                          //     context: context, route: CheckUserBookingStatus());
+                          AppUtils.pushRoute(
+                              context: context, route: CheckUserBookingStatus());
                         },
                       ),
                     ),
@@ -89,6 +66,7 @@ class _BookingProgressDetailsScreenState
                 ),
               ),
               backgroundColor: Colors.white,
+              // body:     MapSample(),
               body: Container(
                 padding: UniversalPlatform.isWeb
                     ? EdgeInsetsDirectional.only(start: 30, end: 30)
@@ -99,6 +77,9 @@ class _BookingProgressDetailsScreenState
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 5,
+                      ),
                       getBookingTransactionId(context),
                       SizedBox(
                         height: 5,
@@ -139,7 +120,6 @@ class _BookingProgressDetailsScreenState
           "Booking ID :",
           style: TextStyleUtil.textStyleRaqiBook(
             context,
-            color: AppColors.instance.lightGreyText,
           ),
         ),
         Text(
@@ -161,6 +141,7 @@ class _BookingProgressDetailsScreenState
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if(widget.servicesData!=null)
             Text(
               widget.servicesData!.serviceName ?? "",
               style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 20),
@@ -174,6 +155,7 @@ class _BookingProgressDetailsScreenState
                   "Date : ",
                   style: TextStyleUtil.textStyleRaqiBook(context),
                 ),
+                if(widget.selectedDate!=null)
                 Text(
                   AppUtils.showFormattedDateWithMonthName(widget.selectedDate!),
                   style: TextStyleUtil.textStyleRaqiBook(context,
@@ -190,6 +172,7 @@ class _BookingProgressDetailsScreenState
                   "Time : ",
                   style: TextStyleUtil.textStyleRaqiBook(context),
                 ),
+                if(widget.selectedTime!=null)
                 Text(
                   AppUtils.showFormattedTime(widget.selectedTime!),
                   style: TextStyleUtil.textStyleRaqiBook(context,
@@ -284,6 +267,7 @@ class _BookingProgressDetailsScreenState
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if(widget.servicesData?.serviceProviderName!=null)
                     Text(
                       widget.servicesData!.serviceProviderName ?? "",
                       style: TextStyleUtil.textStyleRaqiBook(context,
@@ -292,6 +276,7 @@ class _BookingProgressDetailsScreenState
                     SizedBox(
                       height: 8,
                     ),
+                    if(widget.servicesData?.serviceName!=null)
                     Text(
                       widget.servicesData!.serviceName ?? "",
                       style: TextStyleUtil.textStyleRaqiBook(context,
@@ -300,6 +285,7 @@ class _BookingProgressDetailsScreenState
                     SizedBox(
                       height: 5,
                     ),
+                    if(widget.servicesData?.serviceProviderRating!=null)
                     getRatingStars(
                         context, widget.servicesData!.serviceProviderRating),
                   ],
@@ -426,7 +412,9 @@ class _BookingProgressDetailsScreenState
   Widget cancelBookingButton(BuildContext context) {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
-      onPressed: () {},
+      onPressed: () {
+        cancelBookingShowDialog(context);
+      },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
       child: Text(
@@ -436,4 +424,31 @@ class _BookingProgressDetailsScreenState
       ),
     );
   }
+   cancelBookingShowDialog(BuildContext context){
+    return    showDialog(
+        context: context,
+        builder: (contextBuilder) => ShowPopup(
+          title: "Warning!",
+          description: "Do you want to cancel the booking?",
+          actions: [
+            AppAlertAction(
+              title: "Yes",
+              handler: (_) {
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+              },
+              showWhiteButton: false,
+            ),
+            AppAlertAction(
+              title: "Cancel",
+              showWhiteButton: true,
+            ),
+          ],
+          // image: Image.asset(MobilyConstants.baseImagePath + "common/info.png"),
+        ),
+        barrierDismissible: true);
+  }
+
 }

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -128,69 +129,75 @@ class _ProviderReviewsScreenState extends State<ProviderReviewsScreen> {
               SizedBox(
                 width: 25,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AutoSizeText(
+                            'Lorem ipsum dolor sit amet consectetur adipisicing elit',
+                            style: TextStyleUtil.textStyleRaqiBook(context,
+                                color: Colors.black),
+                            // softWrap: true,
+                            // overflow: TextOverflow.ellipsis,
+                            // textAlign: TextAlign.start,
+                          ),
+                        ),
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width / 2.4,
+                        // ),
+                        Text(
+                          '02 Dec',
+                          style: TextStyleUtil.textStyleRaqiBookBold(context,
+                              color: Colors.grey, fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        RatingBar.builder(
+                          initialRating: 3.5,
+                          minRating: 1,
+                          itemSize: 15,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          '3.5',
+                          style: TextStyleUtil.textStyleRaqiBookBold(context,
+                              fontSize: 13, color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    Container(
+                      // height: 33,
+                      // width: 200,
+                      child: Text(
                         'John',
                         style: TextStyleUtil.textStyleRaqiBookBold(context,
-                            color: Colors.black),
-                        textAlign: TextAlign.center,
+                            color: Colors.grey),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.4,
-                      ),
-                      Text(
-                        '02 Dec',
-                        style: TextStyleUtil.textStyleRaqiBookBold(context,
-                            color: Colors.grey, fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  Row(children: [
-                    RatingBar.builder(
-                      initialRating: 3.5,
-                      minRating: 1,
-                      itemSize: 15,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
                     ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      '3.5',
-                      style: TextStyleUtil.textStyleRaqiBookBold(context,
-                          fontSize: 13, color: Colors.grey),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],),
-                  Container(
-                   // height: 33,
-                    width:200,
-                    child: Text(
-                      'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-                      style: TextStyleUtil.textStyleRaqiBookBold(context,
-
-                          color: Colors.grey),
-                      overflow: TextOverflow.ellipsis,
-
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),

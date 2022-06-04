@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../constants/caireColors.dart';
-import '../../viewmodel/booking/booking_screen_viewmodel.dart';
 import '../../viewmodel/handyman/handyman_list_viewmodel.dart';
 import '../../widgets/caire_fields.dart';
 import 'chatDetailScreen.dart';

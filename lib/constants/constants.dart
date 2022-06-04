@@ -15,5 +15,8 @@ class Constants {
   static int tabletScreenWidth=800;
 
   static int mobileScreenWidth=640;
+  static double borderRadiusCard = 10;
 
+  static const String dashboardRouteName = "Dashboard";
+  static const String providerServicesRouteName = "Provider Services";
 }

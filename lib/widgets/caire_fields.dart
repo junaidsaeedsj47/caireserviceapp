@@ -10,12 +10,13 @@ class CarieTextField extends StatelessWidget {
   final bool obscureText;
   final Widget suffix;
   final Widget? prefixIcon;
+  final TextInputType? textInputType;
+  final int? maxLines;
 
   // ValueChanged<String> onChanged;
   final TextEditingController controller;
 
   const CarieTextField({
-
     required this.labelText,
     required this.controller,
     this.obscureText = false,
@@ -24,14 +25,18 @@ class CarieTextField extends StatelessWidget {
       width: 0,
     ),
     this.hintText = "", this.prefixIcon,
+    this.textInputType=TextInputType.text,
+    this.maxLines=1,
     // this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: textInputType,
       obscureText: obscureText,
       controller: controller,
+      maxLines: maxLines,
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: const TextStyle(color: Color(0xffB4B4B4)),
@@ -73,6 +78,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
   final TextInputType keyboardType;
   // ValueChanged<String> onChanged;
   final TextEditingController controller;
+  final int? maxLines;
 
   const CarieTextFieldWithoutLabel({
     required this.controller,
@@ -95,6 +101,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
     this.focusedBorderColor = const Color(0xffE7E8EE),   this.errorText, this.prefixIcon,
     // this.onChanged,
     this.keyboardType=TextInputType.text,
+    this.maxLines=1,
   });
 
   @override
@@ -103,6 +110,7 @@ class CarieTextFieldWithoutLabel extends StatelessWidget {
       obscureText: obscureText,
       controller: controller,
       keyboardType: keyboardType,
+      maxLines: maxLines,
       style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,customDecoration: TextDecoration.none),
       decoration: InputDecoration(
         labelStyle: const TextStyle(color: Colors.red),

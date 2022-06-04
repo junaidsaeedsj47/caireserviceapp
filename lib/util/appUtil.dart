@@ -1,11 +1,14 @@
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/device/device.dart';
-import 'package:caireapp/screens/booking/booking_screen.dart';
 import 'package:caireapp/screens/chat/chat_screen.dart';
 import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
+import 'package:caireapp/screens/profile/profile_screen.dart';
+import 'package:caireapp/screens/service/service_screen.dart';
+import 'package:caireapp/screens/userBookingMain/booking_screen.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/widgets/bottom_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -30,13 +33,21 @@ class AppUtils {
   }
 
   static showFormattedDate(DateTime date) {
-    return DateFormat('dd-MM-yyyy').format(date);
+    if (date != null) {
+      return DateFormat('dd-MM-yyyy').format(date);
+    }
   }
-  static showFormattedDateWithMonthName(DateTime date) {
-    return DateFormat('dd MMMM, yyyy').format(date);
+
+  static showFormattedDateWithMonthName(date) {
+    if (date != null) {
+      return DateFormat('dd MMMM, yyyy').format(date);
+    }
   }
+
   static showFormattedTime(DateTime time) {
-    return DateFormat('kk:mm a').format(time);
+    if (time != null) {
+      return DateFormat('kk:mm a').format(time);
+    }
   }
 
   static bool isTabletDevice(BuildContext context) {
@@ -80,11 +91,10 @@ class AppUtils {
       String? title,
       bool showBack = true,
       bool centerTitle = true,
-      Widget? actionWidget}) {
+      Widget? actionWidget,
+      double? titleFontSize = 24}) {
     return AppBar(
-      actions: [
-        actionWidget!
-      ],
+      actions: actionWidget != null ? [actionWidget!] : [],
       automaticallyImplyLeading: showBack ? true : false,
       iconTheme: IconThemeData(
         color: AppColors.instance.textWhiteColor, //change your color here
@@ -93,7 +103,7 @@ class AppUtils {
       title: Text(
         title ?? "",
         style: TextStyleUtil.textStyleRaqiBook(context!,
-            fontSize: 24, color: AppColors.instance.textWhiteColor),
+            fontSize: titleFontSize!, color: AppColors.instance.textWhiteColor),
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: AppColors.instance.themeColor, // Status bar
@@ -161,6 +171,36 @@ class AppUtils {
           // changeSelectedScreen(index);
         },
         elevation: 5);
+  }
+
+  static void pushAndRemove(BuildContext context,Widget screenName) {
+    Route route = MaterialPageRoute(
+        settings: RouteSettings(name: Constants.providerServicesRouteName),
+        builder: (context) => screenName);
+    Navigator.pushAndRemoveUntil(
+      context,
+      route,
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  static void moveToDashboard(BuildContext context,List bottomBar) {
+    Route route = MaterialPageRoute(
+        settings: RouteSettings(name: Constants.dashboardRouteName),
+        builder: (context) => AppBottomBar(
+          bottomBarPages: bottomBar,
+              // bottomBarPages: [
+              //   DashboardScreen(),
+              //   ChatScreen(),
+              //   BookingMainScreen(),
+              //   ProfileScreen(),
+              // ],
+            ));
+    Navigator.pushAndRemoveUntil(
+      context,
+      route,
+      (Route<dynamic> route) => false,
+    );
   }
 
   static void pushRoute(
@@ -267,5 +307,9 @@ class AppUtils {
     return SizedBox(
       height: DynamicSize.height(0.04, context),
     );
+  }
+
+  static EdgeInsets dialogPadding(BuildContext context) {
+    return EdgeInsets.all(20);
   }
 }

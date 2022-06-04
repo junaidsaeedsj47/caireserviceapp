@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "200881815392",
+    "project_id": "caireapp-e46d7",
+    "storage_bucket": "caireapp-e46d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200881815392:android:7039616f702ebaeeb0a805",
+        "android_client_info": {
+          "package_name": "com.example.caireapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200881815392-utfnjiaauqme7415kcqcehrvgkne49i5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.caireapp",
+            "certificate_hash": "a466c1e7a522ef1708b46165cb77747215168c19"
+          }
+        },
+        {
+          "client_id": "200881815392-4ak51o102stq93au79s7gr9lvc5s8nvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJQNAbTK3AGLlmRGVxa3VbejegSp-qB9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200881815392-4ak51o102stq93au79s7gr9lvc5s8nvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

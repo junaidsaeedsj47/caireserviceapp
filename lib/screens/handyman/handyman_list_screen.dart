@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../constants/caireColors.dart';
-import '../../viewmodel/booking/booking_screen_viewmodel.dart';
 import '../../viewmodel/handyman/handyman_list_viewmodel.dart';
 import '../service/add_service_screen.dart';
 import '../service/service_screen.dart';
@@ -200,11 +199,11 @@ class _HandymanListScreenState extends State<HandymanListScreen> {
                             color: Colors.white),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ServiceScreen()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const ServiceScreen()),
+                        // );
                       }),
                 ),
               ),

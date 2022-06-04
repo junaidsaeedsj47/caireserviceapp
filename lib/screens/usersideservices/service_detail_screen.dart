@@ -8,6 +8,7 @@ import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/usersideservices/service_detail_viewmodel.dart';
+import 'package:caireapp/widgets/custom_popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -34,7 +35,23 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         viewModelBuilder: () => serviceDetailsViewModel,
         builder: (contextBuilder, model, child) {
           return Scaffold(
-            appBar: AppUtils.showAppBar(context: context,title: "Service Details",showBack:UniversalPlatform.isWeb? false : true),
+            // appBar: AppUtils.showAppBar(context: context,title: "Service Details",showBack:UniversalPlatform.isWeb? false : true),
+            appBar: AppUtils.showAppBarWithAction(
+            showBack:UniversalPlatform.isWeb? false : true,
+              title: "Service Details",
+              context: context,
+              actionWidget: IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  deleteProviderServiceDialog(context);
+                  // AppUtils.pushRoute(
+                  //     context: context, route: AddServiceScreen());
+                },
+              ),
+            ),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -164,14 +181,18 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                         SizedBox(
                           height: 20,
                         ),
+                        if(!widget.userFromViewProfile!)
                         Text(
                           "Available At",
                           style: TextStyleUtil.textStyleRaqiBook(context),
                         ),
+                        if(!widget.userFromViewProfile!)
                         SizedBox(
                           height: 20,
                         ),
+                        if(!widget.userFromViewProfile!)
                         getContinueButton(context, model),
+                        if(!widget.userFromViewProfile!)
                         SizedBox(
                           height: 20,
                         ),
@@ -335,5 +356,29 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
             color: AppColors.instance.white, fontSize: 18),
       ),
     );
+  }
+ deleteProviderServiceDialog(BuildContext context){
+    return    showDialog(
+        context: context,
+        builder: (contextBuilder) => ShowPopup(
+          title: "Warning!",
+          description: "Do you want to delete the service?",
+          actions: [
+            AppAlertAction(
+              title: "Yes",
+              handler: (_) {
+                AppUtils.pop(context: context);
+                AppUtils.pop(context: context);
+              },
+              showWhiteButton: false,
+            ),
+            AppAlertAction(
+              title: "Cancel",
+              showWhiteButton: true,
+            ),
+          ],
+          // image: Image.asset(MobilyConstants.baseImagePath + "common/info.png"),
+        ),
+        barrierDismissible: true);
   }
 }

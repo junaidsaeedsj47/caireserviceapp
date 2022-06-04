@@ -7,34 +7,34 @@ import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
-import 'package:caireapp/viewmodel/providerDetails/provider_details_viewmodel.dart';
+import 'package:caireapp/viewmodel/consumerDetails/consumer_details_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stacked/stacked.dart';
 
-class ProviderDetailsScreen extends StatefulWidget {
+class ConsumerDetailsScreen extends StatefulWidget {
   final String? title;
   final ServiceModel? servicesData;
 
-  ProviderDetailsScreen({Key? key, this.title, this.servicesData});
+  ConsumerDetailsScreen({Key? key, this.title, this.servicesData});
 
   @override
-  _ProviderDetailsScreenState createState() => _ProviderDetailsScreenState();
+  _ConsumerDetailsScreenState createState() => _ConsumerDetailsScreenState();
 }
 
-class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
+class _ConsumerDetailsScreenState extends State<ConsumerDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    ProviderDetailsViewModel providerDetailsViewModel =
-        ProviderDetailsViewModel();
+    ConsumerDetailsViewModel consumerDetailsViewModel =
+    ConsumerDetailsViewModel();
     return SafeArea(
-        child: ViewModelBuilder<ProviderDetailsViewModel>.reactive(
+        child: ViewModelBuilder<ConsumerDetailsViewModel>.reactive(
             onModelReady: (model) {
               model.initialize(context);
             },
-            viewModelBuilder: () => providerDetailsViewModel,
+            viewModelBuilder: () => consumerDetailsViewModel,
             builder: (contextBuilder, model, child) {
               return Scaffold(
                 appBar: AppBar(
@@ -44,7 +44,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                   ),
                   centerTitle: true,
                   title: Text(
-                    "Provider Detail",
+                    "Consumer Details",
                     style: TextStyleUtil.textStyleRaqiBook(context,
                         fontSize: 24, color: AppColors.instance.textWhiteColor),
                   ),
@@ -63,32 +63,15 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                             start: 10, end: 10, top: 20, bottom: 20),
                         child: Column(
                           children: [
-                            // SizedBox(
-                            //   height: 30,
-                            // ),
                             getAboutSummary(context, model),
                             SizedBox(
-                              height: 30,
-                            ),
-                            getContactDetails(context, model),
-
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 10, end: 10, ),
-                        child: Column(
-                          children: [
-                            getSubTitleServices(model),
-                            const SizedBox(
                               height: 20,
                             ),
-                            serviceProviderCard(context, model),
+                            getContactDetails(context, model),
                           ],
                         ),
                       ),
+
                       Container(
                         padding: const EdgeInsetsDirectional.only(
                           start: 10, end: 10,),
@@ -110,7 +93,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
   }
 
   Widget userProfileNameTitle(
-      BuildContext context, ProviderDetailsViewModel model) {
+      BuildContext context, ConsumerDetailsViewModel model) {
     return Container(
       padding: const EdgeInsetsDirectional.only(
           start: 10, end: 10, top: 20, bottom: 20),
@@ -125,7 +108,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
             child: CircleAvatar(
               radius: 50,
               child: Image.network(
-                  'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg',),
+                'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg',),
             ),
           ),
           Column(
@@ -176,19 +159,19 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
     );
   }
 
-  Widget getAboutSummary(BuildContext context, ProviderDetailsViewModel model) {
+  Widget getAboutSummary(BuildContext context, ConsumerDetailsViewModel model) {
     return Container(
       padding: const EdgeInsetsDirectional.only(
-          start: 20, end: 20,),
+        start: 20, end: 20,),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("About",   style: TextStyleUtil.textStyleRaqiBook(
             context,
           )),
-          SizedBox(
-            height: 20,
-          ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           AutoSizeText(model.providerDetails.first.userSummaryDetails ?? "",
               style: TextStyleUtil.textStyleRaqiBook(
                 context,
@@ -202,7 +185,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
   }
 
   Widget getContactDetails(
-      BuildContext context, ProviderDetailsViewModel model) {
+      BuildContext context, ConsumerDetailsViewModel model) {
     return Container(
       padding: const EdgeInsetsDirectional.only(
           start: 20, end: 20, top: 30, bottom: 30),
@@ -262,7 +245,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
       ),
     );
   }
-  Widget getReviewsTitle(ProviderDetailsViewModel model) {
+  Widget getReviewsTitle(ConsumerDetailsViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -289,11 +272,11 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
   }
 
   Widget providerReviewsCard(
-      BuildContext context, ProviderDetailsViewModel model) {
+      BuildContext context, ConsumerDetailsViewModel model) {
     return Container(
       // height: 300,
       child:   ListView.builder(
-        itemCount: 1,
+        itemCount: 2,
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
         itemBuilder: (context, i) {
@@ -390,7 +373,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
     );
   }
   Widget getRatingStars(
-      BuildContext context, ProviderDetailsViewModel model, double? ratingNo) {
+      BuildContext context, ConsumerDetailsViewModel model, double? ratingNo) {
     List starToShow = [];
     if (ratingNo == 1 || ratingNo! < 2) {
       starToShow = [1];
@@ -414,13 +397,13 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
         Row(
           children: starToShow
               .map((e) => Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 5),
-                    child: Image.asset(
-                      "assets/images/goldenStar.png",
-                      fit: BoxFit.cover,
-                      width: 20,
-                    ),
-                  ))
+            padding: const EdgeInsetsDirectional.only(end: 5),
+            child: Image.asset(
+              "assets/images/goldenStar.png",
+              fit: BoxFit.cover,
+              width: 20,
+            ),
+          ))
               .toList(),
         ),
         Text(
@@ -440,7 +423,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
     //     });
   }
 
-  Widget getSubTitleServices(ProviderDetailsViewModel model) {
+  Widget getSubTitleServices(ConsumerDetailsViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -468,7 +451,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
   }
 
   Widget serviceProviderCard(
-      BuildContext context, ProviderDetailsViewModel model) {
+      BuildContext context, ConsumerDetailsViewModel model) {
     return Container(
       // height: 300,
       child: ListView.builder(
@@ -603,7 +586,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
     );
   }
 
-  Widget getPriceTag(ProviderDetailsViewModel model, int index) {
+  Widget getPriceTag(ConsumerDetailsViewModel model, int index) {
     return Container(
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.instance.white, width: 2),
