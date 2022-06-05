@@ -40,7 +40,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
             showBack:UniversalPlatform.isWeb? false : true,
               title: "Service Details",
               context: context,
-              actionWidget: IconButton(
+              actionWidget: widget.userFromViewProfile! ? IconButton(
                 icon: Icon(
                   Icons.delete,
                   color: Colors.white,
@@ -50,7 +50,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   // AppUtils.pushRoute(
                   //     context: context, route: AddServiceScreen());
                 },
-              ),
+              ) : Container(),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -69,7 +69,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           width: double.infinity,
-                          height: 400,
+                          height: 350,
                           child: Image.network(
                             widget.servicesData!.serviceImage.toString(),
                             fit: BoxFit.cover,

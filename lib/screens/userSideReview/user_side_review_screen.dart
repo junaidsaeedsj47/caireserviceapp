@@ -20,7 +20,9 @@ import 'package:universal_platform/universal_platform.dart';
 
 class UserSideReviewScreen extends StatefulWidget {
   final bool providerCompletingService;
-  const UserSideReviewScreen({Key? key,this.providerCompletingService=false}) : super(key: key);
+
+  const UserSideReviewScreen({Key? key, this.providerCompletingService = false})
+      : super(key: key);
 
   @override
   _UserSideReviewScreenState createState() => _UserSideReviewScreenState();
@@ -73,7 +75,15 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      userRatingBar(context,model),
+                      Text(
+                        "Rate Service",
+                        style: TextStyleUtil.textStyleRaqiBook(context,
+                            fontSize: 20),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      userRatingBar(context, model),
                       SizedBox(
                         height: 40,
                       ),
@@ -142,14 +152,15 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
       ),
     );
   }
-Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
+
+  Widget userRatingBar(BuildContext context, UserSideReviewViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         RatingBar.builder(
           ignoreGestures: false,
-          itemSize: 30,
-          initialRating:0,
+          itemSize: 25,
+          initialRating: 0,
           minRating: 0,
           direction: Axis.horizontal,
           allowHalfRating: true,
@@ -159,7 +170,7 @@ Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
           itemBuilder: (context, _) =>
               Image.asset("assets/images/goldenStar.png"),
           onRatingUpdate: (rating) {
-           model.updateRatingValue(rating);
+            model.updateRatingValue(rating);
           },
         ),
         Text(
@@ -172,7 +183,7 @@ Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
         ),
       ],
     );
-}
+  }
 
   Widget paymentBookingButton(
     BuildContext context,
@@ -180,7 +191,7 @@ Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {
-        if(widget.providerCompletingService){
+        if (widget.providerCompletingService) {
           AppUtils.moveToDashboard(
             context,
             [
@@ -190,13 +201,17 @@ Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
               ProfileScreen(),
             ],
           );
-        }else{
-        AppUtils.moveToDashboard(context,[
+        } else {
+          AppUtils.moveToDashboard(
+            context,
+            [
               DashboardScreen(),
               ChatScreen(),
               BookingMainScreen(),
               ProfileScreen(),
-            ],);}
+            ],
+          );
+        }
       },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
@@ -214,7 +229,7 @@ Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
     return CupertinoButton(
       color: AppColors.instance.white,
       onPressed: () {
-        if(widget.providerCompletingService){
+        if (widget.providerCompletingService) {
           AppUtils.moveToDashboard(
             context,
             [
@@ -224,13 +239,17 @@ Widget userRatingBar(BuildContext context,UserSideReviewViewModel model){
               ProfileScreen(),
             ],
           );
-        }else{
-          AppUtils.moveToDashboard(context,[
-            DashboardScreen(),
-            ChatScreen(),
-            BookingMainScreen(),
-            ProfileScreen(),
-          ],);}
+        } else {
+          AppUtils.moveToDashboard(
+            context,
+            [
+              DashboardScreen(),
+              ChatScreen(),
+              BookingMainScreen(),
+              ProfileScreen(),
+            ],
+          );
+        }
       },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),

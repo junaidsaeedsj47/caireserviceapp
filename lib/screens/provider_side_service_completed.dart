@@ -21,7 +21,10 @@ import 'handyman/provider_dashboard.dart';
 
 class ProviderSideServiceCompleted extends StatefulWidget {
   final bool providerCompletingService;
-  const ProviderSideServiceCompleted({Key? key,this.providerCompletingService=false}) : super(key: key);
+
+  const ProviderSideServiceCompleted(
+      {Key? key, this.providerCompletingService = false})
+      : super(key: key);
 
   @override
   _ProviderSideServiceCompletedState createState() =>
@@ -50,64 +53,81 @@ class _ProviderSideServiceCompletedState
                   context: context, title: "Caire", showBack: false),
               // bottomNavigationBar: AppUtils.appBottomBar(context),
               body: Center(
-                child: Expanded(
-                  child: Container(
-                    padding: UniversalPlatform.isWeb
-                        ? EdgeInsetsDirectional.only(start: 30, end: 30)
-                        : EdgeInsetsDirectional.only(
-                        start: 10, end: 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 20),
-                          Container(
+                child: Container(
+                  padding: UniversalPlatform.isWeb
+                      ? EdgeInsetsDirectional.only(start: 30, end: 30)
+                      : EdgeInsetsDirectional.only(start: 10, end: 10),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 20),
+                        Container(
+                          child: Text(
+                            'Thank you',
+                            style: TextStyleUtil.textStyleRaqiBook(context,
+                                fontSize: 20),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          child: Text(
+                            "Waiting for consumer to complete it.",
+                            style: TextStyleUtil.textStyleRaqiBook(context),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.8,
+                          child: CupertinoButton(
+                            color: AppColors.instance.themeColor,
+                            onPressed: () {
+                              AppUtils.moveToDashboard(
+                                context,
+                                [
+                                  ProviderDashboardScreen(),
+                                  ChatScreen(),
+                                  ProviderSideBookingScreen(),
+                                  ProfileScreen(),
+                                ],
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            padding:
+                                EdgeInsetsDirectional.only(top: 10, bottom: 10),
                             child: Text(
-                              'Thank you',
-                              style: TextStyleUtil.textStyleRaqiBook(context,fontSize: 20),
+                              "Go to Dashboard",
+                              style: TextStyleUtil.textStyleRaqiBook(context,
+                                  fontSize: 18,
+                                  color: AppColors.instance.white),
                             ),
                           ),
-                          SizedBox(height: 20),
-                          Container(
-                            child: Text(
-                              "Waiting for consumer to complete it.",
-                              style: TextStyleUtil.textStyleRaqiBook(context),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Container(
-                            width: MediaQuery.of(context).size.width/1.8,
-                            child: CupertinoButton(
-                              color: AppColors.instance.themeColor,
-                              onPressed: () {
-                                if(widget.providerCompletingService){
-                                  AppUtils.pushAndRemove(context, UserSideReviewScreen(providerCompletingService:widget.providerCompletingService));
-                                }else{
-                                AppUtils.moveToDashboard(
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.8,
+                          child: CupertinoButton(
+                            color: AppColors.instance.themeColor,
+                            onPressed: () {
+                              AppUtils.pushAndRemove(
                                   context,
-                                  [
-                                    ProviderDashboardScreen(),
-                                    ChatScreen(),
-                                    ProviderSideBookingScreen(),
-                                    ProfileScreen(),
-                                  ],
-                                );}
-                              },
-                              borderRadius: BorderRadius.circular(12),
-                              padding:
-                                  EdgeInsetsDirectional.only(top: 10, bottom: 10),
-                              child:   Text(
-                                "Go to Dashboard",
-                                style: TextStyleUtil.textStyleRaqiBook(
-                                    context,
-                                    fontSize: 18,
-                                    color: AppColors.instance.white),
-                              ),
+                                  UserSideReviewScreen(
+                                      providerCompletingService:
+                                          widget.providerCompletingService));
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            padding:
+                                EdgeInsetsDirectional.only(top: 10, bottom: 10),
+                            child: Text(
+                              "Review the Consumer",
+                              style: TextStyleUtil.textStyleRaqiBook(context,
+                                  fontSize: 18,
+                                  color: AppColors.instance.white),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
