@@ -58,6 +58,9 @@ class AppUtils {
   static bool isMobileDevice(BuildContext context) {
     return MediaQuery.of(context).size.width < 650;
   }
+  static bool checkMobileDeviceForPopup(BuildContext context) {
+    return  MediaQuery.of(context).size.width < 850;
+  }
 
   static bool isDesktopDevice(BuildContext context) {
     return MediaQuery.of(context).size.width >= 1100;
@@ -70,11 +73,13 @@ class AppUtils {
     bool centerTitle = true,
   }) {
     return AppBar(
+      elevation: 0,
       automaticallyImplyLeading: showBack ? true : false,
       iconTheme: IconThemeData(
         color: AppColors.instance.textWhiteColor, //change your color here
       ),
       centerTitle: centerTitle,
+      // backgroundColor: AppColors.instance.themeColor,
       title: Text(
         title ?? "",
         style: TextStyleUtil.textStyleRaqiBook(context!,
@@ -87,11 +92,12 @@ class AppUtils {
   }
 
   static AppBar showAppBarWithAction(
-      {BuildContext? context,
+      {required BuildContext context,
       String? title,
       bool showBack = true,
       bool centerTitle = true,
       Widget? actionWidget,
+      bool transparentAppBar=false,
       double? titleFontSize = 24}) {
     return AppBar(
       actions: actionWidget != null ? [actionWidget!] : [],
@@ -100,9 +106,11 @@ class AppUtils {
         color: AppColors.instance.textWhiteColor, //change your color here
       ),
       centerTitle: centerTitle,
+      elevation: 0,
+      backgroundColor: transparentAppBar ?  AppColors.instance.clear : AppColors.instance.themeColor,
       title: Text(
         title ?? "",
-        style: TextStyleUtil.textStyleRaqiBook(context!,
+        style: TextStyleUtil.textStyleRaqiBook(context,
             fontSize: titleFontSize!, color: AppColors.instance.textWhiteColor),
       ),
       systemOverlayStyle: SystemUiOverlayStyle(

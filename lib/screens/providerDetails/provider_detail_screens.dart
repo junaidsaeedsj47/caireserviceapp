@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ProviderDetailsScreen extends StatefulWidget {
   final String? title;
@@ -37,21 +38,10 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
             viewModelBuilder: () => providerDetailsViewModel,
             builder: (contextBuilder, model, child) {
               return Scaffold(
-                appBar: AppBar(
-                  iconTheme: IconThemeData(
-                    color: AppColors
-                        .instance.textWhiteColor, //change your color here
-                  ),
-                  centerTitle: true,
-                  title: Text(
-                    "Provider Detail",
-                    style: TextStyleUtil.textStyleRaqiBook(context,
-                        fontSize: 24, color: AppColors.instance.textWhiteColor),
-                  ),
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: AppColors.instance.themeColor, // Status bar
-                  ),
-                ),
+                appBar:  AppUtils.showAppBar(
+                    context: context,
+                    title: "Provider Detail",
+                    showBack: UniversalPlatform.isWeb ? false : true),
                 body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

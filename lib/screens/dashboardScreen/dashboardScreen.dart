@@ -1,25 +1,31 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
+import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/device/device.dart';
 import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
 import 'package:caireapp/screens/chat/chat_screen.dart';
+import 'package:caireapp/screens/loginScreen/login_screen.dart';
+import 'package:caireapp/screens/signUpScreen/signup_screen.dart';
+import 'package:caireapp/screens/userBookingMain/booking_screen.dart';
+import 'package:caireapp/screens/userProfileOption/user_profile_all_options_screen.dart';
 import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
 import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/dashboard_viewmodel/dashboard_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stacked/stacked.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  final UserType userType;
+
+  DashboardScreen({this.userType = UserType.LoggedIn});
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -38,26 +44,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return ResponsiveWrapper.builder(
               SafeArea(
                 child: Scaffold(
-                  appBar: AppUtils.showAppBar(context: context,title: "Caire",showBack: false),
+                  appBar: MediaQuery.of(context).size.width >= 800
+                      ? null
+                      : AppUtils.showAppBar(
+                          context: context, title: "Caire", showBack: false),
                   body: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        getCarouselSlider(context, model),
+                        if (MediaQuery.of(context).size.width >= 800)
+                          getNavbarForWeb(context),
+                        if (MediaQuery.of(context).size.width >= 800)
+                          Stack(
+                            children: [
+                              getCarouselSlider(context, model),
+                              Positioned.fill(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                      padding: EdgeInsetsDirectional.only(
+                                          start: 30, end: 30),
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: getWebSearchField(context)),
+                                ),
+                              )
+                            ],
+                          ),
+                        if (MediaQuery.of(context).size.width < 800)
+                          getCarouselSlider(context, model),
                         Container(
                           padding: UniversalPlatform.isWeb
                               ? EdgeInsetsDirectional.only(start: 30, end: 30)
-                              : EdgeInsetsDirectional.only(
-                                  start: 10, end: 10),
+                              : EdgeInsetsDirectional.only(start: 10, end: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              getSearField(context),
+                              if (MediaQuery.of(context).size.width < 800)
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              if (MediaQuery.of(context).size.width < 800)
+                                getSearField(context),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -73,8 +103,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 10, end: 10, top: 20, bottom: 70),
+                          padding: MediaQuery.of(context).size.width >= 800
+                              ? EdgeInsetsDirectional.only(
+                                  start: 30, end: 30, top: 20, bottom: 70)
+                              : EdgeInsetsDirectional.only(
+                                  start: 10, end: 10, top: 20, bottom: 70),
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                             begin: Alignment.bottomLeft,
@@ -180,6 +213,191 @@ class _DashboardScreenState extends State<DashboardScreen> {
         });
   }
 
+  Widget getNavbarForWeb(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: AppColors.instance.themeColor),
+      // height: 70,
+      padding:
+          EdgeInsetsDirectional.only(start: 30, end: 30, top: 5, bottom: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          getAppLogo(),
+          Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  AppUtils.pushRoute(context: context, route: DashboardScreen());
+                  // AppUtils.moveToDashboard(context, [DashboardScreen]);
+                },
+                child: Text('Home',
+                    style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                        fontSize: 20, color: AppColors.instance.white)),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  // AppUtils.moveToDashboard(context, [ChatScreen()]);
+                  AppUtils.pushRoute(context: context, route: ChatScreen());
+                },
+                child: Text('Chat',
+                    style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                        fontSize: 20, color: AppColors.instance.white)),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  AppUtils.pushRoute(context: context, route: BookingMainScreen());
+                  // AppUtils.moveToDashboard(context, [BookingMainScreen()]);
+                },
+                child: Text('Bookings',
+                    style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                        fontSize: 20, color: AppColors.instance.white)),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  AppUtils.pushRoute(context: context, route: NavDrawer());
+                  // AppUtils.moveToDashboard(context, [NavDrawer()]);
+                },
+                child: Text('Profile',
+                    style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                        fontSize: 20, color: AppColors.instance.white)),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  AppUtils.pushRoute(context: context, route: LoginScreen());
+                  // AppUtils.moveToDashboard(context, [LoginScreen()]);
+                },
+                child: Text('Sign in',
+                    style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                        fontSize: 20, color: AppColors.instance.white)),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 0.5, color: AppColors.instance.backGroundColor),
+                    borderRadius: BorderRadius.circular(5)),
+                padding: EdgeInsetsDirectional.only(
+                    bottom: 0, top: 0, end: 15, start: 15),
+                child: InkWell(
+                  onTap: () {
+                    AppUtils.pushRoute(context: context, route: SignUpScreen());
+                    // AppUtils.moveToDashboard(context, [SignUpScreen()]);
+                  },
+                  child: Text('Join',
+                      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+                          fontSize: 20, color: AppColors.instance.white)),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  getAppLogo() {
+    return Text(
+      'Caire',
+      style: TextStyleUtil.textStyleBeforeLoginRaqiBook(context,
+          fontSize: UniversalPlatform.isWeb ? Constants.webTitleFontSize : 24,
+          color: AppColors.instance.white),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget getWebSearchField(BuildContext context) {
+    return Container(
+      height: 80,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsetsDirectional.only(top: 0, bottom: 0),
+                filled: true,
+                fillColor: Colors.white,
+                // prefixIconColor: AppColors.instance.themeColor,
+                // iconColor: AppColors.instance.themeColor,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      topLeft: Radius.circular(5)),
+                  borderSide:
+                      BorderSide(color: AppColors.instance.clear, width: 0.0),
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: AppColors.instance.lightGreyText,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      topLeft: Radius.circular(5)),
+                  borderSide:
+                      BorderSide(color: AppColors.instance.clear, width: 0.0),
+                ),
+                // suffixIcon:    CupertinoButton(
+                //   color: AppColors.instance.themeColor,
+                //   onPressed: () {},
+                //   // borderRadius: BorderRadius.circular(10),
+                //   // padding: EdgeInsetsDirectional.zero,
+                //   child: Text(
+                //     "Search",
+                //     style: TextStyleUtil.textStyleRaqiBook(context,
+                //         color: AppColors.instance.white, fontSize: 20),
+                //   ),
+                // ),
+                suffixIconColor: AppColors.instance.themeColor,
+                hintText: "Search services",
+                hintStyle: TextStyleUtil.textStyleRaqiBook(
+                  context,
+                  color: AppColors.instance.lightGreyText,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsetsDirectional.zero,
+            width: 100,
+            height: 48,
+            margin: EdgeInsetsDirectional.zero,
+            decoration: BoxDecoration(
+              color: AppColors.instance.themeColor,
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(5),
+                  topRight: Radius.circular(5)),
+            ),
+            child: GestureDetector(
+              onTap: () {},
+              child: Center(
+                child: Text(
+                  "Search",
+                  style: TextStyleUtil.textStyleRaqiBook(context,
+                      color: AppColors.instance.white, fontSize: 20),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget getSearField(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
@@ -215,7 +433,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return CarouselSlider(
       options: CarouselOptions(
         disableCenter: true,
-        aspectRatio: AppUtils.isDesktopDevice(context) ? 16 / 6 :16/9,
+        aspectRatio: AppUtils.isDesktopDevice(context) ? 16 / 8 : 16 / 10,
         viewportFraction: 1,
         initialPage: 0,
         enableInfiniteScroll: true,
@@ -255,7 +473,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         GestureDetector(
           onTap: () {
             AppUtils.pushRoute(
-                context: context, route: ViewAllCategoriesScreen());
+                context: context,
+                route: ViewAllCategoriesScreen(
+                  userType: widget.userType,
+                ));
           },
           child: Text(
             "View All",
@@ -282,6 +503,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             AppUtils.pushRoute(
                 context: context,
                 route: ViewAllServicesScreen(
+                  userType: widget.userType,
                   title: model.lisOfCategories[index],
                 ));
           },
@@ -315,7 +537,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: UniversalPlatform.isWeb ? 1.5 : 1.1,
-        crossAxisCount: AppUtils.isDesktopDevice(context) ? 3 :  2,
+        crossAxisCount: AppUtils.isDesktopDevice(context) ? 3 : 2,
         mainAxisSpacing: UniversalPlatform.isWeb ? 30 : 20,
         crossAxisSpacing: UniversalPlatform.isWeb ? 30 : 15,
         // childAspectRatio:,
@@ -335,7 +557,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         GestureDetector(
           onTap: () {
             AppUtils.pushRoute(
-                context: context, route: ViewAllServicesScreen());
+                context: context,
+                route: ViewAllServicesScreen(
+                  userType: widget.userType,
+                ));
           },
           child: Text(
             "View All",
@@ -348,7 +573,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget serviceProviderCard(BuildContext context, DashboardViewModel model) {
-
     // double customWidth;
     // double customHeight;
     // if(AppUtils.isDesktopDevice(context)){
@@ -366,19 +590,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: model.servicesData.length,
+          itemCount:  model.servicesData.length,
           itemBuilder: (context, int index) {
             return GestureDetector(
               onTap: () {
                 AppUtils.pushRoute(
                     context: context,
                     route: ServiceDetailScreen(
+                      userType: widget.userType,
                       servicesData: model.servicesData[index],
                     ));
               },
               child: Container(
                 // width:customWidth,
-
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: AppColors.instance.backGroundColor),
@@ -394,11 +618,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          height: 160,
+                          height:  160,
                           width: 270,
                           child: Image.network(
                             model.servicesData[index].serviceImage.toString(),
-                            fit:  BoxFit.fill,
+                            fit: BoxFit.fill,
                           ),
                         ),
                         Positioned.fill(

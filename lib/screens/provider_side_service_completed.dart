@@ -4,6 +4,7 @@ import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
 import 'package:caireapp/screens/profile/profile_screen.dart';
 import 'package:caireapp/screens/providerSideBooking/provider_side_booking_main_screen.dart';
 import 'package:caireapp/screens/service/service_screen.dart';
+import 'package:caireapp/screens/userProfileOption/user_profile_all_options_screen.dart';
 import 'package:caireapp/screens/userSideReview/user_side_review_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/enum.dart';
@@ -83,15 +84,21 @@ class _ProviderSideServiceCompletedState
                           child: CupertinoButton(
                             color: AppColors.instance.themeColor,
                             onPressed: () {
-                              AppUtils.moveToDashboard(
-                                context,
-                                [
-                                  ProviderDashboardScreen(),
-                                  ChatScreen(),
-                                  ProviderSideBookingScreen(),
-                                  ProfileScreen(),
-                                ],
-                              );
+                              if (UniversalPlatform.isWeb) {
+                                AppUtils.pushRoute(
+                                    context: context,
+                                    route: ProviderDashboardScreen());
+                              } else {
+                                AppUtils.moveToDashboard(
+                                  context,
+                                  [
+                                    ProviderDashboardScreen(),
+                                    ChatScreen(),
+                                    ProviderSideBookingScreen(),
+                                    NavDrawer(),
+                                  ],
+                                );
+                              }
                             },
                             borderRadius: BorderRadius.circular(12),
                             padding:

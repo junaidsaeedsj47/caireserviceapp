@@ -31,129 +31,130 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
         },
         viewModelBuilder: () => userSideBookingScreen,
         builder: (contextBuilder, model, child) {
-          return SafeArea(
-            child: Scaffold(
-              appBar: AppUtils.showAppBar(context: context,title: "Service Booking",showBack:UniversalPlatform.isWeb? false : true),
-              body: SingleChildScrollView(
-                child: Container(
-                  padding: AppUtils.unifiedPaddingOfScreen(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: Row(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      // padding: EdgeInsetsDirectional.only(start: 10,top: 10,end: 10,bottom: 10),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.instance.themeColor,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
+          return Scaffold(
+            appBar: AppUtils.showAppBar(
+                context: context,
+                title: "Service Booking",
+                showBack: UniversalPlatform.isWeb ? false : true),
+            body: SingleChildScrollView(
+              child: Container(
+                padding: AppUtils.unifiedPaddingOfScreen(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    // padding: EdgeInsetsDirectional.only(start: 10,top: 10,end: 10,bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.instance.themeColor,
+                                      borderRadius:
+                                          BorderRadius.circular(100),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "01",
+                                        style:
+                                            TextStyleUtil.textStyleRaqiBook(
+                                                context,
+                                                fontSize: 14,
+                                                color:
+                                                    AppColors.instance.white),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          "01",
-                                          style:
-                                              TextStyleUtil.textStyleRaqiBook(
-                                                  context,
-                                                  fontSize: 14,
-                                                  color:
-                                                      AppColors.instance.white),
-                                        ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Step 1",
+                                    style: TextStyleUtil.textStyleRaqiBook(
+                                        context,
+                                        color: AppColors.instance.black),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: AppUtils.isDesktopDevice(context)
+                                    ? 20
+                                    : 10,
+                              ),
+                              dashedHorizontalLine(),
+                              SizedBox(
+                                width: AppUtils.isDesktopDevice(context)
+                                    ? 20
+                                    : 10,
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    // padding: EdgeInsetsDirectional.only(start: 10,top: 10,end: 10,bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          AppColors.instance.backGroundColor,
+                                      borderRadius:
+                                          BorderRadius.circular(100),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "02",
+                                        style:
+                                            TextStyleUtil.textStyleRaqiBook(
+                                                context,
+                                                fontSize: 14,
+                                                color: AppColors
+                                                    .instance.lightGreyText),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Step 1",
-                                      style: TextStyleUtil.textStyleRaqiBook(
-                                          context,
-                                          color: AppColors.instance.black),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: AppUtils.isDesktopDevice(context)
-                                      ? 20
-                                      : 10,
-                                ),
-                                dashedHorizontalLine(),
-                                SizedBox(
-                                  width: AppUtils.isDesktopDevice(context)
-                                      ? 20
-                                      : 10,
-                                ),
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      // padding: EdgeInsetsDirectional.only(start: 10,top: 10,end: 10,bottom: 10),
-                                      decoration: BoxDecoration(
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Step 2",
+                                    style: TextStyleUtil.textStyleRaqiBook(
+                                        context,
                                         color:
-                                            AppColors.instance.backGroundColor,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "02",
-                                          style:
-                                              TextStyleUtil.textStyleRaqiBook(
-                                                  context,
-                                                  fontSize: 14,
-                                                  color: AppColors
-                                                      .instance.lightGreyText),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Step 2",
-                                      style: TextStyleUtil.textStyleRaqiBook(
-                                          context,
-                                          color:
-                                              AppColors.instance.lightGreyText),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
+                                            AppColors.instance.lightGreyText),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        "Enter Detail Information",
-                        style: TextStyleUtil.textStyleRaqiBook(context,
-                            fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      userBookingCardInformation(model),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      getNextButton(context, model),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Enter Detail Information",
+                      style: TextStyleUtil.textStyleRaqiBook(context,
+                          fontSize: 20),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    userBookingCardInformation(model),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    getNextButton(context, model),
+                  ],
                 ),
               ),
             ),
@@ -206,25 +207,29 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
                         context,
                       )),
                   Container(
-                    padding: EdgeInsetsDirectional.all(4),
+                    width: 100,
+                    padding: EdgeInsetsDirectional.only(
+                        top: 6, end: 6, start: 6, bottom: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: AppColors.instance.white),
-                    child: GestureDetector(
-                        onTap: () {
-                          DatePicker.showDatePicker(context,
-                              minTime: DateTime.now(),
-                              maxTime: DateTime(2050, 01, 01),
-                              showTitleActions: true,
-                              onChanged: (date) {}, onConfirm: (date) {
-                            model.updateSelectedDate(date);
-                          }, currentTime: DateTime.now());
-                        },
-                        child: AutoSizeText(
-                          AppUtils.showFormattedDate(model.selectedDate),
-                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                              context),
-                        )),
+                    child: Center(
+                      child: GestureDetector(
+                          onTap: () {
+                            DatePicker.showDatePicker(context,
+                                minTime: DateTime.now(),
+                                maxTime: DateTime(2050, 01, 01),
+                                showTitleActions: true,
+                                onChanged: (date) {}, onConfirm: (date) {
+                              model.updateSelectedDate(date);
+                            }, currentTime: DateTime.now());
+                          },
+                          child: AutoSizeText(
+                            AppUtils.showFormattedDate(model.selectedDate),
+                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context),
+                          )),
+                    ),
                   ),
                 ],
               ),
@@ -238,32 +243,36 @@ class _UserSideBookingScreenState extends State<UserSideBookingScreen> {
                       style:
                           TextStyleUtil.textStyleBeforeLoginRaqiBook(context)),
                   Container(
-                    padding: EdgeInsetsDirectional.all(4),
+                    width: 100,
+                    padding: EdgeInsetsDirectional.only(
+                        top: 6, end:6, start:6, bottom: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: AppColors.instance.white),
-                    child: GestureDetector(
-                        onTap: () {
-                          DatePicker.showTimePicker(
-                            context,
-                            showTitleActions: true,
-                            onChanged: (date) {
-                              // model.updateSelectedTime(date);
-                            },
-                            onConfirm: (date) {
-                              model.updateSelectedTime(date);
-                            },
-                            currentTime: DateTime.now(),
-                          );
-                        },
-                        child: AutoSizeText(
-                          AppUtils.showFormattedTime(model.selectedTime),
-                          // model.selectedTime.hour.toString() +
-                          //     ":" +
-                          //     model.selectedTime.minute.toString(),
-                          style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                              context),
-                        )),
+                    child: Center(
+                      child: GestureDetector(
+                          onTap: () {
+                            DatePicker.showTimePicker(
+                              context,
+                              showTitleActions: true,
+                              onChanged: (date) {
+                                // model.updateSelectedTime(date);
+                              },
+                              onConfirm: (date) {
+                                model.updateSelectedTime(date);
+                              },
+                              currentTime: DateTime.now(),
+                            );
+                          },
+                          child: AutoSizeText(
+                            AppUtils.showFormattedTime(model.selectedTime),
+                            // model.selectedTime.hour.toString() +
+                            //     ":" +
+                            //     model.selectedTime.minute.toString(),
+                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                context),
+                          )),
+                    ),
                   ),
                 ],
               ),

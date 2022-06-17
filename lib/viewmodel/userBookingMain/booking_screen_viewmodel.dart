@@ -4,7 +4,11 @@ import 'package:flutter/cupertino.dart';
 
 class BookingMainViewModel extends ChangeNotifier {
   String selectedValue = 'All';
-  BookingTypes bookingTypes=BookingTypes.All;
+  BookingTypes bookingTypes=BookingTypes.InProgress;
+  List<TabBarModelUser> userTabBarItems = [];
+  bool tabSelected = false;
+  int? currentIndex=0;
+  bool showLoader=false;
   List<String> listOfBookingServices = [
     'All',
     'New Booking',
@@ -25,8 +29,52 @@ class BookingMainViewModel extends ChangeNotifier {
     serviceDuration:1,
     descriptionOfService: "Lorem ipsum dolor sit mit is a dumy text.ipsum dolor sit mit is a dumy text ",
     ),]);
+    userTabBarItems.addAll([
+      TabBarModelUser(tabTitle: "In Progress", tabIndex: 0),
+      TabBarModelUser(tabTitle: "Waiting Provider", tabIndex: 1),
+      TabBarModelUser(tabTitle: "Scheduled", tabIndex: 2),
+      TabBarModelUser(tabTitle: "Completed", tabIndex: 3),
+      TabBarModelUser(tabTitle: "Cancelled", tabIndex: 4),
+    ]);
   }
 
+  selectedTabView(int? index) {
+    if (index == 0) {
+      currentIndex=index;
+      bookingTypes = BookingTypes.InProgress;
+      showLoader=true;
+      dismissLoader(showLoader);
+    } else if (index == 1) {
+      currentIndex=index;
+      bookingTypes = BookingTypes.WaitingProvider;
+      showLoader=true;
+      dismissLoader(showLoader);
+    } else if (index == 2) {
+      currentIndex=index;
+      bookingTypes = BookingTypes.Scheduled;
+      showLoader=true;
+      dismissLoader(showLoader);
+    } else if (index == 3) {
+      currentIndex=index;
+      bookingTypes = BookingTypes.Completed;
+      showLoader=true;
+      dismissLoader(showLoader);
+    }else if (index == 4) {
+      currentIndex=index;
+      bookingTypes = BookingTypes.Cancelled;
+      showLoader=true;
+      dismissLoader(showLoader);
+    }
+    notifyListeners();
+  }
+  dismissLoader(bool value){
+    if(value){
+      Future.delayed(Duration(seconds: 2),(){
+        showLoader=false;
+        notifyListeners();
+      });
+    }
+  }
   updateBookingTypes(String value) {
     selectedValue = value;
     if(value.toLowerCase()=="All".toLowerCase()){
@@ -40,4 +88,10 @@ class BookingMainViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+}
+class TabBarModelUser {
+  String? tabTitle;
+  int? tabIndex;
+
+  TabBarModelUser({this.tabTitle, this.tabIndex});
 }

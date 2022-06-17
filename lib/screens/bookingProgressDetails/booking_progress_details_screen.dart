@@ -42,10 +42,10 @@ class _BookingProgressDetailsScreenState
           builder: (contextBuilder, model, child) {
             return Scaffold(
               appBar: AppUtils.showAppBarWithAction(
-                showBack: true,
+                showBack:UniversalPlatform.isWeb ? false: true,
                 title: "Booking Status",
                 // titleFontSize: 18,
-                centerTitle: false,
+                centerTitle:UniversalPlatform.isWeb ? true: false,
                 context: context,
                 actionWidget: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -91,6 +91,7 @@ class _BookingProgressDetailsScreenState
                       SizedBox(
                         height: 5,
                       ),
+                      getTotalAmount(label: "Total Amount", price: "\$500"),
                       Divider(
                         thickness: 0.8,
                       ),
@@ -110,6 +111,9 @@ class _BookingProgressDetailsScreenState
                         height: 20,
                       ),
                       providerBookingStatus(context),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -127,7 +131,7 @@ class _BookingProgressDetailsScreenState
             "\n" +
             "or" +
             "\n" +
-            "Provider Re-Schedule the booking to " +
+            "Provider scheduled the booking to " +
             AppUtils.showFormattedDateWithMonthName(widget.selectedDate!) +
             "\n" +
             AppUtils.showFormattedTime(widget.selectedTime!),
@@ -152,13 +156,37 @@ class _BookingProgressDetailsScreenState
           "1233",
           style: TextStyleUtil.textStyleRaqiBook(
             context,
+            fontSize: 18,
             color: AppColors.instance.themeColor,
           ),
         ),
       ],
     );
   }
-
+  Widget getTotalAmount({String? label, String? price, double}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label ?? "",
+          style: TextStyleUtil.textStyleRaqiBook(
+            context,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          price ?? "",
+          style: TextStyleUtil.textStyleRaqiBook(
+            context,
+            fontSize: 18,
+            color: AppColors.instance.themeColor,
+          ),
+        )
+      ],
+    );
+  }
   Widget serviceBookingDetails(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -328,7 +356,6 @@ class _BookingProgressDetailsScreenState
                   child: CupertinoButton(
                     color: AppColors.instance.themeColor,
                     onPressed: () {
-                      AppUtils.pop(context: context);
                     },
                     borderRadius: BorderRadius.circular(12),
                     padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),

@@ -1,4 +1,5 @@
 import 'package:caireapp/constants/caireColors.dart';
+import 'package:caireapp/device/device.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,13 +16,14 @@ class AppAlertAction {
 typedef void AppAlertHandler(AppAlertAction action);
 
 class ShowPopup extends StatefulWidget {
-  final String title, description;
+  final String title;
+  final String? description;
   final List<AppAlertAction> actions;
   final Image? image;
 
   ShowPopup({
     required this.title,
-    required this.description,
+    this.description,
     required this.actions,
     this.image,
   });
@@ -31,7 +33,7 @@ class ShowPopup extends StatefulWidget {
     return _ShowPopupState(
       title: this.title,
       actions: this.actions,
-      description: this.description,
+      description: this.description!,
     );
   }
 }
@@ -137,7 +139,7 @@ class _ShowPopupState extends State<ShowPopup> {
                 ],
               ),
               child: Container(
-                width: double.infinity,
+                width: AppUtils.checkMobileDeviceForPopup(context) ? double.infinity: MediaQuery.of(context).size.width/2,
                 child: Column(
                   //   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,

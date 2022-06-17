@@ -6,6 +6,7 @@ import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/profile/profile_screen.dart';
 import 'package:caireapp/screens/providerSideBooking/provider_side_booking_main_screen.dart';
 import 'package:caireapp/screens/userBookingMain/booking_screen.dart';
+import 'package:caireapp/screens/userProfileOption/user_profile_all_options_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/text.dart';
@@ -42,57 +43,62 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
           builder: (contextBuilder, model, child) {
             return Scaffold(
               appBar: AppUtils.showAppBarWithAction(
-                showBack: true,
+                showBack: false,
                 title: "Review on Service",
-                centerTitle: false,
+                centerTitle: true,
                 context: context,
               ),
               backgroundColor: Colors.white,
               // body:     MapSample(),
-              body: Container(
-                padding: UniversalPlatform.isWeb
-                    ? EdgeInsetsDirectional.only(start: 30, end: 30)
-                    : EdgeInsetsDirectional.only(
-                        top: 20, bottom: 20, start: 20, end: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      getBookingTransactionId(context, model),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Your Review",
-                        style: TextStyleUtil.textStyleRaqiBook(context,
-                            fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      userSideReviewField(model),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Rate Service",
-                        style: TextStyleUtil.textStyleRaqiBook(context,
-                            fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      userRatingBar(context, model),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      paymentBookingButton(context),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      skipReviewBookingButton(context),
-                    ],
+              body: WillPopScope(
+                onWillPop: () {
+                  return moveToDashboard(context);
+                },
+                child: Container(
+                  padding: UniversalPlatform.isWeb
+                      ? EdgeInsetsDirectional.only(start: 30, end: 30)
+                      : EdgeInsetsDirectional.only(
+                      top: 20, bottom: 20, start: 20, end: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        getBookingTransactionId(context, model),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Your Review",
+                          style: TextStyleUtil.textStyleRaqiBook(context,
+                              fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        userSideReviewField(model),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Rate Service",
+                          style: TextStyleUtil.textStyleRaqiBook(context,
+                              fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        userRatingBar(context, model),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        paymentBookingButton(context),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        skipReviewBookingButton(context),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -101,8 +107,43 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
     );
   }
 
-  Widget getBookingTransactionId(
-      BuildContext context, UserSideReviewViewModel model) {
+  moveToDashboard(BuildContext context) {
+    if (widget.providerCompletingService) {
+      if (UniversalPlatform.isWeb) {
+        AppUtils.pushRoute(
+            context: context,
+            route: ProviderDashboardScreen());
+      } else {
+      AppUtils.moveToDashboard(
+        context,
+        [
+          ProviderDashboardScreen(),
+          ChatScreen(),
+          ProviderSideBookingScreen(),
+          NavDrawer(),
+        ],
+      );}
+    } else {
+      if (UniversalPlatform.isWeb) {
+        AppUtils.pushRoute(
+            context: context,
+            route: DashboardScreen());
+      } else {
+      AppUtils.moveToDashboard(
+        context,
+        [
+          DashboardScreen(),
+          ChatScreen(),
+          BookingMainScreen(),
+          NavDrawer(),
+        ],
+      );}
+    }
+    return;
+  }
+
+  Widget getBookingTransactionId(BuildContext context,
+      UserSideReviewViewModel model) {
     return Container(
       padding: AppUtils.unifiedPaddingOfScreen(
           start: 20, end: 20, top: 20, bottom: 20),
@@ -148,7 +189,7 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
           context,
         ),
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
       ),
     );
   }
@@ -185,32 +226,42 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
     );
   }
 
-  Widget paymentBookingButton(
-    BuildContext context,
-  ) {
+  Widget paymentBookingButton(BuildContext context,) {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {
         if (widget.providerCompletingService) {
-          AppUtils.moveToDashboard(
-            context,
-            [
-              ProviderDashboardScreen(),
-              ChatScreen(),
-              ProviderSideBookingScreen(),
-              ProfileScreen(),
-            ],
-          );
+          if (UniversalPlatform.isWeb) {
+            AppUtils.pushRoute(
+                context: context,
+                route: ProviderDashboardScreen());
+          } else {
+            AppUtils.moveToDashboard(
+              context,
+              [
+                ProviderDashboardScreen(),
+                ChatScreen(),
+                ProviderSideBookingScreen(),
+                NavDrawer(),
+              ],
+            );
+          }
         } else {
-          AppUtils.moveToDashboard(
-            context,
-            [
-              DashboardScreen(),
-              ChatScreen(),
-              BookingMainScreen(),
-              ProfileScreen(),
-            ],
-          );
+          if (UniversalPlatform.isWeb) {
+            AppUtils.pushRoute(
+                context: context,
+                route: DashboardScreen());
+          } else {
+            AppUtils.moveToDashboard(
+              context,
+              [
+                DashboardScreen(),
+                ChatScreen(),
+                BookingMainScreen(),
+                NavDrawer(),
+              ],
+            );
+          }
         }
       },
       borderRadius: BorderRadius.circular(12),
@@ -223,32 +274,40 @@ class _UserSideReviewScreenState extends State<UserSideReviewScreen> {
     );
   }
 
-  Widget skipReviewBookingButton(
-    BuildContext context,
-  ) {
+  Widget skipReviewBookingButton(BuildContext context,) {
     return CupertinoButton(
       color: AppColors.instance.white,
       onPressed: () {
         if (widget.providerCompletingService) {
+          if (UniversalPlatform.isWeb) {
+            AppUtils.pushRoute(
+                context: context,
+                route: ProviderDashboardScreen());
+          } else {
           AppUtils.moveToDashboard(
             context,
             [
               ProviderDashboardScreen(),
               ChatScreen(),
               ProviderSideBookingScreen(),
-              ProfileScreen(),
+              NavDrawer(),
             ],
-          );
+          );}
         } else {
+          if (UniversalPlatform.isWeb) {
+            AppUtils.pushRoute(
+                context: context,
+                route: DashboardScreen());
+          } else {
           AppUtils.moveToDashboard(
             context,
             [
               DashboardScreen(),
               ChatScreen(),
               BookingMainScreen(),
-              ProfileScreen(),
+              NavDrawer(),
             ],
-          );
+          );}
         }
       },
       borderRadius: BorderRadius.circular(12),

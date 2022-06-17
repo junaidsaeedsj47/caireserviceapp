@@ -9,6 +9,7 @@ import 'package:caireapp/widgets/custom_popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 import '../../constants/caireColors.dart';
 import '../handyman/handyman_list_screen.dart';
@@ -50,41 +51,45 @@ class _BookingMainScreenState extends State<BookingMainScreen> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          tabBarItems(context, model),
                           SizedBox(height: 20),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                                start: 20, end: 20),
-                            padding: EdgeInsets.symmetric(horizontal: 12),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: DropdownButton<String>(
-                              value: model.selectedValue,
-                              isExpanded: true,
-                              icon: const Icon(Icons.arrow_drop_down),
-                              iconSize: 24,
-                              elevation: 16,
-                              underline: SizedBox(
-                                height: 0,
-                                width: 0,
-                              ),
-                              style:
-                                  TextStyleUtil.textStyleRaqiBookBold(context),
-                              onChanged: (String? newValue) {
-                                model.updateBookingTypes(newValue!);
-                              },
-                              items: model.listOfBookingServices.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text( value),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          ListView.builder(
+                          // Container(
+                          //   margin: const EdgeInsetsDirectional.only(
+                          //       start: 20, end: 20),
+                          //   padding: EdgeInsets.symmetric(horizontal: 12),
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.grey.withOpacity(0.1),
+                          //     borderRadius:
+                          //         BorderRadius.all(Radius.circular(5)),
+                          //   ),
+                          //   child: DropdownButton<String>(
+                          //     value: model.selectedValue,
+                          //     isExpanded: true,
+                          //     icon: const Icon(Icons.arrow_drop_down),
+                          //     iconSize: 24,
+                          //     elevation: 16,
+                          //     underline: SizedBox(
+                          //       height: 0,
+                          //       width: 0,
+                          //     ),
+                          //     style:
+                          //         TextStyleUtil.textStyleRaqiBookBold(context),
+                          //     onChanged: (String? newValue) {
+                          //       model.updateBookingTypes(newValue!);
+                          //     },
+                          //     items: model.listOfBookingServices.map<DropdownMenuItem<String>>((String value) {
+                          //       return DropdownMenuItem<String>(
+                          //         value: value,
+                          //         child: Text( value),
+                          //       );
+                          //     }).toList(),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 10),
+                          model.showLoader
+                              ? CircularProgressIndicator(
+                              color: AppColors.instance.themeColor)
+                              :  ListView.builder(
                             itemCount: 3,
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
@@ -102,10 +107,68 @@ class _BookingMainScreenState extends State<BookingMainScreen> {
           }),
     );
   }
-
+  Widget tabBarItems(BuildContext context, BookingMainViewModel model) {
+    return Container(
+      margin: const EdgeInsetsDirectional.only(start: 10, end: 10, top: 20),
+      height: 40,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: model.userTabBarItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: (){
+                model.selectedTabView(model.userTabBarItems[index].tabIndex);
+              },
+              child: Container(
+                // padding: EdgeInsetsDirectional.only(start: 10,end: 10),
+                // height: 30,
+                margin: const EdgeInsetsDirectional.only(end: 15),
+                width:UniversalPlatform.isWeb ?200 :MediaQuery.of(context).size.width / 2.7,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: index == model.currentIndex
+                      ? AppColors.instance.themeColor
+                      : AppColors.instance.backGroundColor,
+                ),
+                child: Center(
+                  child: Text(
+                    model.userTabBarItems[index].tabTitle ?? "",
+                    style: TextStyleUtil.textStyleRaqiBook(context,
+                        color: index == model.currentIndex
+                            ? AppColors.instance.white
+                            : AppColors.instance.black),
+                  ),
+                ),
+                // child: CupertinoButton(
+                //   pressedOpacity: 0.0,
+                //     padding: EdgeInsetsDirectional.zero,
+                //     borderRadius: BorderRadius.circular(8),
+                //     color: index==model.currentIndex
+                //         ? AppColors.instance.themeColor
+                //         : AppColors.instance.lightGreyText,
+                //     child: Text(
+                //       model.tabBarItems[index].tabTitle ?? "",
+                //       style: TextStyleUtil.textStyleRaqiBook(context,
+                //           color: Colors.white),
+                //     ),
+                //     onPressed: () {
+                //       // Navigator.push(
+                //       //   context,
+                //       //   MaterialPageRoute(
+                //       //       builder: (context) => CheckUserBookingStatus(
+                //       //             providerSideScreen: true,
+                //       //           )),
+                //       // );
+                //       model.selectedTabView(model.tabBarItems[index].tabIndex);
+                //     }),
+              ),
+            );
+          }),
+    );
+  }
   Container _bookingContainer(BuildContext context,BookingMainViewModel model) {
     return Container(
-      margin: const EdgeInsetsDirectional.only(start: 20, end: 20, bottom: 10),
+      margin: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
       padding: EdgeInsets.all(12),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -210,9 +273,9 @@ class _BookingMainScreenState extends State<BookingMainScreen> {
               ),
             ],
           ),
-          if(model.bookingTypes==BookingTypes.New)
+          if(model.bookingTypes==BookingTypes.WaitingProvider)
           Divider(),
-          if(model.bookingTypes==BookingTypes.New)
+          if(model.bookingTypes==BookingTypes.WaitingProvider)
           Row(
             children: [
               Expanded(
@@ -293,6 +356,78 @@ class _BookingMainScreenState extends State<BookingMainScreen> {
                 ),
               ],
             ),
+          if (model.bookingTypes == BookingTypes.Scheduled) Divider(),
+          if (model.bookingTypes == BookingTypes.Scheduled)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Scheduled On :",
+                  style: TextStyleUtil.textStyleRaqiBook(
+                    context,
+                  ),
+                ),
+                Text(
+                  "15 June 2022 12 : 00 PM",
+                  style: TextStyleUtil.textStyleRaqiBook(context,
+                      color: AppColors.instance.themeColor),
+                ),
+              ],
+            ),
+          if (model.bookingTypes == BookingTypes.Scheduled)
+            SizedBox(
+              height: 5,
+            ),
+          if (model.bookingTypes == BookingTypes.Scheduled)
+            Container(
+              height: 45,
+              width: double.infinity,
+              child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.instance.lightGreyText.withOpacity(0.1),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyleUtil.textStyleRaqiBook(context,
+                        color: Colors.black),
+                  ),
+                  onPressed: () {
+                    cancelBookingShowDialog(context);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const HandymanListScreen()),
+                    // );
+                  }),
+            ),
+          if(model.bookingTypes==BookingTypes.Cancelled)
+            Divider(),
+          if(model.bookingTypes==BookingTypes.Cancelled)
+          Container(
+            // height: 45,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                'Cancelled',
+                style: TextStyleUtil.textStyleRaqiBook(context,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+          if(model.bookingTypes==BookingTypes.Completed)
+            Divider(),
+          if(model.bookingTypes==BookingTypes.Completed)
+            Container(
+              // height: 45,
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  'Completed',
+                  style: TextStyleUtil.textStyleRaqiBook(context,
+                      color: Colors.black),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -307,9 +442,6 @@ class _BookingMainScreenState extends State<BookingMainScreen> {
             AppAlertAction(
               title: "Yes",
               handler: (_) {
-                AppUtils.pop(context: context);
-                AppUtils.pop(context: context);
-                AppUtils.pop(context: context);
                 AppUtils.pop(context: context);
               },
               showWhiteButton: false,

@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:caireapp/constants/caireColors.dart';
+import 'package:caireapp/screens/dashboardScreen/dashboardScreen.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
@@ -37,7 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
           return Scaffold(
             body: GestureDetector(
               onTap: (){
-                AppUtils.pushRoute(context: context, route: const LoginScreen());
+               if(MediaQuery.of(context).size.width>=800){
+                 AppUtils.pushRoute(context: context, route:  DashboardScreen());
+               }else{
+                 AppUtils.pushRoute(context: context, route: const LoginScreen());
+               }
               },
               child: Center(
                 child: Container(

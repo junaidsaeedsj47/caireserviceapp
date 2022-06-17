@@ -35,9 +35,9 @@ class _CheckUserBookingStatusState extends State<CheckUserBookingStatus> {
           builder: (contextBuilder, model, child) {
             return Scaffold(
               appBar: AppUtils.showAppBarWithAction(
-                showBack: true,
+                showBack:UniversalPlatform.isWeb ? false: true,
                 title: "In Progress",
-                centerTitle: false,
+                centerTitle:UniversalPlatform.isWeb ? true: false,
                 context: context,
                 actionWidget: Row(
                   // mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +133,10 @@ class _CheckUserBookingStatusState extends State<CheckUserBookingStatus> {
                            SizedBox(
                              height: 20,
                            ),
-                           completeBookingButton(context)
+                           completeBookingButton(context),
+                           SizedBox(
+                             height: 20,
+                           ),
                          ],
                        ),
                      )
@@ -148,6 +151,9 @@ class _CheckUserBookingStatusState extends State<CheckUserBookingStatus> {
 
   Widget getTheServiceDuration(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(
+        height: 10,
+      ),
       Text(
         "Booking Details :",
         style: TextStyleUtil.textStyleRaqiBook(context, fontSize: 18),

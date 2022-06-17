@@ -32,12 +32,10 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
           viewModelBuilder: () => paymentDetailsViewModel,
           builder: (contextBuilder, model, child) {
             return Scaffold(
-              appBar: AppUtils.showAppBarWithAction(
-                showBack: true,
-                title: "Payment",
-                centerTitle: false,
-                context: context,
-              ),
+              appBar:  AppUtils.showAppBar(
+                  context: context,
+                  title: "Payment",
+                  showBack: UniversalPlatform.isWeb ? false : true),
               backgroundColor: Colors.white,
               // body:     MapSample(),
               body: Container(

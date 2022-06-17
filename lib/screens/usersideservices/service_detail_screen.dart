@@ -2,9 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/constants/constants.dart';
 import 'package:caireapp/model/service_data_model.dart';
+import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/screens/providerDetails/provider_detail_screens.dart';
 import 'package:caireapp/screens/usersidebooking/user_side_booking_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/usersideservices/service_detail_viewmodel.dart';
@@ -17,8 +19,13 @@ import 'package:universal_platform/universal_platform.dart';
 class ServiceDetailScreen extends StatefulWidget {
   final bool? userFromViewProfile;
   final ServiceModel? servicesData;
+  final UserType userType;
 
-  ServiceDetailScreen({Key? key, this.servicesData,this.userFromViewProfile=false});
+  ServiceDetailScreen(
+      {Key? key,
+      this.servicesData,
+      this.userFromViewProfile = false,
+      this.userType = UserType.LoggedIn});
 
   @override
   _ServiceDetailScreenState createState() => _ServiceDetailScreenState();
@@ -37,20 +44,22 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           return Scaffold(
             // appBar: AppUtils.showAppBar(context: context,title: "Service Details",showBack:UniversalPlatform.isWeb? false : true),
             appBar: AppUtils.showAppBarWithAction(
-            showBack:UniversalPlatform.isWeb? false : true,
+              showBack: UniversalPlatform.isWeb ? false : true,
               title: "Service Details",
               context: context,
-              actionWidget: widget.userFromViewProfile! ? IconButton(
-                icon: Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  deleteProviderServiceDialog(context);
-                  // AppUtils.pushRoute(
-                  //     context: context, route: AddServiceScreen());
-                },
-              ) : Container(),
+              actionWidget: widget.userFromViewProfile!
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        deleteProviderServiceDialog(context);
+                        // AppUtils.pushRoute(
+                        //     context: context, route: AddServiceScreen());
+                      },
+                    )
+                  : Container(),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -69,31 +78,42 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           width: double.infinity,
-                          height: 350,
+                          height: 300,
                           child: Image.network(
                             widget.servicesData!.serviceImage.toString(),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      Positioned.fill(
-                          child: Align(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                    top: 50, end: 40),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.instance.white,
-                                    borderRadius: BorderRadius.circular(20),
+                      if (!widget.userFromViewProfile!)
+                        Positioned.fill(
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      top: 50, end: 40),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.instance.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          model.saveService(model.isSavedService
+                                              ? false
+                                              : true);
+                                        },
+                                        child: Icon(
+                                          model.isSavedService
+                                              ? Icons.thumb_up_alt_rounded
+                                              : Icons.thumb_up_alt_outlined,
+                                          color: model.isSavedService
+                                              ? AppColors.instance.themeColor
+                                              : AppColors.instance.appIconColor,
+                                        )),
                                   ),
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Icon(
-                                    Icons.thumb_up_alt_outlined,
-                                    color: AppColors.instance.appIconColor,
-                                  ),
-                                ),
-                              ))),
+                                ))),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
@@ -119,59 +139,78 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: NetworkImage(
-                                      'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  widget.servicesData!.serviceProviderName ??
-                                      "",
-                                  style:
-                                      TextStyleUtil.textStyleRaqiBook(context),
-                                ),
-                              ],
-                            ),
-                            if(!widget.userFromViewProfile!)
-                            CupertinoButton(
-                              // color: AppColors.instance.themeColor,
-                              onPressed: () {
-                                AppUtils.pushRoute(
-                                    context: context,
-                                    route: ProviderDetailsScreen(
-                                      servicesData: widget.servicesData,
-                                    ));
-                              },
-                              padding: EdgeInsetsDirectional.only(
-                                top: 10,
-                                bottom: 10,
-                              ),
-                              child: Text(
-                                "View Profile",
-                                style: TextStyleUtil.textStyleRaqiBook(context,
-                                    color: AppColors.instance.themeColor,
-                                    fontSize: 20),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: NetworkImage(
+                                        'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    child: AutoSizeText(
+                                      widget.servicesData!
+                                              .serviceProviderName ??
+                                          "",
+                                      style: TextStyleUtil.textStyleRaqiBook(
+                                          context),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            if (!widget.userFromViewProfile!)
+                              CupertinoButton(
+                                // color: AppColors.instance.themeColor,
+                                onPressed: () {
+                                  if (widget.userType == UserType.Guest) {
+                                    AppUtils.pushRoute(
+                                        context: context, route: LoginScreen());
+                                  } else {
+                                    AppUtils.pushRoute(
+                                        context: context,
+                                        route: ProviderDetailsScreen(
+                                          servicesData: widget.servicesData,
+                                        ));
+                                  }
+                                },
+                                padding: EdgeInsetsDirectional.only(
+                                  top: 10,
+                                  bottom: 10,
+                                ),
+                                child: Text(
+                                  "View Profile",
+                                  style: TextStyleUtil.textStyleRaqiBook(
+                                      context,
+                                      color: AppColors.instance.themeColor,
+                                      fontSize: 20),
+                                ),
+                              ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         Text(
                           "Description",
                           style: TextStyleUtil.textStyleRaqiBook(context),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         AutoSizeText(
                           widget.servicesData!.descriptionOfService ?? "",
@@ -181,21 +220,21 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        if(!widget.userFromViewProfile!)
-                        Text(
-                          "Available At",
-                          style: TextStyleUtil.textStyleRaqiBook(context),
-                        ),
-                        if(!widget.userFromViewProfile!)
-                        SizedBox(
-                          height: 20,
-                        ),
-                        if(!widget.userFromViewProfile!)
-                        getContinueButton(context, model),
-                        if(!widget.userFromViewProfile!)
-                        SizedBox(
-                          height: 20,
-                        ),
+                        if (!widget.userFromViewProfile!)
+                          Text(
+                            "Available At",
+                            style: TextStyleUtil.textStyleRaqiBook(context),
+                          ),
+                        if (!widget.userFromViewProfile!)
+                          SizedBox(
+                            height: 10,
+                          ),
+                        if (!widget.userFromViewProfile!)
+                          getContinueButton(context, model),
+                        if (!widget.userFromViewProfile!)
+                          SizedBox(
+                            height: 20,
+                          ),
                       ],
                     ),
                   )
@@ -220,8 +259,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           ],
           color: AppColors.instance.white,
           borderRadius: BorderRadius.circular(20)),
-      padding:
-          EdgeInsetsDirectional.only(top: 20, bottom: 20, start: 20, end: 20),
+      padding: EdgeInsetsDirectional.only(top: 20, start: 20, end: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -240,7 +278,11 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           SizedBox(
             height: 20,
           ),
-          getRatingValue(),
+          if (!widget.userFromViewProfile!) getRatingValue(),
+          if (!widget.userFromViewProfile!)
+            SizedBox(
+              height: 20,
+            ),
         ],
       ),
     );
@@ -345,8 +387,15 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     return CupertinoButton(
       color: AppColors.instance.themeColor,
       onPressed: () {
-        AppUtils.pushRoute(
-            context: context, route: UserSideBookingScreen(servicesData: widget.servicesData,));
+        if (widget.userType == UserType.Guest) {
+          AppUtils.pushRoute(context: context, route: LoginScreen());
+        } else {
+          AppUtils.pushRoute(
+              context: context,
+              route: UserSideBookingScreen(
+                servicesData: widget.servicesData,
+              ));
+        }
       },
       borderRadius: BorderRadius.circular(12),
       padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
@@ -357,28 +406,29 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
       ),
     );
   }
- deleteProviderServiceDialog(BuildContext context){
-    return    showDialog(
+
+  deleteProviderServiceDialog(BuildContext context) {
+    return showDialog(
         context: context,
         builder: (contextBuilder) => ShowPopup(
-          title: "Warning!",
-          description: "Do you want to delete the service?",
-          actions: [
-            AppAlertAction(
-              title: "Yes",
-              handler: (_) {
-                AppUtils.pop(context: context);
-                AppUtils.pop(context: context);
-              },
-              showWhiteButton: false,
+              title: "Warning!",
+              description: "Do you want to delete the service?",
+              actions: [
+                AppAlertAction(
+                  title: "Yes",
+                  handler: (_) {
+                    AppUtils.pop(context: context);
+                    AppUtils.pop(context: context);
+                  },
+                  showWhiteButton: false,
+                ),
+                AppAlertAction(
+                  title: "Cancel",
+                  showWhiteButton: true,
+                ),
+              ],
+              // image: Image.asset(MobilyConstants.baseImagePath + "common/info.png"),
             ),
-            AppAlertAction(
-              title: "Cancel",
-              showWhiteButton: true,
-            ),
-          ],
-          // image: Image.asset(MobilyConstants.baseImagePath + "common/info.png"),
-        ),
         barrierDismissible: true);
   }
 }

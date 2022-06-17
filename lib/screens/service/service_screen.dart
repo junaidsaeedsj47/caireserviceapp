@@ -111,7 +111,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
       },
       child: Container(
         margin:
-            const EdgeInsetsDirectional.only(start: 20, end: 20, bottom: 10),
+            const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
         // width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.1),
@@ -127,8 +127,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
                     bottomLeft: Radius.circular(8),
                   ),
                   child: Container(
-                    height: 110,
-                    width: 110,
+                    height: 130,
+                    width: 130,
                     child: Image.network(
                       item.serviceImage!,
                       fit: BoxFit.fill,

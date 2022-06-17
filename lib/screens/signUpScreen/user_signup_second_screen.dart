@@ -4,6 +4,7 @@ import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/screens/profile/profile_screen.dart';
 import 'package:caireapp/screens/providerSideBooking/provider_side_booking_main_screen.dart';
+import 'package:caireapp/screens/userProfileOption/user_profile_all_options_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/signup_viewmodel/signup-second_viewmodel.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:stacked/stacked.dart';
+import 'package:universal_platform/universal_platform.dart';
 import '../../constants/caireColors.dart';
 
 class UserSignUpSecondScreen extends StatefulWidget {
@@ -313,14 +315,20 @@ class _UserSignUpSecondScreenState extends State<UserSignUpSecondScreen> {
                                   color: AppColors.instance.white),
                             ),
                             onPressed: () {
-                              AppUtils.pushRoute(
-                                  context: context,
-                                  route: AppBottomBar(bottomBarPages: [
-                                    ProviderDashboardScreen(),
-                                    ChatScreen(),
-                                    ProviderSideBookingScreen(),
-                                    ProfileScreen(),
-                                  ]));
+                              if (UniversalPlatform.isWeb) {
+                                AppUtils.pushRoute(
+                                    context: context,
+                                    route: ProviderDashboardScreen());
+                              } else {
+                                AppUtils.pushRoute(
+                                    context: context,
+                                    route: AppBottomBar(bottomBarPages: [
+                                      ProviderDashboardScreen(),
+                                      ChatScreen(),
+                                      ProviderSideBookingScreen(),
+                                      NavDrawer(),
+                                    ]));
+                              }
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(builder: (context) => HomeScreen()),

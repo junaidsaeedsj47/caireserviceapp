@@ -78,7 +78,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                           width: double.infinity,
                           height: 150,
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, bottom: 10),
+                              start: 10, end: 10, bottom: 10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(20)),
                               border: Border.all(

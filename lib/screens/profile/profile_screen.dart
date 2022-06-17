@@ -23,7 +23,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         builder: (buildContext, model, index) {
           return SafeArea(
             child: Scaffold(
-              appBar: AppUtils.showAppBar(showBack: false,title: "Profile",context: context),
+              appBar: AppUtils.showAppBar(showBack: false,title: "Profile Details",context: context),
               body: Container(
                 // decoration: BoxDecoration(
                 //     gradient: LinearGradient(
@@ -188,7 +188,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                         Expanded(
                                           child: Container(
                                             child: Text(
-                                              "Islamabad",
+                                              "Lahore",
                                               style: TextStyleUtil
                                                   .textStyleRaqiBookBold(context,
                                                       fontSize: 14),

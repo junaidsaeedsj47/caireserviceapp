@@ -48,6 +48,7 @@ dependencies:
   intl: ^0.17.0
   date_format: ^2.0.6
   responsive_framework:
+  google_maps_flutter_web: ^0.3.3
 
 dev_dependencies:
   flutter_test:

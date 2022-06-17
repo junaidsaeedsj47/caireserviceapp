@@ -1,8 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/screens/chat/chat_screen.dart';
 import 'package:caireapp/screens/handyman/provider_dashboard.dart';
 import 'package:caireapp/screens/loginScreen/login_screen.dart';
 import 'package:caireapp/screens/profile/profile_screen.dart';
 import 'package:caireapp/screens/providerSideBooking/provider_side_booking_main_screen.dart';
+import 'package:caireapp/screens/userProfileOption/user_profile_all_options_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/signup_viewmodel/provider_signup_screen_viewmodel.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:universal_platform/universal_platform.dart';
 import '../../constants/caireColors.dart';
 import 'package:date_format/date_format.dart';
 
@@ -405,7 +408,7 @@ class _ProviderSignUpSecondScreenState
                         inactiveColor: AppColors.instance.lightGreyText,
                         thumbColor: AppColors.instance.themeColor,
                         activeColor: AppColors.instance.themeColor,
-                        label: _currentSliderValue.round().toString(),
+                        label: _currentSliderValue.round().toString() + " km",
                         onChanged: (double value) {
                           setState(() {
                             _currentSliderValue = value;
@@ -441,75 +444,65 @@ class _ProviderSignUpSecondScreenState
                         height: 15,
                       ),
                       Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('No of Days : ',
-                                    style: TextStyleUtil
-                                        .textStyleBeforeLoginRaqiBook(context,
-                                            fontSize: 14)),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Container(
-                                  child: Expanded(
-                                    child: CarieTextFieldWithoutLabel(
-                                      focusedBorderColor:
-                                          AppColors.instance.appTextColor,
-                                      enableBorderColor:
-                                          AppColors.instance.appTextColor,
-                                      keyboardType: TextInputType.number,
-                                      obscureText: false,
-                                      controller: model.availabilityController,
-                                      hintText: 'Enter',
-                                      hintStyle: TextStyleUtil
-                                          .textStyleBeforeLoginRaqiBook(context,
-                                              fontSize: 14),
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 14, horizontal: 14),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Container(
+                            width: 150,
+                            child: Expanded(
+                              child: CarieTextFieldWithoutLabel(
+                                focusedBorderColor:
+                                    AppColors.instance.appTextColor,
+                                enableBorderColor:
+                                    AppColors.instance.appTextColor,
+                                keyboardType: TextInputType.number,
+                                obscureText: false,
+                                controller: model.availabilityController,
+                                hintText: 'Enter of days',
+                                hintStyle:
+                                    TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                        context,
+                                        fontSize: 14),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 14, horizontal: 14),
+                              ),
                             ),
                           ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text('Select Time :',
-                                    style: TextStyleUtil
-                                        .textStyleBeforeLoginRaqiBook(context,
-                                            fontSize: 14)),
-                                GestureDetector(
-                                    onTap: () {
-                                      DatePicker.showTimePicker(
-                                        context,
-                                        showTitleActions: true,
-                                        onChanged: (date) {
-                                          print('change $date in time zone ' +
-                                              date.timeZoneOffset.inHours
-                                                  .toString());
-                                        },
-                                        onConfirm: (date) {
-                                          model.updateSelectedTime(date);
-                                          print('confirm $date');
-                                        },
-                                        currentTime: DateTime.now(),
-                                      );
-                                    },
-                                    child: Text(
-                                      AppUtils.showFormattedTime(
-                                          model.selectedDate),
-                                      style: TextStyleUtil
-                                          .textStyleBeforeLoginRaqiBook(context,
-                                              fontSize: 14),
-                                    )),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              DatePicker.showTimePicker(
+                                context,
+                                showTitleActions: true,
+                                onChanged: (date) {
+                                  print('change $date in time zone ' +
+                                      date.timeZoneOffset.inHours.toString());
+                                },
+                                onConfirm: (date) {
+                                  model.updateSelectedTime(date);
+                                  print('confirm $date');
+                                },
+                                currentTime: DateTime.now(),
+                              );
+                            },
+                            child: Container(
+                              width: 100,
+                              padding: EdgeInsetsDirectional.only(
+                                  top: 6, end: 8, start: 8, bottom: 6),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: AppColors.instance.backGroundColor),
+                              child: Center(
+                                  child: AutoSizeText(
+                                model.showTime
+                                    ? AppUtils.showFormattedTime(
+                                        model.selectedDate)
+                                    : "Select Time",
+                                // model.selectedTime.hour.toString() +
+                                //     ":" +
+                                //     model.selectedTime.minute.toString(),
+                                style:
+                                    TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                        context),
+                              )),
                             ),
                           ),
                         ],
@@ -558,29 +551,34 @@ class _ProviderSignUpSecondScreenState
                         height: 54,
                         width: double.infinity,
                         child: CupertinoButton(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColors.instance.themeColor,
-                          child: Text(
-                            'Sign up',
-                            style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
-                                context,
-                                color: AppColors.instance.white),
-                          ),
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => HomeScreen()),
-                            // );
-                            AppUtils.pushRoute(
-                                context: context,
-                                route: AppBottomBar(bottomBarPages: [
-                                  ProviderDashboardScreen(),
-                                  ChatScreen(),
-                                  ProviderSideBookingScreen(),
-                                  ProfileScreen(),
-                                ]));
-                          },
-                        ),
+                            borderRadius: BorderRadius.circular(12),
+                            color: AppColors.instance.themeColor,
+                            child: Text(
+                              'Sign up',
+                              style: TextStyleUtil.textStyleBeforeLoginRaqiBook(
+                                  context,
+                                  color: AppColors.instance.white),
+                            ),
+                            onPressed: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => HomeScreen()),
+                              // );
+                              if (UniversalPlatform.isWeb) {
+                                AppUtils.pushRoute(
+                                    context: context,
+                                    route: ProviderDashboardScreen());
+                              } else {
+                                AppUtils.pushRoute(
+                                    context: context,
+                                    route: AppBottomBar(bottomBarPages: [
+                                      ProviderDashboardScreen(),
+                                      ChatScreen(),
+                                      ProviderSideBookingScreen(),
+                                      NavDrawer(),
+                                    ]));
+                              }
+                            }),
                       ),
                       const SizedBox(
                         height: 15,

@@ -3,6 +3,7 @@ import 'package:caireapp/model/service_data_model.dart';
 import 'package:caireapp/screens/categories/viewall_categories_screen.dart';
 import 'package:caireapp/screens/usersideservices/service_detail_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/usersideservices/viewall_services_viewmodel.dart';
@@ -15,7 +16,13 @@ import 'package:universal_platform/universal_platform.dart';
 class ViewAllServicesScreen extends StatefulWidget {
   final String? title;
   final ServiceModel? servicesData;
-  ViewAllServicesScreen({Key? key,this.title,this.servicesData});
+  final UserType userType;
+
+  ViewAllServicesScreen(
+      {Key? key,
+      this.title,
+      this.servicesData,
+      this.userType = UserType.LoggedIn});
 
   @override
   _ViewAllServicesScreenState createState() => _ViewAllServicesScreenState();
@@ -34,13 +41,16 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
             viewModelBuilder: () => viewAllServicesViewModel,
             builder: (contextBuilder, model, child) {
               return Scaffold(
-                appBar: AppUtils.showAppBar(title: widget.title??"Services",context: context,showBack:UniversalPlatform.isWeb ? false : true, ),
+                appBar: AppUtils.showAppBar(
+                  title: widget.title ?? "Services",
+                  context: context,
+                  showBack: UniversalPlatform.isWeb ? false : true,
+                ),
                 body: SingleChildScrollView(
                   child: Container(
                     padding: UniversalPlatform.isWeb
                         ? EdgeInsetsDirectional.only(start: 30, end: 30)
-                        : EdgeInsetsDirectional.only(
-                        start: 10, end: 10),
+                        : EdgeInsetsDirectional.only(start: 10, end: 10),
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.stretch,
                       // mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +69,9 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                            AppUtils.isDesktopDevice(context) ? getWebServicesListCard(context, model) : serviceProviderCard(context, model) ,
+                              AppUtils.isDesktopDevice(context)
+                                  ? getWebServicesListCard(context, model)
+                                  : serviceProviderCard(context, model),
                             ],
                           ),
                         ),
@@ -150,7 +162,6 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
     );
   }
 
-
   Widget getWebServicesListCard(
       BuildContext context, ViewAllServicesViewModel model) {
     return GridView.builder(
@@ -158,8 +169,12 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
       shrinkWrap: true,
       itemCount: model.servicesData.length,
       itemBuilder: (context, index) => GestureDetector(
-        onTap: (){
-          AppUtils.pushRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+        onTap: () {
+          AppUtils.pushRoute(
+              context: context,
+              route: ServiceDetailScreen(
+                servicesData: model.servicesData[index],
+              ));
         },
         child: Padding(
           padding: const EdgeInsetsDirectional.only(bottom: 20),
@@ -316,8 +331,13 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
           itemCount: model.servicesData.length,
           itemBuilder: (context, int index) {
             return GestureDetector(
-              onTap: (){
-                AppUtils.pushRoute(context: context, route: ServiceDetailScreen(servicesData: model.servicesData[index],));
+              onTap: () {
+                AppUtils.pushRoute(
+                    context: context,
+                    route: ServiceDetailScreen(
+                      userType: widget.userType,
+                      servicesData: model.servicesData[index],
+                    ));
               },
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(bottom: 20),
@@ -332,11 +352,8 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                     children: [
                       Stack(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            // height: 150,
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
                             child: Image.network(
                               model.servicesData[index].serviceImage.toString(),
                               fit: BoxFit.fill,
@@ -361,8 +378,11 @@ class _ViewAllServicesScreenState extends State<ViewAllServicesScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           // mainAxisAlignment: MainAxisAlignment.,
                           children: [
-                            getRatingStars(model, index,
-                                model.servicesData[index].serviceProviderRating!),
+                            getRatingStars(
+                                model,
+                                index,
+                                model.servicesData[index]
+                                    .serviceProviderRating!),
                             // RatingBar.builder(
                             //   ignoreGestures: false,
                             //   itemSize: 15,

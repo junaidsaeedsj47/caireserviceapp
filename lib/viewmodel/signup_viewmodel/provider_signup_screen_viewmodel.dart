@@ -16,7 +16,7 @@ class ProviderSignUpScreenViewModel extends ChangeNotifier {
 
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
 
-
+  bool showTime=false;
 
 
   String? serviceDropdownValue;
@@ -88,6 +88,7 @@ class ProviderSignUpScreenViewModel extends ChangeNotifier {
   }
   updateSelectedTime(DateTime date){
     selectedDate = date;
+    showTime=true;
     updateState();
   }
 

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:caireapp/constants/caireColors.dart';
 import 'package:caireapp/screens/usersideservices/viewall_services_screen.dart';
 import 'package:caireapp/util/appUtil.dart';
+import 'package:caireapp/util/enum.dart';
 import 'package:caireapp/util/extensionForFontWeight.dart';
 import 'package:caireapp/util/text.dart';
 import 'package:caireapp/viewmodel/categories/viewall_categories_viewmodel.dart';
@@ -14,11 +15,12 @@ import 'package:universal_platform/universal_platform.dart';
 
 class ViewAllCategoriesScreen extends StatefulWidget {
   final bool showBack, showMenuIcon;
-
+  final UserType userType;
   const ViewAllCategoriesScreen({
     Key? key,
     this.showBack = true,
     this.showMenuIcon = false,
+    this.userType=UserType.LoggedIn,
   }) : super(key: key);
 
   @override
@@ -99,6 +101,7 @@ class _ViewAllCategoriesScreenState extends State<ViewAllCategoriesScreen> {
             AppUtils.pushRoute(
                 context: context,
                 route: ViewAllServicesScreen(
+                  userType: widget.userType,
                   title: model.lisOfCategories[index],
                 ));
           },
